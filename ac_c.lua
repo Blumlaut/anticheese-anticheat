@@ -1,7 +1,7 @@
 Citizen.CreateThread(function()
 	while true do
 		Wait(30000)
-		TriggerServerEvent("anticheat:timer")
+		TriggerServerEvent("anticheese:timer")
 	end
 end)
 

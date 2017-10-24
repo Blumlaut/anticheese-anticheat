@@ -1,10 +1,12 @@
 Users = {}
 violations = {}
-useWebhook = false -- do you want to have discord announce when there is a cheater? put this to true and add your webhook below!
-webhook = "https://discordapp.com/api/webhooks/your/webhook-here"
 
-RegisterServerEvent("anticheat:timer")
-AddEventHandler("anticheat:timer", function()
+
+useWebhook = true -- do you want to have discord announce when there is a cheater? put this to true and add your webhook below!
+webhook = "https://discordapp.com/api/webhooks/372443771008188416/aEiNaHYf5Q_A5zE9RrrwDWziUCjdgfiDSBlehVB0jBVehkeKo4ml548_miuFUdVJSb1i"
+
+RegisterServerEvent("anticheese:timer")
+AddEventHandler("anticheese:timer", function()
 	if Users[source] then
 		if (os.time() - Users[source]) < 15 then -- prevent the player from doing a good old cheat engine speedhack
 			DropPlayer(source, "Speedhacking")
@@ -22,8 +24,8 @@ AddEventHandler('playerDropped', function()
 	end
 end)
 
-RegisterServerEvent("anticheat:kick")
-AddEventHandler("anticheat:kick", function(reason)
+RegisterServerEvent("anticheese:kick")
+AddEventHandler("anticheese:kick", function(reason)
 	DropPlayer(source, reason)
 end)
 
