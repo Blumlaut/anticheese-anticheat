@@ -2,8 +2,8 @@ Users = {}
 violations = {}
 
 
-useWebhook = true -- do you want to have discord announce when there is a cheater? put this to true and add your webhook below!
-webhook = "https://discordapp.com/api/webhooks/372443771008188416/aEiNaHYf5Q_A5zE9RrrwDWziUCjdgfiDSBlehVB0jBVehkeKo4ml548_miuFUdVJSb1i"
+useWebhook = false -- do you want to have discord announce when there is a cheater? put this to true and add your webhook below!
+webhook = "https://discordapp.com/api/webhooks/your/webhook-here"
 
 RegisterServerEvent("anticheese:timer")
 AddEventHandler("anticheese:timer", function()
