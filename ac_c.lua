@@ -26,6 +26,8 @@ Citizen.CreateThread(function()
 		SetEntityVisible(PlayerPedId(), true) -- make sure player is visible
 		Wait(3000) -- wait 3 seconds and check again
 		
+		local more = speed - 9.0 -- avarage running speed is 7.06 so just incase someone runs a bit faster it wont trigger
+		
 		local rounds = tonumber(string.format("%.2f", speed))
 		local roundm = tonumber(string.format("%.2f", more))
 		
