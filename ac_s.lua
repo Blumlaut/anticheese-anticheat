@@ -38,7 +38,6 @@ if ver ~= nil and tonumber(ver) < 3.65 then
 	print("\nEasyAdmin is outdated or missing and will not work with AntiCheese\nplease update it from https://github.com/Bluethefurry/EasyAdmin")
 	print("\n###############################")
 end
-SaveResourceFile('EasyAdmin', 'version', ver, -1)
 
 
 Citizen.CreateThread(function()
