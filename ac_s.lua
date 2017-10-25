@@ -30,6 +30,16 @@ AddEventHandler("anticheese:kick", function(reason)
 end)
 
 
+
+local ver = LoadResourceFile('EasyAdmin', 'version')
+
+if ver ~= nil and tonumber(ver) < 3.65 then
+	print("\n###############################")
+	print("\nEasyAdmin is outdated or missing and will not work with AntiCheese\nplease update it from https://github.com/Bluethefurry/EasyAdmin")
+	print("\n###############################")
+end
+
+
 Citizen.CreateThread(function()
 	
 	function SendWebhookMessage(webhook,message)
@@ -46,10 +56,15 @@ Citizen.CreateThread(function()
 			if thePlayer.name == name then
 				isKnown = true
 				if violations[i].count == 3 then
-					TriggerEvent("banCheater", source)
+					for i,identifier in ipairs(GetPlayerIdentifiers(source)) do
+						if string.find(identifier, "license:") then
+							exports.EasyAdmin.BanIdentifier(identifier, "Cheating ( Nickname: "..GetPlayerName(source).. " )")
+						end
+					end
 					isKnownCount = violations[i].count
 					table.remove(violations,i)
 					isKnownExtraText = ", was banned."
+					DropPlayer(source,"Cheating")
 				else
 					violations[i].count = violations[i].count+1
 					isKnownCount = violations[i].count
