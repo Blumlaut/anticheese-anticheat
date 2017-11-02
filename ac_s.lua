@@ -1,3 +1,43 @@
+
+-- with this you can turn on/off specific anticheese components, note: you can also turn these off while the script is running by using events, see examples for such below
+Components = {
+	Teleport = true,
+	GodMode = true,
+	Speedhack = true
+}
+
+
+--[[ 
+event examples are:
+
+anticheese:SetComponentStatus( component, state ) 
+	enables or disables specific components
+		component:
+			an AntiCheese component, such as the ones listed aboth, must be a string
+		state:
+			the state to what the component should be set to, accepts booleans such as "true" for enabled and "false" for disabled
+
+
+anticheese:ToggleComponent( component ) 
+	sets a component to the opposite mode ( e.g. enabled becomes disabled ), there is no reason to use this.
+		component:
+			an AntiCheese component, such as the ones listed aboth, must be a string
+
+anticheese:SetAllComponents( state ) 
+	enables or disables **all** components
+		state:
+			the state to what the components should be set to, accepts booleans such as "true" for enabled and "false" for disabled
+
+			
+These can be used by triggering them like following:
+	TriggerEvent("anticheese:SetComponentStatus", "Teleport", false)
+	
+Triggering these events from the clientside is not recommended as these get disabled globally and not just for one player.
+
+
+]]
+
+
 Users = {}
 violations = {}
 
@@ -8,7 +48,7 @@ webhook = "https://discordapp.com/api/webhooks/your/webhook-here"
 RegisterServerEvent("anticheese:timer")
 AddEventHandler("anticheese:timer", function()
 	if Users[source] then
-		if (os.time() - Users[source]) < 15 then -- prevent the player from doing a good old cheat engine speedhack
+		if (os.time() - Users[source]) < 15 and Components.Speedhack then -- prevent the player from doing a good old cheat engine speedhack
 			DropPlayer(source, "Speedhacking")
 		else
 			Users[source] = os.time()
@@ -29,6 +69,28 @@ AddEventHandler("anticheese:kick", function(reason)
 	DropPlayer(source, reason)
 end)
 
+RegisterServerEvent("anticheese:SetComponentStatus")
+AddEventHandler("anticheese:SetComponentStatus", function(component, state)	
+	if type(component) == "string" and type(state) == "boolean" then
+		Components[component] = state -- changes the component to the wished status
+	end
+end)
+
+RegisterServerEvent("anticheese:ToggleComponent")
+AddEventHandler("anticheese:ToggleComponent", function(component)
+	if type(component) == "string" then
+		Components[component] = not Components[component] 
+	end
+end)
+
+RegisterServerEvent("anticheese:SetAllComponents")
+AddEventHandler("anticheese:SetAllComponents", function(state)	
+	if type(state) == "boolean" then
+		for i,theComponent in pairs(Components) do
+			Components[i] = state
+		end
+	end
+end)
 
 Citizen.CreateThread(function()
 	
@@ -81,42 +143,48 @@ Citizen.CreateThread(function()
 	
 	RegisterNetEvent('RottenV:SpeedFlag')
 	AddEventHandler('RottenV:SpeedFlag', function(rounds, roundm)
-		license, steam = GetPlayerNeededIdentifiers(source)
-		
-		name = GetPlayerName(source)
-		
-		isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Speed Hacking")
-		
+		if Components.Speedhack then
+			license, steam = GetPlayerNeededIdentifiers(source)
+			
+			name = GetPlayerName(source)
+			
+			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Speed Hacking")
+			
 
-		SendWebhookMessage(webhook, "**Speed Hacker!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nWas travelling "..rounds.. " units. That's "..roundm.." more than normal! \nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			SendWebhookMessage(webhook, "**Speed Hacker!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nWas travelling "..rounds.. " units. That's "..roundm.." more than normal! \nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+		end
 	end)
 	
 	
 	
 	RegisterNetEvent('RottenV:NoclipFlag')
 	AddEventHandler('RottenV:NoclipFlag', function(distance)
-		license, steam = GetPlayerNeededIdentifiers(source)
-		name = GetPlayerName(source)
-		
-		isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Noclip/Teleport")
+		if Components.Speedhack then
+			license, steam = GetPlayerNeededIdentifiers(source)
+			name = GetPlayerName(source)
+			
+			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Noclip/Teleport")
 
-		
+			
 
-		SendWebhookMessage(webhook,"**Noclip/Teleport!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nCaught with "..distance.." units between last checked location\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			SendWebhookMessage(webhook,"**Noclip/Teleport!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nCaught with "..distance.." units between last checked location\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+		end
 	end)
 	
 	RegisterNetEvent('RottenV:HealthFlag')
 	AddEventHandler('RottenV:HealthFlag', function(invincible,oldHealth, newHealth)
-		license, steam = GetPlayerNeededIdentifiers(source)
-		name = GetPlayerName(source)
-		
-		isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Health Hacking")
+		if Components.GodMode then
+			license, steam = GetPlayerNeededIdentifiers(source)
+			name = GetPlayerName(source)
+			
+			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Health Hacking")
 
-		if invincible then
-			SendWebhookMessage(webhook,"**Health Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nRegenerated "..newHealth-oldHealth.."hp ( to reach "..newHealth.."hp ) in 50ms! ( PlayerPed was invincible )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
-		else 
-			SendWebhookMessage(webhook,"**Health Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nRegenerated "..newHealth-oldHealth.."hp ( to reach "..newHealth.."hp ) in 50ms! ( Health was Forced )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
-		end	
+			if invincible then
+				SendWebhookMessage(webhook,"**Health Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nRegenerated "..newHealth-oldHealth.."hp ( to reach "..newHealth.."hp ) in 50ms! ( PlayerPed was invincible )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			else 
+				SendWebhookMessage(webhook,"**Health Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nRegenerated "..newHealth-oldHealth.."hp ( to reach "..newHealth.."hp ) in 50ms! ( Health was Forced )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end	
+		end
 	end)
 end)
 
