@@ -13,7 +13,7 @@ event examples are:
 anticheese:SetComponentStatus( component, state ) 
 	enables or disables specific components
 		component:
-			an AntiCheese component, such as the ones listed aboth, must be a string
+			an AntiCheese component, such as the ones listed above, must be a string
 		state:
 			the state to what the component should be set to, accepts booleans such as "true" for enabled and "false" for disabled
 
@@ -21,7 +21,7 @@ anticheese:SetComponentStatus( component, state )
 anticheese:ToggleComponent( component ) 
 	sets a component to the opposite mode ( e.g. enabled becomes disabled ), there is no reason to use this.
 		component:
-			an AntiCheese component, such as the ones listed aboth, must be a string
+			an AntiCheese component, such as the ones listed above, must be a string
 
 anticheese:SetAllComponents( state ) 
 	enables or disables **all** components
