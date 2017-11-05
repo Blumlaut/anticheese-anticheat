@@ -108,7 +108,7 @@ Citizen.CreateThread(function()
 			if thePlayer.name == name then
 				isKnown = true
 				if violations[i].count == 3 then
-					TriggerEvent("banCheater", source)
+					TriggerEvent("banCheater", source,reason)
 					isKnownCount = violations[i].count
 					table.remove(violations,i)
 					isKnownExtraText = ", was banned."
