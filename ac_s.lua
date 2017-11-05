@@ -163,7 +163,7 @@ Citizen.CreateThread(function()
 			license, steam = GetPlayerNeededIdentifiers(source)
 			name = GetPlayerName(source)
 			
-			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Noclip/Teleport")
+			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Noclip/Teleport Hacking")
 
 			
 
