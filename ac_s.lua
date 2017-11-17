@@ -3,14 +3,14 @@
 Components = {
 	Teleport = true,
 	GodMode = true,
-	Speedhack = true
+	Speedhack = true,
+	WeaponBlacklist = true,
 }
 
-
---[[ 
+--[[
 event examples are:
 
-anticheese:SetComponentStatus( component, state ) 
+anticheese:SetComponentStatus( component, state )
 	enables or disables specific components
 		component:
 			an AntiCheese component, such as the ones listed above, must be a string
@@ -18,20 +18,20 @@ anticheese:SetComponentStatus( component, state )
 			the state to what the component should be set to, accepts booleans such as "true" for enabled and "false" for disabled
 
 
-anticheese:ToggleComponent( component ) 
+anticheese:ToggleComponent( component )
 	sets a component to the opposite mode ( e.g. enabled becomes disabled ), there is no reason to use this.
 		component:
 			an AntiCheese component, such as the ones listed above, must be a string
 
-anticheese:SetAllComponents( state ) 
+anticheese:SetAllComponents( state )
 	enables or disables **all** components
 		state:
 			the state to what the components should be set to, accepts booleans such as "true" for enabled and "false" for disabled
 
-			
+
 These can be used by triggering them like following:
 	TriggerEvent("anticheese:SetComponentStatus", "Teleport", false)
-	
+
 Triggering these events from the clientside is not recommended as these get disabled globally and not just for one player.
 
 
@@ -42,8 +42,9 @@ Users = {}
 violations = {}
 
 
-useWebhook = false -- do you want to have discord announce when there is a cheater? put this to true and add your webhook below!
-webhook = "https://discordapp.com/api/webhooks/your/webhook-here"
+
+webhook = GetConvar("ac_webhook", false)
+
 
 RegisterServerEvent("anticheese:timer")
 AddEventHandler("anticheese:timer", function()
@@ -70,7 +71,7 @@ AddEventHandler("anticheese:kick", function(reason)
 end)
 
 RegisterServerEvent("anticheese:SetComponentStatus")
-AddEventHandler("anticheese:SetComponentStatus", function(component, state)	
+AddEventHandler("anticheese:SetComponentStatus", function(component, state)
 	if type(component) == "string" and type(state) == "boolean" then
 		Components[component] = state -- changes the component to the wished status
 	end
@@ -79,12 +80,12 @@ end)
 RegisterServerEvent("anticheese:ToggleComponent")
 AddEventHandler("anticheese:ToggleComponent", function(component)
 	if type(component) == "string" then
-		Components[component] = not Components[component] 
+		Components[component] = not Components[component]
 	end
 end)
 
 RegisterServerEvent("anticheese:SetAllComponents")
-AddEventHandler("anticheese:SetAllComponents", function(state)	
+AddEventHandler("anticheese:SetAllComponents", function(state)
 	if type(state) == "boolean" then
 		for i,theComponent in pairs(Components) do
 			Components[i] = state
@@ -93,13 +94,13 @@ AddEventHandler("anticheese:SetAllComponents", function(state)
 end)
 
 Citizen.CreateThread(function()
-	
+
 	function SendWebhookMessage(webhook,message)
-		if useWebhook then
+		if webhook then
 			PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({content = message}), { ['Content-Type'] = 'application/json' })
 		end
 	end
-	
+
 	function WarnPlayer(playername, reason)
 		local isKnown = false
 		local isKnownCount = 1
@@ -118,19 +119,19 @@ Citizen.CreateThread(function()
 				end
 			end
 		end
-		
-		if not isKnown then 
-			table.insert(violations, { name = name, count = 1 }) 
+
+		if not isKnown then
+			table.insert(violations, { name = name, count = 1 })
 		end
-	
+
 		return isKnown, isKnownCount,isKnownExtraText
 	end
-	
+
 	function GetPlayerNeededIdentifiers(player)
 		local ids = GetPlayerIdentifiers(player)
 		for i,theIdentifier in ipairs(ids) do
 			if string.find(theIdentifier,"license:") or -1 > -1 then
-				license = theIdentifier 
+				license = theIdentifier
 			elseif string.find(theIdentifier,"steam:") or -1 > -1 then
 				steam = theIdentifier
 			end
@@ -140,53 +141,62 @@ Citizen.CreateThread(function()
 		end
 		return license, steam
 	end
-	
+
 	RegisterNetEvent('RottenV:SpeedFlag')
 	AddEventHandler('RottenV:SpeedFlag', function(rounds, roundm)
 		if Components.Speedhack then
 			license, steam = GetPlayerNeededIdentifiers(source)
-			
+
 			name = GetPlayerName(source)
-			
+
 			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Speed Hacking")
-			
+
 
 			SendWebhookMessage(webhook, "**Speed Hacker!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nWas travelling "..rounds.. " units. That's "..roundm.." more than normal! \nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 		end
 	end)
-	
-	
-	
+
+
+
 	RegisterNetEvent('RottenV:NoclipFlag')
 	AddEventHandler('RottenV:NoclipFlag', function(distance)
 		if Components.Speedhack then
 			license, steam = GetPlayerNeededIdentifiers(source)
 			name = GetPlayerName(source)
-			
+
 			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Noclip/Teleport Hacking")
 
-			
+
 
 			SendWebhookMessage(webhook,"**Noclip/Teleport!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nCaught with "..distance.." units between last checked location\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 		end
 	end)
-	
+
 	RegisterNetEvent('RottenV:HealthFlag')
 	AddEventHandler('RottenV:HealthFlag', function(invincible,oldHealth, newHealth)
 		if Components.GodMode then
 			license, steam = GetPlayerNeededIdentifiers(source)
 			name = GetPlayerName(source)
-			
+
 			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Health Hacking")
 
 			if invincible then
 				SendWebhookMessage(webhook,"**Health Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nRegenerated "..newHealth-oldHealth.."hp ( to reach "..newHealth.."hp ) in 50ms! ( PlayerPed was invincible )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
-			else 
+			else
 				SendWebhookMessage(webhook,"**Health Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nRegenerated "..newHealth-oldHealth.."hp ( to reach "..newHealth.."hp ) in 50ms! ( Health was Forced )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
-			end	
+			end
+		end
+	end)
+
+	RegisterNetEvent('RottenV:WeaponFlag')
+	AddEventHandler('RottenV:WeaponFlag', function(weapon)
+		if Components.WeaponBlacklist then
+			license, steam = GetPlayerNeededIdentifiers(source)
+			name = GetPlayerName(source)
+
+			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Inventory Cheating")
+
+			SendWebhookMessage(webhook,"**Inventory Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nGot Weapon: "..weapon.."( Blacklisted )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 		end
 	end)
 end)
-
-
--- {content = "**Noclipper!** \n```Markdown \nUser:"..name.."\n"..license.."\n"..steam.."\nCaught with "..distance.." units between last checked location```"}
