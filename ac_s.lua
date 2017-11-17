@@ -43,7 +43,6 @@ violations = {}
 
 
 
-webhook = GetConvar("ac_webhook", false)
 
 
 RegisterServerEvent("anticheese:timer")
@@ -94,9 +93,10 @@ AddEventHandler("anticheese:SetAllComponents", function(state)
 end)
 
 Citizen.CreateThread(function()
+	webhook = GetConvar("ac_webhook", "none")
 
 	function SendWebhookMessage(webhook,message)
-		if webhook then
+		if webhook ~= "none" then
 			PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({content = message}), { ['Content-Type'] = 'application/json' })
 		end
 	end
