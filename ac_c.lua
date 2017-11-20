@@ -104,6 +104,7 @@ Citizen.CreateThread(function()
 			Citizen.Wait(30000)
 			for _,theWeapon in ipairs(BlacklistedWeapons) do
 				if HasPedGotWeapon(PlayerPedId(),GetHashKey(theWeapon),false) == 1 then
+						RemoveAllPedWeapons(PlayerPedId(),false)
 						TriggerServerEvent("RottenV:WeaponFlag", theWeapon )
 				end
 			end
