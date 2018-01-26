@@ -66,17 +66,18 @@ Citizen.CreateThread(function()
 		local curPed = PlayerPedId()
 		local curHealth = GetEntityHealth( curPed )
 		SetEntityHealth( curPed, curHealth-2)
+		local curWait = math.random(20,350)
 		-- this will substract 2hp from the current player, wait 50ms and then add it back, this is to check for hacks that force HP at 200
-		Citizen.Wait(50)
+		Citizen.Wait(curWait)
 
 		if PlayerPedId() == curPed and GetEntityHealth(curPed) == curHealth and GetEntityHealth(curPed) ~= 0 then
-			TriggerServerEvent("RottenV:HealthFlag", false, curHealth-2, GetEntityHealth( curPed ) )
+			TriggerServerEvent("RottenV:HealthFlag", false, curHealth-2, GetEntityHealth( curPed ),curWait )
 		elseif GetEntityHealth(curPed) == curHealth-2 then
 			SetEntityHealth(curPed, GetEntityHealth(curPed)+2)
 		end
 
 		if GetPlayerInvincible( PlayerId() ) then -- if the player is invincible, flag him as a cheater and then disable their invincibility
-			TriggerServerEvent("RottenV:HealthFlag", true, curHealth-2, GetEntityHealth( curPed ) )
+			TriggerServerEvent("RottenV:HealthFlag", true, curHealth-2, GetEntityHealth( curPed ),curWait )
 			SetPlayerInvincible( PlayerId(), false )
 		end
 
