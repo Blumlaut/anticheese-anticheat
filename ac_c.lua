@@ -84,20 +84,22 @@ Citizen.CreateThread(function()
 	end
 end)
 
--- prevent infinite ammo
+-- prevent infinite ammo, godmode, invisibility and ped speed hacks
 Citizen.CreateThread(function()
     while true do
 		Citizen.Wait(1)
-		SetPedInfiniteAmmoClip(PlayerPedId(), false)
-    end
-end)
-
--- prevent player from going invisible
-Citizen.CreateThread(function()
-	while true do
-		Citizen.Wait(1)
+		SetPedInfiniteAmmoClip(PlayerPedId(), false) 
+		SetEntityInvincible(PlayerPedId(), false) 
 		ResetEntityAlpha(PlayerPedId())
-	end
+		local fallin = IsPedFalling(PlayerPedId())
+		local ragg = IsPedRagdoll(PlayerPedId())
+		local parac = GetPedParachuteState(PlayerPedId())
+		if parac >= 0 or ragg or fallin then
+			SetEntityMaxSpeed(PlayerPedId(), 80.0)
+		else
+			SetEntityMaxSpeed(PlayerPedId(), 7.1)
+		end
+    end
 end)
 
 Citizen.CreateThread(function()
@@ -109,19 +111,4 @@ Citizen.CreateThread(function()
 				end
 			end
 		end
-end)
-
--- force max speed to be 7.1 so they can't magically run faster, only exclusion is when parachuting
-Citizen.CreateThread(function()
-	while true do
-		Citizen.Wait(0)
-		local fallin = IsPedFalling(PlayerPedId())
-		local ragg = IsPedRagdoll(PlayerPedId())
-		local parac = GetPedParachuteState(PlayerPedId())
-		if parac >= 0 or ragg or fallin then
-			SetEntityMaxSpeed(PlayerPedId(), 80.0)
-		else
-			SetEntityMaxSpeed(PlayerPedId(), 7.1)
-		end
-	end
 end)
