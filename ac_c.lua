@@ -15,8 +15,6 @@ end)
 
 Citizen.CreateThread(function()
 	Citizen.Wait(60000)
-
-
 	while true do
 		Citizen.Wait(0)
 		local ped = PlayerPedId()
@@ -54,15 +52,12 @@ Citizen.CreateThread(function()
 			--dont activate this, its broken!
 			--TriggerServerEvent("RottenV:SpeedFlag", rounds, roundm) -- send alert along with the rounded speed and how much faster they are
 		end
-
-
 	end
 end)
 
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(60000)
-
 		local curPed = PlayerPedId()
 		local curHealth = GetEntityHealth( curPed )
 		SetEntityHealth( curPed, curHealth-2)
@@ -80,35 +75,34 @@ Citizen.CreateThread(function()
 			TriggerServerEvent("RottenV:HealthFlag", true, curHealth-2, GetEntityHealth( curPed ),curWait )
 			SetPlayerInvincible( PlayerId(), false )
 		end
-
 	end
 end)
 
 -- prevent infinite ammo, godmode, invisibility and ped speed hacks
 Citizen.CreateThread(function()
     while true do
-		Citizen.Wait(1)
-		SetPedInfiniteAmmoClip(PlayerPedId(), false) 
-		SetEntityInvincible(PlayerPedId(), false) 
-		ResetEntityAlpha(PlayerPedId())
-		local fallin = IsPedFalling(PlayerPedId())
-		local ragg = IsPedRagdoll(PlayerPedId())
-		local parac = GetPedParachuteState(PlayerPedId())
-		if parac >= 0 or ragg or fallin then
-			SetEntityMaxSpeed(PlayerPedId(), 80.0)
-		else
-			SetEntityMaxSpeed(PlayerPedId(), 7.1)
-		end
+	Citizen.Wait(1)
+	SetPedInfiniteAmmoClip(PlayerPedId(), false) 
+	SetEntityInvincible(PlayerPedId(), false) 
+	ResetEntityAlpha(PlayerPedId())
+	local fallin = IsPedFalling(PlayerPedId())
+	local ragg = IsPedRagdoll(PlayerPedId())
+	local parac = GetPedParachuteState(PlayerPedId())
+	if parac >= 0 or ragg or fallin then
+		SetEntityMaxSpeed(PlayerPedId(), 80.0)
+	else
+		SetEntityMaxSpeed(PlayerPedId(), 7.1)
+	end
     end
 end)
 
 Citizen.CreateThread(function()
-		while true do
-			Citizen.Wait(30000)
-			for _,theWeapon in ipairs(BlacklistedWeapons) do
-				if HasPedGotWeapon(PlayerPedId(),GetHashKey(theWeapon),false) == 1 then
-						RemoveAllPedWeapons(PlayerPedId(),false)
-				end
+	while true do
+		Citizen.Wait(30000)
+		for _,theWeapon in ipairs(BlacklistedWeapons) do
+			if HasPedGotWeapon(PlayerPedId(),GetHashKey(theWeapon),false) == 1 then
+					RemoveAllPedWeapons(PlayerPedId(),false)
 			end
 		end
+	end
 end)
