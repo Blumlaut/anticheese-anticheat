@@ -190,18 +190,14 @@ Citizen.CreateThread(function()
 	end)
 
 	RegisterNetEvent('RottenV:RagdollFlag')
-	AddEventHandler('RottenV:RagdollFlag', function(invincible,)
+	AddEventHandler('RottenV:RagdollFlag', function()
 		if Components.Ragdoll then
 			license, steam = GetPlayerNeededIdentifiers(source)
 			name = GetPlayerName(source)
 
 			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Health Hacking")
 
-			if invincible then
 				SendWebhookMessage(webhook,"**Ragdoll Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
-			else
-				SendWebhookMessage(webhook,"**Ragdoll Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
-			end
 		end
 	end)
 
