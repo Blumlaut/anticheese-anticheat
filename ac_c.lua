@@ -79,6 +79,7 @@ Citizen.CreateThread(function()
 		if not CanPedRagdoll(PlayerPedId()) then
 			TriggerServerEvent("RottenV:RagdollFlag", true )
 			SetPedCanRagdoll(PlayerPedId(),true )
+		end
 	end
 end)
 
