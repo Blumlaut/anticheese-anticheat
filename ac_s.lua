@@ -5,7 +5,6 @@ Components = {
 	GodMode = true,
 	Speedhack = true,
 	WeaponBlacklist = true,
-	Ragdoll = true,
 }
 
 --[[
@@ -186,18 +185,6 @@ Citizen.CreateThread(function()
 			else
 				SendWebhookMessage(webhook,"**Health Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nRegenerated "..newHealth-oldHealth.."hp ( to reach "..newHealth.."hp ) in "..curWait.."ms! ( Health was Forced )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 			end
-		end
-	end)
-
-	RegisterNetEvent('AntiCheese:RagdollFlag')
-	AddEventHandler('AntiCheese:RagdollFlag', function()
-		if Components.Ragdoll then
-			license, steam = GetPlayerNeededIdentifiers(source)
-			name = GetPlayerName(source)
-
-			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Health Hacking")
-
-				SendWebhookMessage(webhook,"**Ragdoll Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 		end
 	end)
 

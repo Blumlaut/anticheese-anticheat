@@ -75,11 +75,6 @@ Citizen.CreateThread(function()
 			TriggerServerEvent("AntiCheese:HealthFlag", true, curHealth-2, GetEntityHealth( curPed ),curWait )
 			SetPlayerInvincible( PlayerId(), false )
 		end
-
-		if not CanPedRagdoll(PlayerPedId()) then
-			TriggerServerEvent("AntiCheese:RagdollFlag", true )
-			SetPedCanRagdoll(PlayerPedId(), true )
-		end
 	end
 end)
 
