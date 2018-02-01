@@ -143,8 +143,8 @@ Citizen.CreateThread(function()
 		return license, steam
 	end
 
-	RegisterNetEvent('RottenV:SpeedFlag')
-	AddEventHandler('RottenV:SpeedFlag', function(rounds, roundm)
+	RegisterNetEvent('AntiCheese:SpeedFlag')
+	AddEventHandler('AntiCheese:SpeedFlag', function(rounds, roundm)
 		if Components.Speedhack then
 			license, steam = GetPlayerNeededIdentifiers(source)
 
@@ -159,8 +159,8 @@ Citizen.CreateThread(function()
 
 
 
-	RegisterNetEvent('RottenV:NoclipFlag')
-	AddEventHandler('RottenV:NoclipFlag', function(distance)
+	RegisterNetEvent('AntiCheese:NoclipFlag')
+	AddEventHandler('AntiCheese:NoclipFlag', function(distance)
 		if Components.Speedhack then
 			license, steam = GetPlayerNeededIdentifiers(source)
 			name = GetPlayerName(source)
@@ -173,8 +173,8 @@ Citizen.CreateThread(function()
 		end
 	end)
 
-	RegisterNetEvent('RottenV:HealthFlag')
-	AddEventHandler('RottenV:HealthFlag', function(invincible,oldHealth, newHealth, curWait)
+	RegisterNetEvent('AntiCheese:HealthFlag')
+	AddEventHandler('AntiCheese:HealthFlag', function(invincible,oldHealth, newHealth, curWait)
 		if Components.GodMode then
 			license, steam = GetPlayerNeededIdentifiers(source)
 			name = GetPlayerName(source)
@@ -189,8 +189,8 @@ Citizen.CreateThread(function()
 		end
 	end)
 
-	RegisterNetEvent('RottenV:RagdollFlag')
-	AddEventHandler('RottenV:RagdollFlag', function()
+	RegisterNetEvent('AntiCheese:RagdollFlag')
+	AddEventHandler('AntiCheese:RagdollFlag', function()
 		if Components.Ragdoll then
 			license, steam = GetPlayerNeededIdentifiers(source)
 			name = GetPlayerName(source)
@@ -201,8 +201,8 @@ Citizen.CreateThread(function()
 		end
 	end)
 
-	RegisterNetEvent('RottenV:WeaponFlag')
-	AddEventHandler('RottenV:WeaponFlag', function(weapon)
+	RegisterNetEvent('AntiCheese:WeaponFlag')
+	AddEventHandler('AntiCheese:WeaponFlag', function(weapon)
 		if Components.WeaponBlacklist then
 			license, steam = GetPlayerNeededIdentifiers(source)
 			name = GetPlayerName(source)

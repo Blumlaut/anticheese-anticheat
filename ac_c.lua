@@ -45,12 +45,12 @@ Citizen.CreateThread(function()
 		newx,newy,newz = table.unpack(GetEntityCoords(ped,true))
 		newPed = PlayerPedId() -- make sure the peds are still the same, otherwise the player probably respawned
 		if GetDistanceBetweenCoords(posx,posy,posz, newx,newy,newz) > 200 and still == IsPedStill(ped) and vel == GetEntitySpeed(ped) and ped == newPed then
-			TriggerServerEvent("RottenV:NoclipFlag", GetDistanceBetweenCoords(posx,posy,posz, newx,newy,newz))
+			TriggerServerEvent("AntiCheese:NoclipFlag", GetDistanceBetweenCoords(posx,posy,posz, newx,newy,newz))
 		end
 
 		if speed > 9.0 and not veh and (para == -1 or para == 0) and not flyveh and not fall and not parafall and not rag then
 			--dont activate this, its broken!
-			--TriggerServerEvent("RottenV:SpeedFlag", rounds, roundm) -- send alert along with the rounded speed and how much faster they are
+			--TriggerServerEvent("AntiCheese:SpeedFlag", rounds, roundm) -- send alert along with the rounded speed and how much faster they are
 		end
 	end
 end)
@@ -66,19 +66,19 @@ Citizen.CreateThread(function()
 		Citizen.Wait(curWait)
 
 		if PlayerPedId() == curPed and GetEntityHealth(curPed) == curHealth and GetEntityHealth(curPed) ~= 0 then
-			TriggerServerEvent("RottenV:HealthFlag", false, curHealth-2, GetEntityHealth( curPed ),curWait )
+			TriggerServerEvent("AntiCheese:HealthFlag", false, curHealth-2, GetEntityHealth( curPed ),curWait )
 		elseif GetEntityHealth(curPed) == curHealth-2 then
 			SetEntityHealth(curPed, GetEntityHealth(curPed)+2)
 		end
 
 		if GetPlayerInvincible( PlayerId() ) then -- if the player is invincible, flag him as a cheater and then disable their invincibility
-			TriggerServerEvent("RottenV:HealthFlag", true, curHealth-2, GetEntityHealth( curPed ),curWait )
+			TriggerServerEvent("AntiCheese:HealthFlag", true, curHealth-2, GetEntityHealth( curPed ),curWait )
 			SetPlayerInvincible( PlayerId(), false )
 		end
 
 		if not CanPedRagdoll(PlayerPedId()) then
-			TriggerServerEvent("RottenV:RagdollFlag", true )
-			SetPedCanRagdoll(PlayerPedId(),true )
+			TriggerServerEvent("AntiCheese:RagdollFlag", true )
+			SetPedCanRagdoll(PlayerPedId(), true )
 		end
 	end
 end)
