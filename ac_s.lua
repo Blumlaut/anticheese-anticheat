@@ -5,6 +5,7 @@ Components = {
 	GodMode = true,
 	Speedhack = true,
 	WeaponBlacklist = true,
+	Ragdoll = true,
 }
 
 --[[
@@ -184,6 +185,22 @@ Citizen.CreateThread(function()
 				SendWebhookMessage(webhook,"**Health Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nRegenerated "..newHealth-oldHealth.."hp ( to reach "..newHealth.."hp ) in "..curWait.."ms! ( PlayerPed was invincible )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 			else
 				SendWebhookMessage(webhook,"**Health Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nRegenerated "..newHealth-oldHealth.."hp ( to reach "..newHealth.."hp ) in "..curWait.."ms! ( Health was Forced )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+
+	RegisterNetEvent('RottenV:RagdollFlag')
+	AddEventHandler('RottenV:RagdollFlag', function(invincible,)
+		if Components.Ragdoll then
+			license, steam = GetPlayerNeededIdentifiers(source)
+			name = GetPlayerName(source)
+
+			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Health Hacking")
+
+			if invincible then
+				SendWebhookMessage(webhook,"**Ragdoll Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			else
+				SendWebhookMessage(webhook,"**Ragdoll Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 			end
 		end
 	end)

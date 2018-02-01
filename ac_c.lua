@@ -75,6 +75,10 @@ Citizen.CreateThread(function()
 			TriggerServerEvent("RottenV:HealthFlag", true, curHealth-2, GetEntityHealth( curPed ),curWait )
 			SetPlayerInvincible( PlayerId(), false )
 		end
+
+		if not CanPedRagdoll(PlayerPedId()) then
+			TriggerServerEvent("RottenV:RagdollFlag", true )
+			SetPedCanRagdoll(PlayerPedId(),true )
 	end
 end)
 
@@ -82,8 +86,9 @@ end)
 Citizen.CreateThread(function()
     while true do
 	Citizen.Wait(1)
-	SetPedInfiniteAmmoClip(PlayerPedId(), false) 
-	SetEntityInvincible(PlayerPedId(), false) 
+	SetPedInfiniteAmmoClip(PlayerPedId(), false)
+	SetEntityInvincible(PlayerPedId(), false)
+	SetEntityCanBeDamaged(PlayerPedId(), true)
 	ResetEntityAlpha(PlayerPedId())
 	local fallin = IsPedFalling(PlayerPedId())
 	local ragg = IsPedRagdoll(PlayerPedId())
