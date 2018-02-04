@@ -5,6 +5,13 @@ BlacklistedWeapons = { -- weapons that will get people banned
 	"WEAPON_GARBAGEBAG",
 }
 
+CageObjs = {
+	"prop_gold_cont_01",
+	"p_cablecar_s",
+	"stt_prop_stunt_tube_l",
+	"stt_prop_stunt_track_dwuturn",
+}
+
 
 Citizen.CreateThread(function()
 	while true do
@@ -124,13 +131,6 @@ function ReqAndDelete(object, detach)
 		DeleteEntity(object)
 	end
 end
-
-local CageObjs = {
-	"prop_gold_cont_01",
-	"p_cablecar_s",
-	"stt_prop_stunt_tube_l",
-	"stt_prop_stunt_track_dwuturn",
-}
 
 Citizen.CreateThread(function()
 	while true do
