@@ -167,6 +167,7 @@ Citizen.CreateThread(function()
 			until not isStillJumping
 			if jumplength > 250 then
 				TriggerServerEvent("AntiCheese:JumpFlag", jumplength )
+			end
 		end
 	end
 end)
