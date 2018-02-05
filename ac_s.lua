@@ -109,7 +109,7 @@ Citizen.CreateThread(function()
 			if thePlayer.name == name then
 				isKnown = true
 				if violations[i].count == 3 then
-					TriggerEvent("banCheater", source,reason)
+					TriggerEvent("banCheater", source,"Cheating")
 					isKnownCount = violations[i].count
 					table.remove(violations,i)
 					isKnownExtraText = ", was banned."
@@ -185,6 +185,18 @@ Citizen.CreateThread(function()
 			else
 				SendWebhookMessage(webhook,"**Health Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nRegenerated "..newHealth-oldHealth.."hp ( to reach "..newHealth.."hp ) in "..curWait.."ms! ( Health was Forced )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 			end
+		end
+	end)
+
+	RegisterNetEvent('AntiCheese:JumpFlag')
+	AddEventHandler('AntiCheese:JumpFlag', function(jumplength)
+		if Components.SuperJump then
+			license, steam = GetPlayerNeededIdentifiers(source)
+			name = GetPlayerName(source)
+
+			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"SuperJump Hacking")
+
+			SendWebhookMessage(webhook,"**SuperJump Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nJumped "..jumplength.."ms long\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 		end
 	end)
 

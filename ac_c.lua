@@ -155,3 +155,18 @@ Citizen.CreateThread(function()
 	end
 end)
 
+Citizen.CreateThread(function()
+	while true do
+		Citizen.Wait(0)
+		if IsPedJumping(PlayerPedId()) then
+			local jumplength = 0
+			repeat
+				Wait(0)
+				jumplength=jumplength+1
+				local isStillJumping = IsPedJumping(PlayerPedId())
+			until not isStillJumping
+			if jumplength > 250 then
+				TriggerServerEvent("AntiCheese:JumpFlag", jumplength )
+		end
+	end
+end)
