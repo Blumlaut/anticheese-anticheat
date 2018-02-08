@@ -1,4 +1,5 @@
-
+local curVersion = "0.4" -- Your version, do not change, as this is what the update notification relies on!
+	
 -- with this you can turn on/off specific anticheese components, note: you can also turn these off while the script is running by using events, see examples for such below
 Components = {
 	Teleport = true,
@@ -211,4 +212,24 @@ Citizen.CreateThread(function()
 			SendWebhookMessage(webhook,"**Inventory Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nGot Weapon: "..weapon.."( Blacklisted )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 		end
 	end)
+end)
+
+Citizen.CreateThread( function()
+	PerformHttpRequest("https://raw.githubusercontent.com/Bluethefurry/anticheese-anticheat/master/version.json", function(err, response, headers)
+		local data = json.decode(response)
+
+		updatePath = "/Bluethefurry/anticheese-anticheat"
+		resourceName = "AntiCheese ("..GetCurrentResourceName()..")"
+
+		if curVersion ~= data.version and tonumber(curVersion) < tonumber(data.version) then
+			print("\n--------------------------------------------------------------------------")
+			print("\n"..resourceName.." is outdated.\nCurrent Version: "..data.version.."\nYour Version: "..curVersion.."\nPlease update it from https://github.com"..updatePath.."")
+			print("\nUpdate Changelog:\n"..data.changelog)
+			print("\n--------------------------------------------------------------------------")
+		elseif tonumber(curVersion) > tonumber(data.version) then
+			print("Your version of "..resourceName.." seems to be higher than the current version.")
+		else
+			print(resourceName.." is up to date!")
+		end
+	end, "GET", "", {version = 'this'})
 end)
