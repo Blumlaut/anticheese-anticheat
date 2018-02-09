@@ -190,8 +190,7 @@ Citizen.CreateThread(function()
 
 	RegisterNetEvent('AntiCheese:JumpFlag')
 	AddEventHandler('AntiCheese:JumpFlag', function(jumplength)
-		
-		if Components.SuperJump and BypassChecks then
+		if Components.SuperJump and not IsPlayerAceAllowed(source,"anticheese.bypass") then
 			license, steam = GetPlayerNeededIdentifiers(source)
 			name = GetPlayerName(source)
 
@@ -203,8 +202,7 @@ Citizen.CreateThread(function()
 
 	RegisterNetEvent('AntiCheese:WeaponFlag')
 	AddEventHandler('AntiCheese:WeaponFlag', function(weapon)
-		
-		if Components.WeaponBlacklist and BypassChecks then
+		if Components.WeaponBlacklist and not IsPlayerAceAllowed(source,"anticheese.bypass") then
 			license, steam = GetPlayerNeededIdentifiers(source)
 			name = GetPlayerName(source)
 
