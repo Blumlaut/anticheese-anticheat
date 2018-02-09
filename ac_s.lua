@@ -1,4 +1,4 @@
-local curVersion = "0.4" -- Your version, do not change, as this is what the update notification relies on!
+local curVersion = "0.5" -- Your version, do not change, as this is what the update notification relies on!
 	
 -- with this you can turn on/off specific anticheese components, note: you can also turn these off while the script is running by using events, see examples for such below
 Components = {
@@ -95,6 +95,7 @@ end)
 
 Citizen.CreateThread(function()
 	webhook = GetConvar("ac_webhook", "none")
+	
 
 	function SendWebhookMessage(webhook,message)
 		if webhook ~= "none" then
@@ -145,13 +146,12 @@ Citizen.CreateThread(function()
 
 	RegisterNetEvent('AntiCheese:SpeedFlag')
 	AddEventHandler('AntiCheese:SpeedFlag', function(rounds, roundm)
-		if Components.Speedhack then
+		if Components.Speedhack and not IsPlayerAceAllowed(source,"anticheese.bypass") then
 			license, steam = GetPlayerNeededIdentifiers(source)
 
 			name = GetPlayerName(source)
 
 			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Speed Hacking")
-
 
 			SendWebhookMessage(webhook, "**Speed Hacker!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nWas travelling "..rounds.. " units. That's "..roundm.." more than normal! \nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 		end
@@ -161,12 +161,11 @@ Citizen.CreateThread(function()
 
 	RegisterNetEvent('AntiCheese:NoclipFlag')
 	AddEventHandler('AntiCheese:NoclipFlag', function(distance)
-		if Components.Speedhack then
+		if Components.Speedhack and not IsPlayerAceAllowed(source,"anticheese.bypass") then
 			license, steam = GetPlayerNeededIdentifiers(source)
 			name = GetPlayerName(source)
 
 			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Noclip/Teleport Hacking")
-
 
 
 			SendWebhookMessage(webhook,"**Noclip/Teleport!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nCaught with "..distance.." units between last checked location\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
@@ -175,7 +174,7 @@ Citizen.CreateThread(function()
 
 	RegisterNetEvent('AntiCheese:HealthFlag')
 	AddEventHandler('AntiCheese:HealthFlag', function(invincible,oldHealth, newHealth, curWait)
-		if Components.GodMode then
+		if Components.GodMode and not IsPlayerAceAllowed(source,"anticheese.bypass") then
 			license, steam = GetPlayerNeededIdentifiers(source)
 			name = GetPlayerName(source)
 
@@ -191,7 +190,8 @@ Citizen.CreateThread(function()
 
 	RegisterNetEvent('AntiCheese:JumpFlag')
 	AddEventHandler('AntiCheese:JumpFlag', function(jumplength)
-		if Components.SuperJump then
+		
+		if Components.SuperJump and BypassChecks then
 			license, steam = GetPlayerNeededIdentifiers(source)
 			name = GetPlayerName(source)
 
@@ -203,7 +203,8 @@ Citizen.CreateThread(function()
 
 	RegisterNetEvent('AntiCheese:WeaponFlag')
 	AddEventHandler('AntiCheese:WeaponFlag', function(weapon)
-		if Components.WeaponBlacklist then
+		
+		if Components.WeaponBlacklist and BypassChecks then
 			license, steam = GetPlayerNeededIdentifiers(source)
 			name = GetPlayerName(source)
 

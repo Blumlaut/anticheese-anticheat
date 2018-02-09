@@ -1,4 +1,4 @@
 {
-    "version":"0.4",
-    "changelog":"Add update notification"
+    "version":"0.5",
+    "changelog":"Added bypass checks for ACE system using 'add_ace [GROUP HERE] command allow'\n\rBe sure to check EasyAdmin if you're stuck with adding people to the system"
 }
