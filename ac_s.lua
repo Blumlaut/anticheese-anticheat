@@ -93,7 +93,7 @@ end)
 
 Citizen.CreateThread(function()
 	webhook = GetConvar("ac_webhook", "none")
-	
+
 
 	function SendWebhookMessage(webhook,message)
 		if webhook ~= "none" then
@@ -210,14 +210,15 @@ Citizen.CreateThread(function()
 		end
 	end)
 end)
+
 local verFile = LoadResourceFile(GetCurrentResourceName(), "version.json")
 local curVersion = json.decode(verFile).version
 Citizen.CreateThread( function()
-	PerformHttpRequest("https://raw.githubusercontent.com/Bluethefurry/anticheese-anticheat/master/version.json", function(err, response, headers)
+	local updatePath = "/Bluethefurry/anticheese-anticheat"
+	local resourceName = "AntiCheese ("..GetCurrentResourceName()..")"
+	PerformHttpRequest("https://raw.githubusercontent.com"..updatePath.."/master/version.json", function(err, response, headers)
 		local data = json.decode(response)
 
-		updatePath = "/Bluethefurry/anticheese-anticheat"
-		resourceName = "AntiCheese ("..GetCurrentResourceName()..")"
 
 		if curVersion ~= data.version and tonumber(curVersion) < tonumber(data.version) then
 			print("\n--------------------------------------------------------------------------")
