@@ -1,5 +1,3 @@
-local curVersion = "0.5" -- Your version, do not change, as this is what the update notification relies on!
-	
 -- with this you can turn on/off specific anticheese components, note: you can also turn these off while the script is running by using events, see examples for such below
 Components = {
 	Teleport = true,
@@ -212,7 +210,8 @@ Citizen.CreateThread(function()
 		end
 	end)
 end)
-
+local verFile = LoadResourceFile(GetCurrentResourceName(), "version.json")
+local curVersion = json.decode(verFile).version
 Citizen.CreateThread( function()
 	PerformHttpRequest("https://raw.githubusercontent.com/Bluethefurry/anticheese-anticheat/master/version.json", function(err, response, headers)
 		local data = json.decode(response)
