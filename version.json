@@ -1,4 +1,4 @@
 {
-    "version":"0.5",
-    "changelog":"Added bypass checks for ACE system using:\n'add_ace [GROUP HERE] anticheese.bypass allow'\n\rBe sure to check EasyAdmin if you're stuck with adding people to the system"
+    "version":"0.6",
+    "changelog":"Added AntiCheese:CustomFlag for Resources to report cheaters to Anticheese."
 }
