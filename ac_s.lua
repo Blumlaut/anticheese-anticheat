@@ -4,6 +4,7 @@ Components = {
 	GodMode = true,
 	Speedhack = true,
 	WeaponBlacklist = true,
+	CustomFlag = true,
 }
 
 --[[
@@ -167,6 +168,20 @@ Citizen.CreateThread(function()
 
 
 			SendWebhookMessage(webhook,"**Noclip/Teleport!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nCaught with "..distance.." units between last checked location\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+		end
+	end)
+	
+	
+	RegisterNetEvent('AntiCheese:CustomFlag')
+	AddEventHandler('AntiCheese:CustomFlag', function(reason,extrainfo)
+		if Components.CustomFlag and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			license, steam = GetPlayerNeededIdentifiers(source)
+			name = GetPlayerName(source)
+			if not extrainfo then extrainfo = "no extra informations provided" end
+			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,reason)
+
+
+			SendWebhookMessage(webhook,"**"..reason.."** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\n"..extrainfo.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 		end
 	end)
 
