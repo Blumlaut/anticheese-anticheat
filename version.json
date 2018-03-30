@@ -1,4 +1,4 @@
 {
-    "version":"0.6",
-    "changelog":"Added AntiCheese:CustomFlag for Resources to report cheaters to Anticheese."
+    "version":"0.7",
+    "changelog":"This Update prevents cheaters from bypassing AntiCheese by disabling anticheese components, such people will now get banned immediately."
 }
