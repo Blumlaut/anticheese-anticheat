@@ -71,6 +71,11 @@ end)
 
 RegisterServerEvent("anticheese:SetComponentStatus")
 AddEventHandler("anticheese:SetComponentStatus", function(component, state)
+	if source ~= "" then
+		SendWebhookMessage(webhook,"**"..GetPlayerName(source).." Tried Bypassing :cheese: and was swiftly banned**")
+		TriggerEvent("banCheater", source,"Cheating")
+		return
+	end
 	if type(component) == "string" and type(state) == "boolean" then
 		Components[component] = state -- changes the component to the wished status
 	end
@@ -78,6 +83,11 @@ end)
 
 RegisterServerEvent("anticheese:ToggleComponent")
 AddEventHandler("anticheese:ToggleComponent", function(component)
+	if source ~= "" then
+		SendWebhookMessage(webhook,"**"..GetPlayerName(source).." Tried Bypassing :cheese: and was swiftly banned**")
+		TriggerEvent("banCheater", source,"Cheating")
+		return
+	end
 	if type(component) == "string" then
 		Components[component] = not Components[component]
 	end
@@ -85,6 +95,11 @@ end)
 
 RegisterServerEvent("anticheese:SetAllComponents")
 AddEventHandler("anticheese:SetAllComponents", function(state)
+	if source ~= "" then
+		SendWebhookMessage(webhook,"**"..GetPlayerName(source).." Tried Bypassing :cheese: and was swiftly banned**")
+		TriggerEvent("banCheater", source,"Cheating")
+		return
+	end
 	if type(state) == "boolean" then
 		for i,theComponent in pairs(Components) do
 			Components[i] = state
