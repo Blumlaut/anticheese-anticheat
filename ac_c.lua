@@ -135,7 +135,7 @@ end
 
 Citizen.CreateThread(function()
 	while true do
-		Citizen.Wait(0)
+		Citizen.Wait(500)
 		local ped = PlayerPedId()
 		local handle, object = FindFirstObject()
 		local finished = false
