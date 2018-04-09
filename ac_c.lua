@@ -108,6 +108,7 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(30000)
 		for _,theWeapon in ipairs(BlacklistedWeapons) do
+			Wait(1)
 			if HasPedGotWeapon(PlayerPedId(),GetHashKey(theWeapon),false) == 1 then
 					RemoveAllPedWeapons(PlayerPedId(),false)
 			end
@@ -139,6 +140,7 @@ Citizen.CreateThread(function()
 		local handle, object = FindFirstObject()
 		local finished = false
 		repeat
+			Wait(1)
 			if IsEntityAttached(object) and DoesEntityExist(object) then
 				if GetEntityModel(object) == GetHashKey("prop_acc_guitar_01") then
 					ReqAndDelete(object, true)
