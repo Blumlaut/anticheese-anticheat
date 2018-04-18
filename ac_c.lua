@@ -68,7 +68,7 @@ Citizen.CreateThread(function()
 		local curPed = PlayerPedId()
 		local curHealth = GetEntityHealth( curPed )
 		SetEntityHealth( curPed, curHealth-2)
-		local curWait = math.random(20,350)
+		local curWait = math.random(10,150)
 		-- this will substract 2hp from the current player, wait 50ms and then add it back, this is to check for hacks that force HP at 200
 		Citizen.Wait(curWait)
 
