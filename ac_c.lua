@@ -77,6 +77,9 @@ Citizen.CreateThread(function()
 		elseif GetEntityHealth(curPed) == curHealth-2 then
 			SetEntityHealth(curPed, GetEntityHealth(curPed)+2)
 		end
+		if GetEntityHealth(curPed) > 400 then
+			TriggerServerEvent("AntiCheese:HealthFlag", false, GetEntityHealth( curPed )-200, GetEntityHealth( curPed ),curWait )
+		end
 
 		if GetPlayerInvincible( PlayerId() ) then -- if the player is invincible, flag him as a cheater and then disable their invincibility
 			TriggerServerEvent("AntiCheese:HealthFlag", true, curHealth-2, GetEntityHealth( curPed ),curWait )
