@@ -140,7 +140,7 @@ Citizen.CreateThread(function()
 		return license, steam
 	end
 
-	RegisterNetEvent('AntiCheese:SpeedFlag')
+	RegisterServerEvent('AntiCheese:SpeedFlag')
 	AddEventHandler('AntiCheese:SpeedFlag', function(rounds, roundm)
 		if Components.Speedhack and not IsPlayerAceAllowed(source,"anticheese.bypass") then
 			license, steam = GetPlayerNeededIdentifiers(source)
@@ -155,7 +155,7 @@ Citizen.CreateThread(function()
 
 
 
-	RegisterNetEvent('AntiCheese:NoclipFlag')
+	RegisterServerEvent('AntiCheese:NoclipFlag')
 	AddEventHandler('AntiCheese:NoclipFlag', function(distance)
 		if Components.Speedhack and not IsPlayerAceAllowed(source,"anticheese.bypass") then
 			license, steam = GetPlayerNeededIdentifiers(source)
@@ -169,7 +169,7 @@ Citizen.CreateThread(function()
 	end)
 	
 	
-	RegisterNetEvent('AntiCheese:CustomFlag')
+	RegisterServerEvent('AntiCheese:CustomFlag')
 	AddEventHandler('AntiCheese:CustomFlag', function(reason,extrainfo)
 		if Components.CustomFlag and not IsPlayerAceAllowed(source,"anticheese.bypass") then
 			license, steam = GetPlayerNeededIdentifiers(source)
@@ -182,7 +182,7 @@ Citizen.CreateThread(function()
 		end
 	end)
 
-	RegisterNetEvent('AntiCheese:HealthFlag')
+	RegisterServerEvent('AntiCheese:HealthFlag')
 	AddEventHandler('AntiCheese:HealthFlag', function(invincible,oldHealth, newHealth, curWait)
 		if Components.GodMode and not IsPlayerAceAllowed(source,"anticheese.bypass") then
 			license, steam = GetPlayerNeededIdentifiers(source)
@@ -198,7 +198,7 @@ Citizen.CreateThread(function()
 		end
 	end)
 
-	RegisterNetEvent('AntiCheese:JumpFlag')
+	RegisterServerEvent('AntiCheese:JumpFlag')
 	AddEventHandler('AntiCheese:JumpFlag', function(jumplength)
 		if Components.SuperJump and not IsPlayerAceAllowed(source,"anticheese.bypass") then
 			license, steam = GetPlayerNeededIdentifiers(source)
@@ -210,7 +210,7 @@ Citizen.CreateThread(function()
 		end
 	end)
 
-	RegisterNetEvent('AntiCheese:WeaponFlag')
+	RegisterServerEvent('AntiCheese:WeaponFlag')
 	AddEventHandler('AntiCheese:WeaponFlag', function(weapon)
 		if Components.WeaponBlacklist and not IsPlayerAceAllowed(source,"anticheese.bypass") then
 			license, steam = GetPlayerNeededIdentifiers(source)
