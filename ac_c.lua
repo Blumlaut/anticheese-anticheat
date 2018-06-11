@@ -72,10 +72,12 @@ Citizen.CreateThread(function()
 		-- this will substract 2hp from the current player, wait 50ms and then add it back, this is to check for hacks that force HP at 200
 		Citizen.Wait(curWait)
 
-		if PlayerPedId() == curPed and GetEntityHealth(curPed) == curHealth and GetEntityHealth(curPed) ~= 0 then
-			TriggerServerEvent("AntiCheese:HealthFlag", false, curHealth-2, GetEntityHealth( curPed ),curWait )
-		elseif GetEntityHealth(curPed) == curHealth-2 then
-			SetEntityHealth(curPed, GetEntityHealth(curPed)+2)
+		if not IsPlayerDead(PlayerId()) then
+			if PlayerPedId() == curPed and GetEntityHealth(curPed) == curHealth and GetEntityHealth(curPed) ~= 0 then
+				TriggerServerEvent("AntiCheese:HealthFlag", false, curHealth-2, GetEntityHealth( curPed ),curWait )
+			elseif GetEntityHealth(curPed) == curHealth-2 then
+				SetEntityHealth(curPed, GetEntityHealth(curPed)+2)
+			end
 		end
 		if GetEntityHealth(curPed) > 400 then
 			TriggerServerEvent("AntiCheese:HealthFlag", false, GetEntityHealth( curPed )-200, GetEntityHealth( curPed ),curWait )
