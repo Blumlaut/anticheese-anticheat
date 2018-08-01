@@ -41,7 +41,7 @@ anticheese:SetAllComponents( state )
 These can be used by triggering them like following:
 	TriggerEvent("anticheese:SetComponentStatus", "Teleport", false)
 	
-Triggering these events from the clientside is not recommended as these get disabled globally and not just for one player.
+These Events CAN NOT be called from the clientside
 ```
 
 # Bypass Checks
