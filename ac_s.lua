@@ -5,6 +5,7 @@ Components = {
 	Speedhack = true,
 	WeaponBlacklist = true,
 	CustomFlag = true,
+	Explosions = true,
 }
 
 --[[
@@ -41,6 +42,7 @@ Users = {}
 violations = {}
 
 
+recentExplosions = {}
 
 
 
@@ -54,6 +56,13 @@ AddEventHandler("anticheese:timer", function()
 		end
 	else
 		Users[source] = os.time()
+	end
+end)
+
+AddEventHandler('explosionEvent', function(sender, ev)
+	if Components.Explosions then
+		ev.time = os.time()
+		table.insert(recentExplosions, {sender = sender, data=ev})
 	end
 end)
 
@@ -85,6 +94,28 @@ AddEventHandler("anticheese:SetAllComponents", function(state)
 		for i,theComponent in pairs(Components) do
 			Components[i] = state
 		end
+	end
+end)
+
+Citizen.CreateThread(function()
+	while true do 
+		Wait(2000)
+		clientExplosionCount = {}
+		for i, expl in ipairs(recentExplosions) do 
+			clientExplosionCount[expl.sender] = clientExplosionCount[expl.sender]+1
+		end 
+		recentExplosions = {}
+		for c, count in pairs(clientExplosionCount) do 
+			if count > 10 then
+				local license, steam = GetPlayerNeededIdentifiers(source)
+				local name = GetPlayerName(source)
+
+				local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Explosion Spawning")
+
+				SendWebhookMessage(webhook, "**Explosion Spawner!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nSpawned "..count.." Explosions in <2s. \nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+		recentExplosions = {}
 	end
 end)
 
