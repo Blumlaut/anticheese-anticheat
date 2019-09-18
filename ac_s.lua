@@ -97,28 +97,40 @@ Citizen.CreateThread(function()
 			PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({content = message}), { ['Content-Type'] = 'application/json' })
 		end
 	end
-
-	function WarnPlayer(playername, reason)
+	
+	function WarnPlayer(playername, reason,banInstantly)
 		local isKnown = false
 		local isKnownCount = 1
 		local isKnownExtraText = ""
 		for i,thePlayer in ipairs(violations) do
-			if thePlayer.name == name then
+			if thePlayer.name == playername then
 				isKnown = true
-				if violations[i].count == 3 then
+				if banInstantly then
 					TriggerEvent("banCheater", source,"Cheating")
 					isKnownCount = violations[i].count
 					table.remove(violations,i)
-					isKnownExtraText = ", was banned."
+					isKnownExtraText = ", was banned instantly."
 				else
-					violations[i].count = violations[i].count+1
-					isKnownCount = violations[i].count
+					if violations[i].count == 3 then
+						TriggerEvent("banCheater", source,"Cheating")
+						isKnownCount = violations[i].count
+						table.remove(violations,i)
+						isKnownExtraText = ", was banned."
+					else
+						violations[i].count = violations[i].count+1
+						isKnownCount = violations[i].count
+					end
 				end
 			end
 		end
 
 		if not isKnown then
-			table.insert(violations, { name = name, count = 1 })
+			if banInstantly then
+				TriggerEvent("banCheater", source,"Cheating")
+				isKnownExtraText = ", was banned instantly."
+			else
+				table.insert(violations, { name = playername, count = 1 })
+			end
 		end
 
 		return isKnown, isKnownCount,isKnownExtraText
@@ -142,11 +154,10 @@ Citizen.CreateThread(function()
 	RegisterServerEvent('AntiCheese:SpeedFlag')
 	AddEventHandler('AntiCheese:SpeedFlag', function(rounds, roundm)
 		if Components.Speedhack and not IsPlayerAceAllowed(source,"anticheese.bypass") then
-			license, steam = GetPlayerNeededIdentifiers(source)
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
 
-			name = GetPlayerName(source)
-
-			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Speed Hacking")
+			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Speed Hacking")
 
 			SendWebhookMessage(webhook, "**Speed Hacker!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nWas travelling "..rounds.. " units. That's "..roundm.." more than normal! \nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 		end
@@ -157,10 +168,10 @@ Citizen.CreateThread(function()
 	RegisterServerEvent('AntiCheese:NoclipFlag')
 	AddEventHandler('AntiCheese:NoclipFlag', function(distance)
 		if Components.Speedhack and not IsPlayerAceAllowed(source,"anticheese.bypass") then
-			license, steam = GetPlayerNeededIdentifiers(source)
-			name = GetPlayerName(source)
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
 
-			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Noclip/Teleport Hacking")
+			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Noclip/Teleport Hacking")
 
 
 			SendWebhookMessage(webhook,"**Noclip/Teleport!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nCaught with "..distance.." units between last checked location\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
@@ -171,10 +182,10 @@ Citizen.CreateThread(function()
 	RegisterServerEvent('AntiCheese:CustomFlag')
 	AddEventHandler('AntiCheese:CustomFlag', function(reason,extrainfo)
 		if Components.CustomFlag and not IsPlayerAceAllowed(source,"anticheese.bypass") then
-			license, steam = GetPlayerNeededIdentifiers(source)
-			name = GetPlayerName(source)
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
 			if not extrainfo then extrainfo = "no extra informations provided" end
-			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,reason)
+			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,reason)
 
 
 			SendWebhookMessage(webhook,"**"..reason.."** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\n"..extrainfo.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
@@ -184,10 +195,10 @@ Citizen.CreateThread(function()
 	RegisterServerEvent('AntiCheese:HealthFlag')
 	AddEventHandler('AntiCheese:HealthFlag', function(invincible,oldHealth, newHealth, curWait)
 		if Components.GodMode and not IsPlayerAceAllowed(source,"anticheese.bypass") then
-			license, steam = GetPlayerNeededIdentifiers(source)
-			name = GetPlayerName(source)
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
 
-			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Health Hacking")
+			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Health Hacking")
 
 			if invincible then
 				SendWebhookMessage(webhook,"**Health Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nRegenerated "..newHealth-oldHealth.."hp ( to reach "..newHealth.."hp ) in "..curWait.."ms! ( PlayerPed was invincible )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
@@ -200,10 +211,10 @@ Citizen.CreateThread(function()
 	RegisterServerEvent('AntiCheese:JumpFlag')
 	AddEventHandler('AntiCheese:JumpFlag', function(jumplength)
 		if Components.SuperJump and not IsPlayerAceAllowed(source,"anticheese.bypass") then
-			license, steam = GetPlayerNeededIdentifiers(source)
-			name = GetPlayerName(source)
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
 
-			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"SuperJump Hacking")
+			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"SuperJump Hacking")
 
 			SendWebhookMessage(webhook,"**SuperJump Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nJumped "..jumplength.."ms long\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 		end
@@ -212,10 +223,10 @@ Citizen.CreateThread(function()
 	RegisterServerEvent('AntiCheese:WeaponFlag')
 	AddEventHandler('AntiCheese:WeaponFlag', function(weapon)
 		if Components.WeaponBlacklist and not IsPlayerAceAllowed(source,"anticheese.bypass") then
-			license, steam = GetPlayerNeededIdentifiers(source)
-			name = GetPlayerName(source)
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
 
-			isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Inventory Cheating")
+			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Inventory Cheating")
 
 			SendWebhookMessage(webhook,"**Inventory Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nGot Weapon: "..weapon.."( Blacklisted )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 		end
