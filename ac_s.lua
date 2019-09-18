@@ -102,6 +102,7 @@ Citizen.CreateThread(function()
 		Wait(2000)
 		clientExplosionCount = {}
 		for i, expl in ipairs(recentExplosions) do 
+			if not clientExplosionCount[expl.sender] then clientExplosionCount[expl.sender] = 0 end
 			clientExplosionCount[expl.sender] = clientExplosionCount[expl.sender]+1
 		end 
 		recentExplosions = {}
