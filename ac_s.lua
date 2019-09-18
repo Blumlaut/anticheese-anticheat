@@ -107,10 +107,10 @@ Citizen.CreateThread(function()
 		recentExplosions = {}
 		for c, count in pairs(clientExplosionCount) do 
 			if count > 10 then
-				local license, steam = GetPlayerNeededIdentifiers(source)
-				local name = GetPlayerName(source)
+				local license, steam = GetPlayerNeededIdentifiers(c)
+				local name = GetPlayerName(c)
 
-				local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Explosion Spawning")
+				local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Explosion Spawning", true, c)
 
 				SendWebhookMessage(webhook, "**Explosion Spawner!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nSpawned "..count.." Explosions in <2s. \nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 			end
@@ -129,7 +129,7 @@ Citizen.CreateThread(function()
 		end
 	end
 	
-	function WarnPlayer(playername, reason,banInstantly)
+	function WarnPlayer(playername, reason,banInstantly,pid)
 		local isKnown = false
 		local isKnownCount = 1
 		local isKnownExtraText = ""
@@ -137,13 +137,13 @@ Citizen.CreateThread(function()
 			if thePlayer.name == playername then
 				isKnown = true
 				if banInstantly then
-					TriggerEvent("banCheater", source,"Cheating")
+					TriggerEvent("banCheater", pid or source,"Cheating")
 					isKnownCount = violations[i].count
 					table.remove(violations,i)
 					isKnownExtraText = ", was banned instantly."
 				else
 					if violations[i].count == 3 then
-						TriggerEvent("banCheater", source,"Cheating")
+						TriggerEvent("banCheater", pid or source,"Cheating")
 						isKnownCount = violations[i].count
 						table.remove(violations,i)
 						isKnownExtraText = ", was banned."
@@ -157,7 +157,7 @@ Citizen.CreateThread(function()
 
 		if not isKnown then
 			if banInstantly then
-				TriggerEvent("banCheater", source,"Cheating")
+				TriggerEvent("banCheater", pid or source,"Cheating")
 				isKnownExtraText = ", was banned instantly."
 			else
 				table.insert(violations, { name = playername, count = 1 })
