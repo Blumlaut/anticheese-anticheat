@@ -59,13 +59,6 @@ AddEventHandler("anticheese:timer", function()
 	end
 end)
 
-AddEventHandler('explosionEvent', function(sender, ev)
-	if Components.Explosions and ev.damageScale ~= 0.0 and ev.ownerNetId == 0 then -- make sure component is enabled, damage isnt 0 and owner is the sender
-		ev.time = os.time()
-		table.insert(recentExplosions, {sender = sender, data=ev})
-	end
-end)
-
 AddEventHandler('playerDropped', function()
 	if(Users[source])then
 		Users[source] = nil
@@ -124,9 +117,9 @@ Citizen.CreateThread(function()
 	webhook = GetConvar("ac_webhook", "none")
 
 
-	function SendWebhookMessage(webhook,message)
-		if webhook ~= "none" then
-			PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({content = message}), { ['Content-Type'] = 'application/json' })
+	function SendWebhookMessage(wh,message)
+		if wh ~= "none" then
+			PerformHttpRequest(wh, function(err, text, headers) end, 'POST', json.encode({content = message}), { ['Content-Type'] = 'application/json' })
 		end
 	end
 	
@@ -143,6 +136,9 @@ Citizen.CreateThread(function()
 					table.remove(violations,i)
 					isKnownExtraText = ", was banned instantly."
 				else
+					if violations[i].count == 2 then
+						TriggerEvent("EasyAdmin:TakeScreenshot", source)
+					end
 					if violations[i].count == 3 then
 						TriggerEvent("banCheater", pid or source,"Cheating")
 						isKnownCount = violations[i].count
@@ -261,6 +257,13 @@ Citizen.CreateThread(function()
 			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Inventory Cheating")
 
 			SendWebhookMessage(webhook,"**Inventory Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nGot Weapon: "..weapon.."( Blacklisted )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+		end
+	end)
+
+	AddEventHandler('explosionEvent', function(sender, ev)
+		if Components.Explosions and ev.damageScale ~= 0.0 and ev.ownerNetId == 0 then -- make sure component is enabled, damage isnt 0 and owner is the sender
+			ev.time = os.time()
+			table.insert(recentExplosions, {sender = sender, data=ev})
 		end
 	end)
 end)
