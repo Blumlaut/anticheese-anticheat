@@ -60,7 +60,7 @@ AddEventHandler("anticheese:timer", function()
 end)
 
 AddEventHandler('explosionEvent', function(sender, ev)
-	if Components.Explosions then
+	if Components.Explosions and ev.damageScale ~= 0.0 and ev.ownerNetId == 0 then -- make sure component is enabled, damage isnt 0 and owner is the sender
 		ev.time = os.time()
 		table.insert(recentExplosions, {sender = sender, data=ev})
 	end
@@ -104,10 +104,11 @@ Citizen.CreateThread(function()
 		for i, expl in ipairs(recentExplosions) do 
 			if not clientExplosionCount[expl.sender] then clientExplosionCount[expl.sender] = 0 end
 			clientExplosionCount[expl.sender] = clientExplosionCount[expl.sender]+1
+			table.remove(recentExplosions,i)
 		end 
 		recentExplosions = {}
 		for c, count in pairs(clientExplosionCount) do 
-			if count > 10 then
+			if count > 20 then
 				local license, steam = GetPlayerNeededIdentifiers(c)
 				local name = GetPlayerName(c)
 
@@ -116,7 +117,6 @@ Citizen.CreateThread(function()
 				SendWebhookMessage(webhook, "**Explosion Spawner!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nSpawned "..count.." Explosions in <2s. \nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 			end
 		end
-		recentExplosions = {}
 	end
 end)
 
