@@ -205,6 +205,7 @@ Citizen.CreateThread(function()
 			SendWebhookMessage(webhook,"**Noclip/Teleport!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nCaught with "..distance.." units between last checked location\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 		end
 	end)
+
 	
 	
 	RegisterServerEvent('AntiCheese:CustomFlag')
@@ -257,6 +258,7 @@ Citizen.CreateThread(function()
 			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Inventory Cheating")
 
 			SendWebhookMessage(webhook,"**Inventory Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nGot Weapon: "..weapon.."( Blacklisted )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			TriggerClientEvent("AntiCheese:RemoveInventoryWeapons", source) 
 		end
 	end)
 
