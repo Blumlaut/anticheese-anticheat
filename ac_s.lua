@@ -136,7 +136,7 @@ Citizen.CreateThread(function()
 					table.remove(violations,i)
 					isKnownExtraText = ", was banned instantly."
 				else
-					if violations[i].count == 2 then
+					if violations[i].count == 1 then
 						TriggerEvent("EasyAdmin:TakeScreenshot", source)
 					end
 					if violations[i].count == 3 then
