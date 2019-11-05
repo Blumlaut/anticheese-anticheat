@@ -115,10 +115,16 @@ Citizen.CreateThread(function()
 		for _,theWeapon in ipairs(BlacklistedWeapons) do
 			Wait(1)
 			if HasPedGotWeapon(PlayerPedId(),GetHashKey(theWeapon),false) == 1 then
-					RemoveAllPedWeapons(PlayerPedId(),false)
+					TriggerServerEvent("AntiCheese:WeaponFlag", theWeapon)
+					break
 			end
 		end
 	end
+end)
+
+RegisterNetEvent("AntiCheese:RemoveInventoryWeapons")
+AddEventHandler('AntiCheese:RemoveInventoryWeapons', function()
+	RemoveAllPedWeapons(PlayerPedId(),false)
 end)
 
 function ReqAndDelete(object, detach)
