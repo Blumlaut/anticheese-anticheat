@@ -114,10 +114,9 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
-	webhook = GetConvar("ac_webhook", "none")
-
 
 	function SendWebhookMessage(wh,message)
+		webhook = GetConvar("ac_webhook", "none")
 		if wh ~= "none" then
 			PerformHttpRequest(wh, function(err, text, headers) end, 'POST', json.encode({content = message}), { ['Content-Type'] = 'application/json' })
 		end
