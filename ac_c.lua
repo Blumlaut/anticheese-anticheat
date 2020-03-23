@@ -213,7 +213,7 @@ Citizen.CreateThread(function()
 				carModel = GetEntityModel(car)
 				carName = GetDisplayNameFromVehicleModel(carModel)
 				if isCarBlacklisted(carModel) then
-					Citizen.InvokeNative(0xAE3CBE5BF394C9C9, Citizen.PointerValueIntInitialized(car))
+					DeleteVehicle(car)
 					TriggerServerEvent('AntiCheese:CarFlag', carModel)
 				end
 			end
