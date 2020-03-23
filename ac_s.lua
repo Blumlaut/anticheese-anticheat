@@ -6,6 +6,7 @@ Components = {
 	WeaponBlacklist = true,
 	CustomFlag = true,
 	Explosions = true,
+	CarBlacklist = true,
 }
 
 --[[
@@ -261,6 +262,19 @@ Citizen.CreateThread(function()
 		end
 	end)
 
+	RegisterServerEvent('AntiCheese:CarFlag')
+	AddEventHandler('AntiCheese:CarFlag', function(car)
+		if Components.CarBlacklist and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+
+			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Car Spawning Cheating", true, source)
+
+			SendWebhookMessage(webhook,"**Spawn Car Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nGot Vehicle: "..car.."( Blacklisted )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			TriggerClientEvent("AntiCheese:RemoveInventoryWeapons", source) 
+		end
+	end)
+		
 	AddEventHandler('explosionEvent', function(sender, ev)
 		if Components.Explosions and ev.damageScale ~= 0.0 and ev.ownerNetId == 0 then -- make sure component is enabled, damage isnt 0 and owner is the sender
 			ev.time = os.time()
