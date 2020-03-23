@@ -12,6 +12,27 @@ CageObjs = {
 	"stt_prop_stunt_track_dwuturn",
 }
 
+CarsBL = {	--BlackListed vehicles
+	"vigilante",
+	"hydra",
+	"buzzard",
+	"deluxo",
+	"avenger",
+	"akula",
+	"apc",
+	"barrage",
+	"caracara",
+	"cargobob",
+	"chernobog",
+	"hunter",
+	"insurgent",
+	"starling",
+	"lazer",
+	"bombushka",
+	"savage",
+	"rhino",
+	"khanjali"
+}
 
 Citizen.CreateThread(function()
 	while true do
@@ -180,6 +201,38 @@ Citizen.CreateThread(function()
 			until not isStillJumping
 			if jumplength > 250 then
 				TriggerServerEvent("AntiCheese:JumpFlag", jumplength )
+			end
+		end
+	end
+end)
+
+function isCarBlacklisted(model)
+	for _, blacklistedCar in pairs(CarsBL) do
+		if model == GetHashKey(blacklistedCar) then
+			return true
+		end
+	end
+
+	return false
+end
+
+Citizen.CreateThread(function()
+	while true do
+		Citizen.Wait(500)
+		if IsPedInAnyVehicle(GetPlayerPed(-1)) then
+			v = GetVehiclePedIsIn(playerPed, false)
+		end
+		playerPed = GetPlayerPed(-1)
+		
+		if playerPed and v then
+			if GetPedInVehicleSeat(v, -1) == playerPed then
+				local car = GetVehiclePedIsIn(playerPed, false)
+				carModel = GetEntityModel(car)
+				carName = GetDisplayNameFromVehicleModel(carModel)
+				if isCarBlacklisted(carModel) then
+					Citizen.InvokeNative(0xAE3CBE5BF394C9C9, Citizen.PointerValueIntInitialized(car))
+					TriggerServerEvent('AntiCheese:CarFlag', carModel)
+				end
 			end
 		end
 	end
