@@ -271,7 +271,6 @@ Citizen.CreateThread(function()
 			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Car Spawning Cheating")
 
 			SendWebhookMessage(webhook,"**Spawn Car Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nGot Vehicle: "..car.."( Blacklisted )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
-			TriggerClientEvent("AntiCheese:RemoveInventoryWeapons", source) 
 		end
 	end)
 		
