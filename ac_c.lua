@@ -13,25 +13,8 @@ CageObjs = {
 }
 
 CarsBL = {	--BlackListed vehicles
-	"vigilante",
-	"hydra",
-	"buzzard",
-	"deluxo",
-	"avenger",
-	"akula",
-	"apc",
-	"barrage",
-	"caracara",
-	"cargobob",
-	"chernobog",
-	"hunter",
-	"insurgent",
-	"starling",
-	"lazer",
-	"bombushka",
-	"savage",
-	"rhino",
-	"khanjali"
+	"khanjali", --Example vehicles
+	"avenger"
 }
 
 Citizen.CreateThread(function()
