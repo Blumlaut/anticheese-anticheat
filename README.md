@@ -53,4 +53,4 @@ add_ace group.admin anticheese.bypass allow
 add_principal identifier.steam:[STEAM ID HERE] group.admin
 ```
 
-© Blü and IllusiveTea
+© Blü and IllusiveTea, For Licensing see [License](https://github.com/Bluethefurry/anticheese-anticheat/blob/master/LICENSE)
