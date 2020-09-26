@@ -9,6 +9,20 @@ Components = {
 	CarBlacklist = true,
 }
 
+
+
+-- AllowedSources defines which resources can call anticheese events externally, leave empty for any
+AllowedSources = {
+	-- "anticheese-anticheat"
+	-- "LemonMenu"
+}
+
+-- table[PlayerId].Component = true or false
+-- dont touch this if you dont want to test something
+PlayerRules = {}
+
+
+
 --[[
 event examples are:
 
@@ -39,57 +53,92 @@ These Events CAN NOT be called from the clientside
 ]]
 
 
-Users = {}
+TimerUsers = {}
 violations = {}
 
 
 recentExplosions = {}
 
 
-
-RegisterServerEvent("anticheese:timer")
-AddEventHandler("anticheese:timer", function()
-	if Users[source] then
-		if (os.time() - Users[source]) < 15 and Components.Speedhack then -- prevent the player from doing a good old cheat engine speedhack
-			DropPlayer(source, "Speedhacking")
-		else
-			Users[source] = os.time()
-		end
+function CanResourceInvoke(resource)
+	if #AllowedSources == 0 then
+		return true
 	else
-		Users[source] = os.time()
+		for i, r in pairs(AllowedSources) do
+			if r == resource then
+				return true 
+			end
+		end
+		return false
 	end
-end)
+end
+
+
+function GetPlayerComponentStatus(player,component)
+	local pl = PlayerRules[player]
+	if not pl then return Components[component] end
+	return pl[component]
+end
+
 
 AddEventHandler('playerDropped', function()
-	if(Users[source])then
-		Users[source] = nil
+	if(TimerUsers[source])then
+		TimerUsers[source] = nil
+	end
+	if(PlayerRules[source])then
+		PlayerRules[source] = nil
 	end
 end)
 
 RegisterServerEvent("anticheese:kick")
 AddEventHandler("anticheese:kick", function(reason)
+	if not CanResourceInvoke(GetInvokingResource()) then return end
 	DropPlayer(source, reason)
 end)
 
 AddEventHandler("anticheese:SetComponentStatus", function(component, state)
+	if not CanResourceInvoke(GetInvokingResource()) then return end
 	if type(component) == "string" and type(state) == "boolean" then
 		Components[component] = state -- changes the component to the wished status
 	end
 end)
 
+AddEventHandler("anticheese:SetComponentForPlayer", function(player, component, state)
+	if not CanResourceInvoke(GetInvokingResource()) then return end
+	if not PlayerRules[player] then PlayerRules[player] = {} end
+	PlayerRules[player].component = state
+end)
+
+
 AddEventHandler("anticheese:ToggleComponent", function(component)
+	if not CanResourceInvoke(GetInvokingResource()) then return end
 	if type(component) == "string" then
 		Components[component] = not Components[component]
 	end
 end)
 
 AddEventHandler("anticheese:SetAllComponents", function(state)
+	if not CanResourceInvoke(GetInvokingResource()) then return end
 	if type(state) == "boolean" then
 		for i,theComponent in pairs(Components) do
 			Components[i] = state
 		end
 	end
 end)
+
+RegisterServerEvent("anticheese:timer")
+AddEventHandler("anticheese:timer", function()
+	if TimerUsers[source] then
+		if (os.time() - TimerUsers[source]) < 15 and (Components.Speedhack or GetPlayerComponentStatus(source, "Speedhack")) then -- prevent the player from doing a good old cheat engine speedhack
+			DropPlayer(source, "Speedhacking")
+		else
+			TimerUsers[source] = os.time()
+		end
+	else
+		TimerUsers[source] = os.time()
+	end
+end)
+
 
 Citizen.CreateThread(function()
 	while true do 
@@ -181,7 +230,7 @@ Citizen.CreateThread(function()
 
 	RegisterServerEvent('AntiCheese:SpeedFlag')
 	AddEventHandler('AntiCheese:SpeedFlag', function(rounds, roundm)
-		if Components.Speedhack and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+		if (Components.Speedhack or GetPlayerComponentStatus(source, "Speedhack")) and not IsPlayerAceAllowed(source,"anticheese.bypass") and CanResourceInvoke(GetInvokingResource()) then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 
@@ -195,7 +244,7 @@ Citizen.CreateThread(function()
 
 	RegisterServerEvent('AntiCheese:NoclipFlag')
 	AddEventHandler('AntiCheese:NoclipFlag', function(distance)
-		if Components.Speedhack and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+		if (Components.Speedhack or GetPlayerComponentStatus(source, "Speedhack")) and not IsPlayerAceAllowed(source,"anticheese.bypass") and CanResourceInvoke(GetInvokingResource()) then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 
@@ -210,7 +259,7 @@ Citizen.CreateThread(function()
 	
 	RegisterServerEvent('AntiCheese:CustomFlag')
 	AddEventHandler('AntiCheese:CustomFlag', function(reason,extrainfo)
-		if Components.CustomFlag and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+		if (Components.CustomFlag or GetPlayerComponentStatus(source, "CustomFlag")) and not IsPlayerAceAllowed(source,"anticheese.bypass") and CanResourceInvoke(GetInvokingResource()) then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 			if not extrainfo then extrainfo = "no extra informations provided" end
@@ -223,7 +272,7 @@ Citizen.CreateThread(function()
 
 	RegisterServerEvent('AntiCheese:HealthFlag')
 	AddEventHandler('AntiCheese:HealthFlag', function(invincible,oldHealth, newHealth, curWait)
-		if Components.GodMode and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+		if (Components.GodMode or GetPlayerComponentStatus(source, "GodMode")) and not IsPlayerAceAllowed(source,"anticheese.bypass") and CanResourceInvoke(GetInvokingResource()) then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 
@@ -239,7 +288,7 @@ Citizen.CreateThread(function()
 
 	RegisterServerEvent('AntiCheese:JumpFlag')
 	AddEventHandler('AntiCheese:JumpFlag', function(jumplength)
-		if Components.SuperJump and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+		if (Components.SuperJump or GetPlayerComponentStatus(source, "SuperJump")) and not IsPlayerAceAllowed(source,"anticheese.bypass") and CanResourceInvoke(GetInvokingResource()) then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 
@@ -251,7 +300,7 @@ Citizen.CreateThread(function()
 
 	RegisterServerEvent('AntiCheese:WeaponFlag')
 	AddEventHandler('AntiCheese:WeaponFlag', function(weapon)
-		if Components.WeaponBlacklist and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+		if (Components.WeaponBlacklist or GetPlayerComponentStatus(source, "WeaponBlacklist")) and not IsPlayerAceAllowed(source,"anticheese.bypass") and CanResourceInvoke(GetInvokingResource()) then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 
@@ -264,7 +313,7 @@ Citizen.CreateThread(function()
 
 	RegisterServerEvent('AntiCheese:CarFlag')
 	AddEventHandler('AntiCheese:CarFlag', function(car)
-		if Components.CarBlacklist and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+		if (Components.CarBlacklist or GetPlayerComponentStatus(source, "CarBlacklist")) and not IsPlayerAceAllowed(source,"anticheese.bypass") and CanResourceInvoke(GetInvokingResource()) then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 
@@ -275,7 +324,7 @@ Citizen.CreateThread(function()
 	end)
 		
 	AddEventHandler('explosionEvent', function(sender, ev)
-		if Components.Explosions and ev.damageScale ~= 0.0 and ev.ownerNetId == 0 then -- make sure component is enabled, damage isnt 0 and owner is the sender
+		if (Components.Explosions or GetPlayerComponentStatus(sender, "Explosions")) and ev.damageScale ~= 0.0 and ev.ownerNetId == 0 then -- make sure component is enabled, damage isnt 0 and owner is the sender
 			ev.time = os.time()
 			table.insert(recentExplosions, {sender = sender, data=ev})
 		end
