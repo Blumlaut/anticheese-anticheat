@@ -7,3 +7,14 @@ server_scripts {
 client_scripts {
 	"ac_c.lua",
 }
+
+
+server_exports {
+	"GetPlayerComponentStatus",
+	"CanResourceInvoke",
+	"SetComponentStatus",
+	"SetComponentForPlayer",
+	"ToggleComponent",
+	"SetAllComponents"
+	"WarnPlayer",
+}

@@ -96,35 +96,39 @@ AddEventHandler("anticheese:kick", function(reason)
 	DropPlayer(source, reason)
 end)
 
-AddEventHandler("anticheese:SetComponentStatus", function(component, state)
+
+function SetComponentStatus(component, state)
 	if not CanResourceInvoke(GetInvokingResource()) then return end
 	if type(component) == "string" and type(state) == "boolean" then
 		Components[component] = state -- changes the component to the wished status
 	end
-end)
+end
+AddEventHandler("anticheese:SetComponentStatus", SetComponentStatus)
 
-AddEventHandler("anticheese:SetComponentForPlayer", function(player, component, state)
+function SetComponentForPlayer(player, component, state)
 	if not CanResourceInvoke(GetInvokingResource()) then return end
 	if not PlayerRules[player] then PlayerRules[player] = {} end
 	PlayerRules[player].component = state
-end)
-
-
-AddEventHandler("anticheese:ToggleComponent", function(component)
+end
+AddEventHandler("anticheese:SetComponentForPlayer", SetComponentForPlayer)
+	
+function ToggleComponent(component)
 	if not CanResourceInvoke(GetInvokingResource()) then return end
 	if type(component) == "string" then
 		Components[component] = not Components[component]
 	end
-end)
+end
+AddEventHandler("anticheese:ToggleComponent", ToggleComponent)
 
-AddEventHandler("anticheese:SetAllComponents", function(state)
+function SetAllComponents(state)
 	if not CanResourceInvoke(GetInvokingResource()) then return end
 	if type(state) == "boolean" then
 		for i,theComponent in pairs(Components) do
 			Components[i] = state
 		end
 	end
-end)
+end
+AddEventHandler("anticheese:SetAllComponents", SetAllComponents)
 
 RegisterServerEvent("anticheese:timer")
 AddEventHandler("anticheese:timer", function()
@@ -173,6 +177,7 @@ Citizen.CreateThread(function()
 	end
 	
 	function WarnPlayer(playername, reason,banInstantly,pid)
+		if not CanResourceInvoke(GetInvokingResource()) then return end
 		local isKnown = false
 		local isKnownCount = 1
 		local isKnownExtraText = ""
