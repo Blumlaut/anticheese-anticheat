@@ -17,4 +17,5 @@ server_exports {
 	"ToggleComponent",
 	"SetAllComponents"
 	"WarnPlayer",
+	"GetPlayerWarnings",
 }

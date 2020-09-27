@@ -130,6 +130,17 @@ function SetAllComponents(state)
 end
 AddEventHandler("anticheese:SetAllComponents", SetAllComponents)
 
+
+function GetPlayerWarnings(id)
+	local playername = GetPlayerName(id)
+	for i,thePlayer in ipairs(violations) do
+		if thePlayer.name == playername then
+			return violations[i].count
+		end
+	end
+	return 0
+end
+
 RegisterServerEvent("anticheese:timer")
 AddEventHandler("anticheese:timer", function()
 	if TimerUsers[source] then
