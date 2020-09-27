@@ -13,7 +13,8 @@ server_exports {
 	"GetPlayerComponentStatus",
 	"CanResourceInvoke",
 	"SetComponentStatus",
-	"SetComponentForPlayer",
+	"GetComponentStatus",
+	"SetPlayerComponentStatus",
 	"ToggleComponent",
 	"SetAllComponents"
 	"WarnPlayer",

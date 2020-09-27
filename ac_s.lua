@@ -105,12 +105,18 @@ function SetComponentStatus(component, state)
 end
 AddEventHandler("anticheese:SetComponentStatus", SetComponentStatus)
 
-function SetComponentForPlayer(player, component, state)
+function GetComponentStatus(component, state)
+	if not CanResourceInvoke(GetInvokingResource()) then return end
+	return Components[component]
+end
+AddEventHandler("anticheese:GetComponentStatus", GetComponentStatus)
+
+function SetPlayerComponentStatus(player, component, state)
 	if not CanResourceInvoke(GetInvokingResource()) then return end
 	if not PlayerRules[player] then PlayerRules[player] = {} end
 	PlayerRules[player].component = state
 end
-AddEventHandler("anticheese:SetComponentForPlayer", SetComponentForPlayer)
+AddEventHandler("anticheese:SetPlayerComponentStatus", SetPlayerComponentStatus)
 	
 function ToggleComponent(component)
 	if not CanResourceInvoke(GetInvokingResource()) then return end
