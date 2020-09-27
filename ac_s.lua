@@ -61,6 +61,7 @@ recentExplosions = {}
 
 
 function CanResourceInvoke(resource)
+	if resource == GetCurrentResourceName() then return true end
 	if #AllowedSources == 0 then
 		return true
 	else
