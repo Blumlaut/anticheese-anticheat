@@ -131,7 +131,7 @@ Citizen.CreateThread(function()
 			if thePlayer.name == playername then
 				isKnown = true
 				if banInstantly then
-					TriggerEvent("banCheater", pid or source,"Cheating")
+					TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
 					isKnownCount = violations[i].count
 					table.remove(violations,i)
 					isKnownExtraText = ", was banned instantly."
@@ -140,7 +140,7 @@ Citizen.CreateThread(function()
 						TriggerEvent("EasyAdmin:TakeScreenshot", source)
 					end
 					if violations[i].count == 3 then
-						TriggerEvent("banCheater", pid or source,"Cheating")
+						TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
 						isKnownCount = violations[i].count
 						table.remove(violations,i)
 						isKnownExtraText = ", was banned."
@@ -154,7 +154,7 @@ Citizen.CreateThread(function()
 
 		if not isKnown then
 			if banInstantly then
-				TriggerEvent("banCheater", pid or source,"Cheating")
+				TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
 				isKnownExtraText = ", was banned instantly."
 			else
 				table.insert(violations, { name = playername, count = 1 })
