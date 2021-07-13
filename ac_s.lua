@@ -346,6 +346,18 @@ Citizen.CreateThread(function()
 	end)
 
 
+	-- hello UC :)
+	RegisterServerEvent("esx-qalle-jail:jailPlayer")
+	AddEventHandler("esx-qalle-jail:jailPlayer", function(_,_,bleh)
+		if bleh == "www.unknowncheats.me" then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
+			SendWebhookMessage(webhook,"**Jailer Cheat!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Jailing Everyone, was banned.```")
+		end
+	end)
+
+
 end)
 
 local verFile = LoadResourceFile(GetCurrentResourceName(), "version.json")
