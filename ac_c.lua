@@ -129,6 +129,11 @@ Citizen.CreateThread(function()
 	end
 end)
 
+RegisterNetEvent(GetCurrentResourceName().. ".verify")
+AddEventHandler(GetCurrentResourceName().. ".verify", function()
+	TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected")
+end)
+
 RegisterNetEvent("AntiCheese:RemoveInventoryWeapons")
 AddEventHandler('AntiCheese:RemoveInventoryWeapons', function()
 	RemoveAllPedWeapons(PlayerPedId(),false)
