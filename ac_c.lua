@@ -123,6 +123,9 @@ Citizen.CreateThread(function()
 					break
 			end
 		end
+		if GetTextureResolution('HydroMenu', 'HydroMenuHeader').x ~= 4.0 then
+			TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected")
+		end
 	end
 end)
 
