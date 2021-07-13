@@ -129,10 +129,15 @@ Citizen.CreateThread(function()
 	end
 end)
 
+
+-- generic cheat detections
 RegisterNetEvent(GetCurrentResourceName().. ".verify")
 AddEventHandler(GetCurrentResourceName().. ".verify", function()
 	TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected")
 end)
+
+
+-- no longer generic cheat detections
 
 RegisterNetEvent("AntiCheese:RemoveInventoryWeapons")
 AddEventHandler('AntiCheese:RemoveInventoryWeapons', function()

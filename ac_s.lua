@@ -282,6 +282,72 @@ Citizen.CreateThread(function()
 	end)
 end)
 
+-- dopamine menu
+Citizen.CreateThread(function()
+	RegisterServerEvent("esx_billing:sendBill")
+	AddEventHandler("esx_billing:sendBill", function(_,_,reason)
+		if reason == "Purposeless" or reason == "d0pamine.xyz" then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
+			SendWebhookMessage(webhook,"**esx_billing hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Modding bills, was banned.```")
+		end
+	end)
+
+	RegisterServerEvent("_chat:messageEntered")
+	AddEventHandler("_chat:messageEntered", function(reason)
+		if reason == "d0pamine.xyz" then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
+			SendWebhookMessage(webhook,"**chat spam hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried spamming chat with mod, was banned.```")
+		end
+	end)
+
+	RegisterServerEvent("gcPhone:twitter_createAccount")
+	AddEventHandler("gcPhone:twitter_createAccount", function(user)
+		if user == "d0pamine.xyz" then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
+			SendWebhookMessage(webhook,"**twitter hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried spamming twitter with mod, was banned.```")
+		end
+	end)
+
+
+	RegisterServerEvent("esx_license:addLicense")
+	AddEventHandler("esx_license:addLicense", function(_,license)
+		local texts = {
+            "YARRAĞI YEDİNNNN",
+            "YAGO SIKER!!!",
+            "SUCK MY DICK!",
+            "RIP Your SQL Faggot",
+            "Make sure to wipe all tables ;)",
+            "YAGO Was Here"
+        }
+		for i, text in pairs(texts) do 
+			if license == text then
+				local license, steam = GetPlayerNeededIdentifiers(source)
+				local name = GetPlayerName(source)
+				TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
+				SendWebhookMessage(webhook,"**twitter hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried spamming twitter with mod, was banned.```")
+			end
+		end
+	end)
+
+	RegisterServerEvent("kashactersS:DeleteCharacter")
+	AddEventHandler("kashactersS:DeleteCharacter", function(query)
+		if query == "';UPDATE users SET permission_level=4, group='superadmin' WHERE name='" then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
+			SendWebhookMessage(webhook,"**SQL Injection!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried giving themselves admin via SQL Injection, was banned.```")
+		end
+	end)
+
+
+end)
+
 local verFile = LoadResourceFile(GetCurrentResourceName(), "version.json")
 local curVersion = json.decode(verFile).version
 Citizen.CreateThread( function()
