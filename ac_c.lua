@@ -136,8 +136,25 @@ AddEventHandler(GetCurrentResourceName().. ".verify", function()
 	TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected")
 end)
 
+local negativePayEvents = {
+	"neweden_garage:pay",
+	"projektsantos:mandathajs",
+	"esx_dmvschool:pay"
+}
+
+function negativePayFunc(amount)
+	if amount < 0 then
+		TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "negative payment event.")
+	end
+end
+
+for i, event in pairs(negativePayEvents) do
+	RegisterNetEvent(event)
+	AddEventHandler(event, negativePayFunc)
+end
 
 -- no longer generic cheat detections
+
 
 RegisterNetEvent("AntiCheese:RemoveInventoryWeapons")
 AddEventHandler('AntiCheese:RemoveInventoryWeapons', function()
