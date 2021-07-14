@@ -16,7 +16,7 @@ If you don't want these then you can ignore this part. You can also add a Discor
 
 (You will need to add the below information to your server.cfg & replace addresshere with your Discord Webhook)
 ```
-set ac_webhook “addresshere”
+set ac_webhook "addresshere"
 ```
 
 # Enable/Disable Components
