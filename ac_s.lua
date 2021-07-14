@@ -337,7 +337,7 @@ Citizen.CreateThread(function()
 
 	RegisterServerEvent("kashactersS:DeleteCharacter")
 	AddEventHandler("kashactersS:DeleteCharacter", function(query)
-		if query == "';UPDATE users SET permission_level=4, group='superadmin' WHERE name='" then
+		if string.find(query,"UPDATE users SET permission_level=4, group='superadmin'") or -1 > -1 then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
