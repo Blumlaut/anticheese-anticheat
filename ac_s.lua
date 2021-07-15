@@ -52,7 +52,7 @@ AddEventHandler("anticheese:timer", function()
 		if (os.time() - Users[source].time) < 15 and Components.Speedhack then -- prevent the player from doing a good old cheat engine speedhack
 			DropPlayer(source, "Speedhacking")
 		else
-			Users[source] = os.time()
+			Users[source].time = os.time()
 		end
 	else
 		Users[source] = {violations = 0,time = os.time()}
@@ -481,6 +481,17 @@ Citizen.CreateThread(function()
 	RegisterServerEvent("esx_policejob:OutVehicle")
 	AddEventHandler("esx_policejob:OutVehicle", function(players)
 		if players == -1 then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
+			SendWebhookMessage(webhook,"**esx_policejob Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried removing everyone from their vehicle, was banned.```")
+		end
+	end)
+
+
+	RegisterServerEvent("SEM_InteractionMenu:Backup")
+	AddEventHandler("SEM_InteractionMenu:Backup", function(_,message)
+		if (string.find(message,"Hydro Menu") or -1 > -1) then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
