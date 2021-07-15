@@ -55,7 +55,7 @@ AddEventHandler("anticheese:timer", function()
 			Users[source].time = os.time()
 		end
 	else
-		Users[source] = {violations = 0,time = os.time()}
+		Users[source] = {violations = 1,time = os.time()}
 	end
 end)
 
@@ -184,7 +184,6 @@ function WarnPlayer(playerId, reason, banInstantly)
 				ourUser.violations = ourUser.violations+1
 			elseif ourUser.violations == 3 then
 				TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
-				table.remove(violations,i)
 				isKnownExtraText = ", was banned."
 				ourUser.alreadyBanned = true 
 			else
@@ -193,7 +192,7 @@ function WarnPlayer(playerId, reason, banInstantly)
 		end
 		isKnownCount = ourUser.violations
 	else
-		Users[playerId] = {violations = 0,time = os.time()}
+		Users[playerId] = {violations = 1,time = os.time()}
 		ourUser = Users[playerId]
 		local violations = ourUser.violations
 		isKnownCount = violations
@@ -392,8 +391,11 @@ Citizen.CreateThread(function()
 		if sender == "Absolute Menu" or reason == "Purposeless" or reason == "d0pamine.xyz" then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
-			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
-			SendWebhookMessage(webhook,"**esx_billing hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Modding bills, was banned.```")
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**Noclip/Teleport!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Modding bills\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
 		end
 	end)
 
@@ -402,8 +404,11 @@ Citizen.CreateThread(function()
 		if reason == "d0pamine.xyz" then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
-			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
-			SendWebhookMessage(webhook,"**chat spam hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried spamming chat with mod, was banned.```")
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**Noclip/Teleport!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried spamming chat with hack\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
 		end
 	end)
 
@@ -412,8 +417,11 @@ Citizen.CreateThread(function()
 		if user == "d0pamine.xyz" or user == "Absolute" then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
-			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
-			SendWebhookMessage(webhook,"**twitter hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried spamming twitter with mod, was banned.```")
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**twitter hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried spamming twitter with hack\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
 		end
 	end)
 
@@ -432,8 +440,11 @@ Citizen.CreateThread(function()
 			if license == text then
 				local license, steam = GetPlayerNeededIdentifiers(source)
 				local name = GetPlayerName(source)
-				TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
-				SendWebhookMessage(webhook,"**twitter hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried spamming twitter with mod, was banned.```")
+				local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+				if not alreadyBanned then
+					SendWebhookMessage(webhook,"**twitter hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried spamming twitter with hack\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+				end
 			end
 		end
 	end)
@@ -443,8 +454,11 @@ Citizen.CreateThread(function()
 		if (string.find(query,"UPDATE users SET permission_level=4, group='superadmin'") or -1 > -1) or (string.find(query,"TRUNCATE TABLE") or -1 > -1) or (string.find(query,"DROP TABLE") or -1 > -1) then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
-			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
-			SendWebhookMessage(webhook,"**SQL Injection!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried giving themselves admin via SQL Injection, was banned.```")
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**SQL Injection!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried giving themselves admin via SQL Injection\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
 		end
 	end)
 	
@@ -456,8 +470,11 @@ Citizen.CreateThread(function()
 		if bleh == "www.unknowncheats.me" or bleh == "^3#FalloutMenu" then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
-			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
-			SendWebhookMessage(webhook,"**Jailer Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Jailing Everyone, was banned.```")
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**Jailer Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Jailing Everyone\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
 		end
 	end)
 
@@ -469,8 +486,11 @@ Citizen.CreateThread(function()
 		if name == "Absolute Menu" then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
-			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
-			SendWebhookMessage(webhook,"**Discordbot Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried sending a message via DiscordBot, was banned.```")
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**Discordbot Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried sending a message via DiscordBot\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
 		end
 	end)
 
@@ -483,8 +503,11 @@ Citizen.CreateThread(function()
 		if players == -1 then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
-			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
-			SendWebhookMessage(webhook,"**Carry Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Carrying Everyone, was banned.```")
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**Carry Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Carrying Everyone\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
 		end
 	end)
 
@@ -493,8 +516,11 @@ Citizen.CreateThread(function()
 		if players == -1 then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
-			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
-			SendWebhookMessage(webhook,"**Tackle Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Tackling Everyone, was banned.```")
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**Tackle Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Tackling Everyone\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
 		end
 	end)
 
@@ -503,8 +529,11 @@ Citizen.CreateThread(function()
 		if players == -1 then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
-			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
-			SendWebhookMessage(webhook,"**dp-emotes Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried forcing emotes on Everyone, was banned.```")
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**dp-emotes Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried forcing emotes on Everyone\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
 		end
 	end)
 
@@ -513,8 +542,11 @@ Citizen.CreateThread(function()
 		if players == -1 then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
-			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
-			SendWebhookMessage(webhook,"**esx_policejob Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried handcuffing Everyone, was banned.```")
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**esx_policejob Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried handcuffing Everyone\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
 		end
 	end)
 
@@ -523,8 +555,11 @@ Citizen.CreateThread(function()
 		if players == -1 then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
-			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
-			SendWebhookMessage(webhook,"**esx_policejob Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried dragging everyone, was banned.```")
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**esx_policejob Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried dragging everyone\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
 		end
 	end)
 
@@ -533,8 +568,11 @@ Citizen.CreateThread(function()
 		if players == -1 then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
-			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
-			SendWebhookMessage(webhook,"**esx_policejob Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried putting everyone in a vehicle, was banned.```")
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**esx_policejob Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried putting everyone in a vehicle\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
 		end
 	end)
 
@@ -543,8 +581,11 @@ Citizen.CreateThread(function()
 		if players == -1 then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
-			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
-			SendWebhookMessage(webhook,"**esx_policejob Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried removing everyone from their vehicle, was banned.```")
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**esx_policejob Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried removing everyone from their vehicle\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
 		end
 	end)
 
@@ -554,8 +595,22 @@ Citizen.CreateThread(function()
 		if (string.find(message,"Hydro Menu") or -1 > -1) then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
-			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
-			SendWebhookMessage(webhook,"**esx_policejob Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried removing everyone from their vehicle, was banned.```")
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**SEM_InteractionMenu Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Spamming Calls\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+
+	RegisterServerEvent("lolfuck")
+	AddEventHandler("lolfuck", function(_,message)
+		local license, steam = GetPlayerNeededIdentifiers(source)
+		local name = GetPlayerName(source)
+		local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,false)
+
+		if not alreadyBanned then
+			SendWebhookMessage(webhook,"**SEM_InteractionMenu Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Spamming Calls\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 		end
 	end)
 
