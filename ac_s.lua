@@ -394,7 +394,7 @@ Citizen.CreateThread(function()
 			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
 
 			if not alreadyBanned then
-				SendWebhookMessage(webhook,"**Noclip/Teleport!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Modding bills\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+				SendWebhookMessage(webhook,"**esx_billing exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Modding bills\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 			end
 		end
 	end)
@@ -407,7 +407,7 @@ Citizen.CreateThread(function()
 			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
 
 			if not alreadyBanned then
-				SendWebhookMessage(webhook,"**Noclip/Teleport!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried spamming chat with hack\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+				SendWebhookMessage(webhook,"**Chat Spam!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried spamming chat with hack\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 			end
 		end
 	end)
@@ -443,7 +443,7 @@ Citizen.CreateThread(function()
 				local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
 
 				if not alreadyBanned then
-					SendWebhookMessage(webhook,"**twitter hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried spamming twitter with hack\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+					SendWebhookMessage(webhook,"**esx_license sql injection!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried SQL Injection\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 				end
 			end
 		end
@@ -457,7 +457,7 @@ Citizen.CreateThread(function()
 			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
 
 			if not alreadyBanned then
-				SendWebhookMessage(webhook,"**SQL Injection!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried giving themselves admin via SQL Injection\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+				SendWebhookMessage(webhook,"**SQL Injection!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried SQL Injection\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 			end
 		end
 	end)
