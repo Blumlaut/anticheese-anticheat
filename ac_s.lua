@@ -50,13 +50,13 @@ recentExplosions = {}
 RegisterServerEvent("anticheese:timer")
 AddEventHandler("anticheese:timer", function()
 	if Users[source] then
-		if (os.time() - Users[source]) < 15 and Components.Speedhack then -- prevent the player from doing a good old cheat engine speedhack
+		if (os.time() - Users[source].time) < 15 and Components.Speedhack then -- prevent the player from doing a good old cheat engine speedhack
 			DropPlayer(source, "Speedhacking")
 		else
 			Users[source] = os.time()
 		end
 	else
-		Users[source] = os.time()
+		Users[source] = {violations = 0,time = os.time()}
 	end
 end)
 
@@ -106,7 +106,7 @@ Citizen.CreateThread(function()
 				local license, steam = GetPlayerNeededIdentifiers(c)
 				local name = GetPlayerName(c)
 
-				local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Explosion Spawning", true, c)
+				local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(c,"Explosion Spawning", true)
 
 				SendWebhookMessage(webhook, "**Explosion Spawner!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nSpawned "..count.." Explosions in <2s. \nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 			end
@@ -122,8 +122,50 @@ Citizen.CreateThread(function()
 			PerformHttpRequest(wh, function(err, text, headers) end, 'POST', json.encode({content = message}), { ['Content-Type'] = 'application/json' })
 		end
 	end
+
+	function WarnPlayer(playerId, reason, banInstantly)
+		local isKnownCount = 1
+		local isKnownExtraText = ""
+		if Users[playerId] then
+			local thisUser = Users[playerId]
+			local violations = thisUser.violations
+			if banInstantly then
+				TriggerEvent("EasyAdmin:addBan", playerId,"Cheating")
+				isKnownExtraText = ", was banned instantly."
+				Users[playerId] = nil
+				return
+			else
+				if thisUser.violations == 1 then
+					TriggerEvent("EasyAdmin:TakeScreenshot", playerId)
+					Users[playerId].violations = Users[playerId].violations+1
+				elseif thisUser.violations == 3 then
+					TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
+					table.remove(violations,i)
+					isKnownExtraText = ", was banned."
+				else
+					Users[playerId].violations = Users[playerId].violations+1
+				end
+			end
+			isKnownCount = Users[playerId].violations
+		else
+			Users[playerId] = {violations = 0,time = os.time()}
+			local thisUser = Users[playerId]
+			local violations = thisUser.violations
+			isKnownCount = violations
+			if banInstantly then
+				TriggerEvent("EasyAdmin:addBan", playerId,"Cheating")
+				isKnownExtraText = ", was banned instantly."
+				Users[playerId] = nil
+				return
+			end
+		end
+		return true, isKnownCount,isKnownExtraText
+	end
 	
-	function WarnPlayer(playername, reason,banInstantly,pid)
+
+	-- legacy WarnPlayer Function
+	--[[
+	function OldWarnPlayer(playername, reason,banInstantly,pid)
 		local isKnown = false
 		local isKnownCount = 1
 		local isKnownExtraText = ""
@@ -163,6 +205,7 @@ Citizen.CreateThread(function()
 
 		return isKnown, isKnownCount,isKnownExtraText
 	end
+	--]]
 
 	function GetPlayerNeededIdentifiers(player)
 		local ids = GetPlayerIdentifiers(player)
@@ -185,7 +228,7 @@ Citizen.CreateThread(function()
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 
-			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Speed Hacking")
+			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(source,"Speed Hacking")
 
 			SendWebhookMessage(webhook, "**Speed Hacker!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nWas travelling "..rounds.. " units. That's "..roundm.." more than normal! \nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 		end
@@ -199,7 +242,7 @@ Citizen.CreateThread(function()
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 
-			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Noclip/Teleport Hacking")
+			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(source,"Noclip/Teleport Hacking")
 
 
 			SendWebhookMessage(webhook,"**Noclip/Teleport!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nCaught with "..distance.." units between last checked location\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
@@ -214,7 +257,7 @@ Citizen.CreateThread(function()
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 			if not extrainfo then extrainfo = "no extra informations provided" end
-			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,reason)
+			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(source,reason)
 
 
 			SendWebhookMessage(webhook,"**"..reason.."** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\n"..extrainfo.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
@@ -227,7 +270,7 @@ Citizen.CreateThread(function()
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 
-			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Health Hacking")
+			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(source,"Health Hacking")
 
 			if invincible then
 				SendWebhookMessage(webhook,"**Health Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nRegenerated "..newHealth-oldHealth.."hp ( to reach "..newHealth.."hp ) in "..curWait.."ms! ( PlayerPed was invincible )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
@@ -243,7 +286,7 @@ Citizen.CreateThread(function()
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 
-			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"SuperJump Hacking")
+			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(source,"SuperJump Hacking")
 
 			SendWebhookMessage(webhook,"**SuperJump Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nJumped "..jumplength.."ms long\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 		end
@@ -255,7 +298,7 @@ Citizen.CreateThread(function()
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 
-			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Inventory Cheating")
+			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(source,"Inventory Cheating")
 
 			SendWebhookMessage(webhook,"**Inventory Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nGot Weapon: "..weapon.."( Blacklisted )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 			TriggerClientEvent("AntiCheese:RemoveInventoryWeapons", source) 
@@ -268,7 +311,7 @@ Citizen.CreateThread(function()
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 
-			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(name,"Car Spawning Cheating")
+			local isKnown, isKnownCount, isKnownExtraText = WarnPlayer(source,"Car Spawning Cheating")
 
 			SendWebhookMessage(webhook,"**Spawn Car Hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nGot Vehicle: "..car.."( Blacklisted )\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 		end
