@@ -603,19 +603,6 @@ Citizen.CreateThread(function()
 		end
 	end)
 
-	RegisterServerEvent("lolfuck")
-	AddEventHandler("lolfuck", function(_,message)
-		local license, steam = GetPlayerNeededIdentifiers(source)
-		local name = GetPlayerName(source)
-		local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,false)
-
-		if not alreadyBanned then
-			SendWebhookMessage(webhook,"**SEM_InteractionMenu Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Spamming Calls\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
-		end
-	end)
-
-
-
 end)
 
 local verFile = LoadResourceFile(GetCurrentResourceName(), "version.json")
