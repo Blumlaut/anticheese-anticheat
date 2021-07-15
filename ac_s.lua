@@ -40,7 +40,6 @@ These Events CAN NOT be called from the clientside
 
 
 Users = {}
-violations = {}
 
 
 recentExplosions = {}
