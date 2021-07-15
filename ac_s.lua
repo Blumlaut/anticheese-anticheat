@@ -349,13 +349,84 @@ Citizen.CreateThread(function()
 	-- hello UC :)
 	RegisterServerEvent("esx-qalle-jail:jailPlayer")
 	AddEventHandler("esx-qalle-jail:jailPlayer", function(_,_,bleh)
-		if bleh == "www.unknowncheats.me" then
+		if bleh == "www.unknowncheats.me" or bleh == "^3#FalloutMenu" then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
-			SendWebhookMessage(webhook,"**Jailer Cheat!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Jailing Everyone, was banned.```")
+			SendWebhookMessage(webhook,"**Jailer Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Jailing Everyone, was banned.```")
 		end
 	end)
+
+	RegisterServerEvent("CarryPeople:sync")
+	AddEventHandler("CarryPeople:sync", function(players)
+		if players == -1 then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
+			SendWebhookMessage(webhook,"**Carry Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Carrying Everyone, was banned.```")
+		end
+	end)
+
+	RegisterServerEvent("esx_kekke_tackle:tryTackle")
+	AddEventHandler("esx_kekke_tackle:tryTackle", function(players)
+		if players == -1 then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
+			SendWebhookMessage(webhook,"**Tackle Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Tackling Everyone, was banned.```")
+		end
+	end)
+
+	RegisterServerEvent("ServerEmoteRequest")
+	AddEventHandler("ServerEmoteRequest", function(players)
+		if players == -1 then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
+			SendWebhookMessage(webhook,"**dp-emotes Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried forcing emotes on Everyone, was banned.```")
+		end
+	end)
+
+	RegisterServerEvent("esx_policejob:handcuff")
+	AddEventHandler("esx_policejob:handcuff", function(players)
+		if players == -1 then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
+			SendWebhookMessage(webhook,"**esx_policejob Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried handcuffing Everyone, was banned.```")
+		end
+	end)
+
+	RegisterServerEvent("esx_policejob:drag")
+	AddEventHandler("esx_policejob:drag", function(players)
+		if players == -1 then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
+			SendWebhookMessage(webhook,"**esx_policejob Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried dragging everyone, was banned.```")
+		end
+	end)
+
+	RegisterServerEvent("esx_policejob:putInVehicle")
+	AddEventHandler("esx_policejob:putInVehicle", function(players)
+		if players == -1 then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
+			SendWebhookMessage(webhook,"**esx_policejob Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried putting everyone in a vehicle, was banned.```")
+		end
+	end)
+
+	RegisterServerEvent("esx_policejob:OutVehicle")
+	AddEventHandler("esx_policejob:OutVehicle", function(players)
+		if players == -1 then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
+			SendWebhookMessage(webhook,"**esx_policejob Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried removing everyone from their vehicle, was banned.```")
+		end
+	end)
+
 
 
 end)
