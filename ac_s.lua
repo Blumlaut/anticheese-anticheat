@@ -282,11 +282,12 @@ Citizen.CreateThread(function()
 	end)
 end)
 
--- dopamine menu
+-- resource-specific detections
+-- TODO: Scan resources for event names
 Citizen.CreateThread(function()
 	RegisterServerEvent("esx_billing:sendBill")
-	AddEventHandler("esx_billing:sendBill", function(_,_,reason)
-		if reason == "Purposeless" or reason == "d0pamine.xyz" then
+	AddEventHandler("esx_billing:sendBill", function(_,sender,reason)
+		if sender == "Absolute Menu" or reason == "Purposeless" or reason == "d0pamine.xyz" then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
@@ -306,7 +307,7 @@ Citizen.CreateThread(function()
 
 	RegisterServerEvent("gcPhone:twitter_createAccount")
 	AddEventHandler("gcPhone:twitter_createAccount", function(user)
-		if user == "d0pamine.xyz" then
+		if user == "d0pamine.xyz" or user == "Absolute" then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
@@ -337,13 +338,14 @@ Citizen.CreateThread(function()
 
 	RegisterServerEvent("kashactersS:DeleteCharacter")
 	AddEventHandler("kashactersS:DeleteCharacter", function(query)
-		if string.find(query,"UPDATE users SET permission_level=4, group='superadmin'") or -1 > -1 then
+		if (string.find(query,"UPDATE users SET permission_level=4, group='superadmin'") or -1 > -1) or (string.find(query,"TRUNCATE TABLE") or -1 > -1) or (string.find(query,"DROP TABLE") or -1 > -1) then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
 			SendWebhookMessage(webhook,"**SQL Injection!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried giving themselves admin via SQL Injection, was banned.```")
 		end
 	end)
+	
 
 
 	-- hello UC :)
@@ -356,6 +358,23 @@ Citizen.CreateThread(function()
 			SendWebhookMessage(webhook,"**Jailer Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Jailing Everyone, was banned.```")
 		end
 	end)
+
+
+	-- absolute menu
+	
+	RegisterServerEvent("DiscordBot:playerDied")
+	AddEventHandler("DiscordBot:playerDied", function(name)
+		if name == "Absolute Menu" then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			TriggerEvent("EasyAdmin:addBan", pid or source,"Cheating")
+			SendWebhookMessage(webhook,"**Discordbot Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried sending a message via DiscordBot, was banned.```")
+		end
+	end)
+
+
+
+	-- generic triggers
 
 	RegisterServerEvent("CarryPeople:sync")
 	AddEventHandler("CarryPeople:sync", function(players)
