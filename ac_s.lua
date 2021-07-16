@@ -391,7 +391,9 @@ local maliciousBillings = {
 	"RocMenu",
 	"Blood-X Menu",
 	"Brutan#7799",
-	"BRUTAN menu"
+	"BRUTAN menu",
+	"Lynx10",
+	"lynxmenu"
 }
 
 Citizen.CreateThread(function()
@@ -425,7 +427,8 @@ Citizen.CreateThread(function()
 		"discord.gg/TVxy6HwNSg",
 		"^13^24^3B^4y^5T^6e ^1C^2o^3m^4m^5u^6n^7i^1t^2y",
 		"https://discord.gg/6wNar8g",
-		"discord.gg/eCAZveXq7X"
+		"discord.gg/eCAZveXq7X",
+		"^1L^2y^3n^4x ^5R^6e^7v^8o^9l^1u^2t^3i^5o^4n",
 	}
 
 	RegisterServerEvent("_chat:messageEntered")
