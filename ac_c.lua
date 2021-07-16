@@ -135,8 +135,10 @@ Citizen.CreateThread(function()
 					break
 			end
 		end
-		if GetTextureResolution('HydroMenu', 'HydroMenuHeader').x ~= 4.0 or GetTextureResolution('John', "John2").x ~= 4.0 then
-			TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected (DUI Check)")
+		if GetTextureResolution('HydroMenu', 'HydroMenuHeader').x ~= 4.0 then
+			TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected (HydroMenu Detected via DUI Check)", true)
+		elseif GetTextureResolution('John', "John2").x ~= 4.0 then
+			TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected (SugarMenu Detected via DUI Check)", true)
 		end
 	end
 end)
@@ -241,7 +243,7 @@ end)
 -- generic cheat detections
 RegisterNetEvent(GetCurrentResourceName().. ".verify")
 AddEventHandler(GetCurrentResourceName().. ".verify", function()
-	TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected")
+	TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected (recieved verify event)", true)
 end)
 
 local negativePayEvents = {
@@ -271,7 +273,7 @@ end
 RegisterNetEvent("gcPhone:sendMessage")
 AddEventHandler("gcPhone:sendMessage", function(message)
 	if (string.find(message, "剎車剎車剎車剎車") or -1 > -1) then
-		TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "GCPhone spam event.")
+		TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "GCPhone spam event.", true)
 	end
 
 end)
