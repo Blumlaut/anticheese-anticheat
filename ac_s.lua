@@ -388,12 +388,15 @@ end)
 local maliciousBillings = {
 	"Absolute Menu",
 	"d0pamine.xyz",
+	"d0pamine_xyz",
+	"discord.gg/fjBp55t",
 	"RocMenu",
 	"Blood-X Menu",
 	"Brutan#7799",
 	"BRUTAN menu",
 	"Lynx10",
-	"lynxmenu"
+	"lynxmenu",
+	"Nertigel#5391"
 }
 
 Citizen.CreateThread(function()
@@ -417,6 +420,8 @@ Citizen.CreateThread(function()
 		"~r~You just got fucked by Falcon",
 		"https://discord.gg/y7xyNeG",
 		"d0pamine.xyz",
+		"d0pamine_xyz",
+		"discord.gg/fjBp55t",
 		"oFlaqme#1325",
 		"RocMenu",
 		"https://discord.gg/NdzS3Qxa",
@@ -429,6 +434,7 @@ Citizen.CreateThread(function()
 		"https://discord.gg/6wNar8g",
 		"discord.gg/eCAZveXq7X",
 		"^1L^2y^3n^4x ^5R^6e^7v^8o^9l^1u^2t^3i^5o^4n",
+		"Nertigel#5391"
 	}
 
 	RegisterServerEvent("_chat:messageEntered")
@@ -448,13 +454,61 @@ Citizen.CreateThread(function()
 
 	RegisterServerEvent("gcPhone:twitter_createAccount")
 	AddEventHandler("gcPhone:twitter_createAccount", function(user, pw)
-		if user == "d0pamine.xyz" or user == "Absolute" or (user == "Lumia" and pw == "Lumia123") then
-			local license, steam = GetPlayerNeededIdentifiers(source)
-			local name = GetPlayerName(source)
-			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+		for i, msg in pairs(maliciousMessages) do
+			if (string.find(user, msg) or -1) > -1 or (string.find(pw, msg) or -1) > -1 or user == "Absolute" or (user == "Lumia" and pw == "Lumia123") then
+				local license, steam = GetPlayerNeededIdentifiers(source)
+				local name = GetPlayerName(source)
+				local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
 
-			if not alreadyBanned then
-				SendWebhookMessage(webhook,"**twitter hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried spamming twitter with hack\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+				if not alreadyBanned then
+					SendWebhookMessage(webhook,"**twitter hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried spamming twitter with hack\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+				end
+			end
+		end
+	end)
+
+	RegisterServerEvent("esx_phone:send")
+	AddEventHandler("esx_phone:send", function(_, message)
+		for i, msg in pairs(maliciousMessages) do
+			if (string.find(message, msg) or -1) > -1 or (string.find(pw, msg) or -1) > -1 or message == "Absolute" or message == "Lumia" then
+				local license, steam = GetPlayerNeededIdentifiers(source)
+				local name = GetPlayerName(source)
+				local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+				if not alreadyBanned then
+					SendWebhookMessage(webhook,"**esx_phone hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried spamming esx_phone with hack\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+				end
+			end
+		end
+	end)
+
+	RegisterServerEvent("esx_addons_gcphone:startCall")
+	AddEventHandler("esx_addons_gcphone:startCall", function(_, message)
+		for i, msg in pairs(maliciousMessages) do
+			if (string.find(message, msg) or -1) > -1 or (string.find(pw, msg) or -1) > -1 or message == "Absolute" or message == "Lumia" then
+				local license, steam = GetPlayerNeededIdentifiers(source)
+				local name = GetPlayerName(source)
+				local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+				if not alreadyBanned then
+					SendWebhookMessage(webhook,"**gcphone hack!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried spamming gcphone with hack\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+				end
+			end
+		end
+	end)
+
+	
+	RegisterServerEvent("esx:triggerServerCallback") -- hook triggerServerCallback and check the event name for known nasties
+	AddEventHandler("esx:triggerServerCallback", function(name)
+		for i, msg in pairs(maliciousMessages) do
+			if (string.find(name, msg) or -1) > -1 then
+				local license, steam = GetPlayerNeededIdentifiers(source)
+				local name = GetPlayerName(source)
+				local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+				if not alreadyBanned then
+					SendWebhookMessage(webhook,"**esx exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried spamming invalid ESX Callbacks\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+				end
 			end
 		end
 	end)
