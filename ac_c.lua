@@ -135,37 +135,11 @@ Citizen.CreateThread(function()
 					break
 			end
 		end
-		if GetTextureResolution('HydroMenu', 'HydroMenuHeader').x ~= 4.0 then
+		if GetTextureResolution('HydroMenu', 'HydroMenuHeader').x ~= 4.0 or GetTextureResolution('John', "John2").x ~= 4.0 then
 			TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected")
 		end
 	end
 end)
-
-
--- generic cheat detections
-RegisterNetEvent(GetCurrentResourceName().. ".verify")
-AddEventHandler(GetCurrentResourceName().. ".verify", function()
-	TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected")
-end)
-
-local negativePayEvents = {
-	"neweden_garage:pay",
-	"projektsantos:mandathajs",
-	"esx_dmvschool:pay"
-}
-
-function negativePayFunc(amount)
-	if amount < 0 then
-		TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "negative payment event.")
-	end
-end
-
-for i, event in pairs(negativePayEvents) do
-	RegisterNetEvent(event)
-	AddEventHandler(event, negativePayFunc)
-end
-
--- no longer generic cheat detections
 
 
 RegisterNetEvent("AntiCheese:RemoveInventoryWeapons")
@@ -261,4 +235,43 @@ Citizen.CreateThread(function()
 			end
 		end
 	end
+end)
+
+
+-- generic cheat detections
+RegisterNetEvent(GetCurrentResourceName().. ".verify")
+AddEventHandler(GetCurrentResourceName().. ".verify", function()
+	TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected")
+end)
+
+local negativePayEvents = {
+	"neweden_garage:pay",
+	"projektsantos:mandathajs",
+	"esx_dmvschool:pay"
+}
+
+function negativePayFunc(amount)
+	if amount < 0 then
+		TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "negative payment event.")
+	end
+end
+
+for i, event in pairs(negativePayEvents) do
+	RegisterNetEvent(event)
+	AddEventHandler(event, negativePayFunc)
+end
+
+-- no longer generic cheat detections
+
+
+
+-- specific resource detections
+
+
+RegisterNetEvent("gcPhone:sendMessage")
+AddEventHandler("gcPhone:sendMessage", function(message)
+	if (string.find(message, "剎車剎車剎車剎車") or -1 > -1) then
+		TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "GCPhone spam event.")
+	end
+
 end)

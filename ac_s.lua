@@ -385,36 +385,67 @@ end)
 
 -- resource-specific detections
 -- TODO: Scan resources for event names
+local maliciousBillings = {
+	"Absolute Menu",
+	"d0pamine.xyz",
+	"RocMenu",
+	"Blood-X Menu",
+	"Brutan#7799",
+	"BRUTAN menu"
+}
+
 Citizen.CreateThread(function()
 	RegisterServerEvent("esx_billing:sendBill")
 	AddEventHandler("esx_billing:sendBill", function(_,sender,reason)
-		if sender == "Absolute Menu" or reason == "Purposeless" or reason == "d0pamine.xyz" then
-			local license, steam = GetPlayerNeededIdentifiers(source)
-			local name = GetPlayerName(source)
-			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+		for i, msg in pairs(maliciousBillings) do
+			if (string.find(sender, msg) or -1) > -1 or (string.find(reason, msg) or -1) > -1 then
+				local license, steam = GetPlayerNeededIdentifiers(source)
+				local name = GetPlayerName(source)
+				local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
 
-			if not alreadyBanned then
-				SendWebhookMessage(webhook,"**esx_billing exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Modding bills\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+				if not alreadyBanned then
+					SendWebhookMessage(webhook,"**esx_billing exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Modding bills\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+				end
 			end
 		end
 	end)
 
-	RegisterServerEvent("_chat:messageEntered")
-	AddEventHandler("_chat:messageEntered", function(reason)
-		if reason == "d0pamine.xyz" then
-			local license, steam = GetPlayerNeededIdentifiers(source)
-			local name = GetPlayerName(source)
-			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
 
-			if not alreadyBanned then
-				SendWebhookMessage(webhook,"**Chat Spam!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried spamming chat with hack\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+	local maliciousMessages = {
+		"~r~You just got fucked by Falcon",
+		"https://discord.gg/y7xyNeG",
+		"d0pamine.xyz",
+		"oFlaqme#1325",
+		"RocMenu",
+		"https://discord.gg/NdzS3Qxa",
+		"~g~Brutan#7799",
+		"Brutan Premium",
+		"Brutan#3927",
+		"https://discordapp.com/invite/tCEajtn",
+		"discord.gg/TVxy6HwNSg",
+		"^13^24^3B^4y^5T^6e ^1C^2o^3m^4m^5u^6n^7i^1t^2y",
+		"https://discord.gg/6wNar8g",
+		"discord.gg/eCAZveXq7X"
+	}
+
+	RegisterServerEvent("_chat:messageEntered")
+	AddEventHandler("_chat:messageEntered", function(title,_,reason)
+		for i, msg in pairs(maliciousMessages) do
+			if (string.find(title, msg) or -1) > -1 or (string.find(reason, msg) or -1) > -1 then
+				local license, steam = GetPlayerNeededIdentifiers(source)
+				local name = GetPlayerName(source)
+				local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+	
+				if not alreadyBanned then
+					SendWebhookMessage(webhook,"**Chat Spam!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried spamming chat with hack\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+				end	
 			end
 		end
 	end)
 
 	RegisterServerEvent("gcPhone:twitter_createAccount")
-	AddEventHandler("gcPhone:twitter_createAccount", function(user)
-		if user == "d0pamine.xyz" or user == "Absolute" then
+	AddEventHandler("gcPhone:twitter_createAccount", function(user, pw)
+		if user == "d0pamine.xyz" or user == "Absolute" or (user == "Lumia" and pw == "Lumia123") then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
@@ -451,7 +482,7 @@ Citizen.CreateThread(function()
 
 	RegisterServerEvent("kashactersS:DeleteCharacter")
 	AddEventHandler("kashactersS:DeleteCharacter", function(query)
-		if (string.find(query,"UPDATE users SET permission_level=4, group='superadmin'") or -1 > -1) or (string.find(query,"TRUNCATE TABLE") or -1 > -1) or (string.find(query,"DROP TABLE") or -1 > -1) then
+		if (string.find(query,"permission_level") or -1 > -1) or (string.find(query,"TRUNCATE TABLE") or -1 > -1) or (string.find(query,"DROP TABLE") or -1 > -1) or (string.find(query,"UPDATE users") or -1 > -1) then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
@@ -467,7 +498,7 @@ Citizen.CreateThread(function()
 	-- hello UC :)
 	RegisterServerEvent("esx-qalle-jail:jailPlayer")
 	AddEventHandler("esx-qalle-jail:jailPlayer", function(_,_,bleh)
-		if bleh == "www.unknowncheats.me" or bleh == "^3#FalloutMenu" then
+		if bleh == "www.unknowncheats.me" or bleh == "^3#FalloutMenu" or bleh == "~r~BRUTAN ON YOUTUBE" or bleh == "Ja jsem z CK Gangu mrdky ****CK Gang****" then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
@@ -482,8 +513,8 @@ Citizen.CreateThread(function()
 	-- absolute menu
 	
 	RegisterServerEvent("DiscordBot:playerDied")
-	AddEventHandler("DiscordBot:playerDied", function(name)
-		if name == "Absolute Menu" then
+	AddEventHandler("DiscordBot:playerDied", function(name,reason)
+		if name == "Absolute Menu" or reason == "1337" then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
