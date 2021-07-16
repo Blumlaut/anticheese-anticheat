@@ -301,12 +301,12 @@ Citizen.CreateThread(function()
 	
 	
 	RegisterServerEvent('AntiCheese:CustomFlag')
-	AddEventHandler('AntiCheese:CustomFlag', function(reason,extrainfo)
+	AddEventHandler('AntiCheese:CustomFlag', function(reason,extrainfo, banInstantly)
 		if Components.CustomFlag and not IsPlayerAceAllowed(source,"anticheese.bypass") then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 			if not extrainfo then extrainfo = "no extra informations provided" end
-			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,reason)
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,reason, banInstantly or false)
 
 			if not alreadyBanned then
 				SendWebhookMessage(webhook,"**"..reason.."** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\n"..extrainfo.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
