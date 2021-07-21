@@ -43,6 +43,7 @@ Users = {}
 
 
 recentExplosions = {}
+recentEvents = {}
 
 
 
@@ -152,6 +153,25 @@ Citizen.CreateThread(function()
 
 				if not alreadyBanned then
 					SendWebhookMessage(webhook, "**Explosion Spawner!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nSpawned "..count.." Explosions in <2s. \nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+				end
+			end
+		end
+		clientEventCount = {}
+		for i, event in ipairs(recentEvents) do 
+			if not clientEventCount[event.sender] then clientEventCount[event.sender] = 0 end
+			clientEventCount[event.sender] = clientEventCount[event.sender]+1
+			table.remove(recentEvents,i)
+		end 
+		recentEvents = {}
+		for c, count in pairs(clientEventCount) do 
+			if count > 10 then
+				local license, steam = GetPlayerNeededIdentifiers(c)
+				local name = GetPlayerName(c)
+
+				local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(c,"Event Spamming", true)
+
+				if not alreadyBanned then
+					SendWebhookMessage(webhook, "**Event Spammer!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nSpammed "..count.." Commonly-Abused Events in <2s. \nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 				end
 			end
 		end
@@ -739,6 +759,83 @@ Citizen.CreateThread(function()
 			end
 		end
 	end)
+
+
+	local spammedEvents = {
+		"esx_pilot:success",
+		"esx_taxijob:success",
+		"esx_mugging:giveMoney",
+		"paycheck:salary",
+		"esx_godirtyjob:pay",
+		"esx_pizza:pay",
+		"esx_slotmachine:sv:2",
+		"esx_banksecurity:pay",
+		"esx_gopostaljob:pay",
+		"esx_truckerjob:pay",
+		"esx_carthief:pay",
+		"esx_garbagejob:pay",
+		"esx_ranger:pay",
+		"esx_truckersjob:payy",
+		"PayForRepairNow",
+		"reanimar:pagamento",
+		"salario:pagamento",
+		"offred:salar",
+		"gcPhone:sendMessage",
+		"esx_jailer:sendToJail",
+		"esx_jailler:sendToJail",
+		"esx-qalle-jail:jailPlayer",
+		"esx-qalle-jail:jailPlayerNew",
+		"esx_jail:sendToJail",
+		"8321hiue89js",
+		"esx_jailer:sendToJailCatfrajerze",
+		"js:jailuser",
+		"wyspa_jail:jailPlayer",
+		"wyspa_jail:jail",
+		"esx_policejob:billPlayer",
+		"esx-qalle-jail:updateJailTime",
+		"esx-qalle-jail:updateJailTime_n96nDDU@X?@zpf8",
+		"::{korioz#0110}::jobs_civil:pay",
+		"esx_drugs:startHarvestOpium",
+		"esx_drugs:startTransformOpium",
+		"esx_drugs:startSellOpium",
+		"esx_drugs:startHarvestWeed",
+		"esx_drugs:startTransformWeed",
+		"esx_drugs:startSellWeed",
+		"::{korioz#0110}::esx_billing:sendBill",
+		"esx_billing:sendBill",
+		"esx_mechanicjob:startHarvest",
+		"esx_mechanicjob:startHarvest2",
+		"esx_mechanicjob:startHarvest3",
+		"esx_mechanicjob:startHarvest4",
+		"esx_mechanicjob:startCraft",
+		"esx_mechanicjob:startCraft2",
+		"esx_mechanicjob:startCraft3",
+		"esx_bitcoin:startHarvestKoda",
+		"esx_bitcoin:startSellKoda",
+		"esx_blanchisseur:startWhitening",
+		"trip_adminmenu:addMoney",
+		"esx_reprogjob:onNPCJobMissionCompleted",
+		"esx_ambulancejob:revive",
+		"Impulsionjobs_civil:pay",
+		"SEM_InteractionMenu:CuffNear",
+		"esx_fueldelivery:pay",
+		"AdminMenu:giveBank",
+		"AdminMenu:giveCash"
+	}
+
+
+	function handleSpammedEvents(event)
+		local source = source
+		local event = event
+
+		local eventData = {name=event, sender = source, time = os.time()}
+		table.insert(recentEvents, eventData)
+	end
+
+	for i, event in pairs(spammedEvents) do
+		RegisterServerEvent(event)
+		AddEventHandler(event, handleSpammedEvents)
+	end
 
 end)
 
