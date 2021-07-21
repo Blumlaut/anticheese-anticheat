@@ -415,6 +415,19 @@ Citizen.CreateThread(function()
 		end
 	end)
 
+	RegisterServerEvent("esx:onPickup")
+	AddEventHandler("esx:onPickup", function(pickup)
+		if type(pickup) ~= "number" then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**es_extended exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried breaking 'onPickup' event\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end	
+	end)
+
 
 	local maliciousMessages = {
 		"~r~You just got fucked by Falcon",
