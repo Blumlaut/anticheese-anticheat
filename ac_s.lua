@@ -164,7 +164,7 @@ Citizen.CreateThread(function()
 		end 
 		recentEvents = {}
 		for c, count in pairs(clientEventCount) do 
-			if count > 10 then
+			if count >= 8 then
 				local license, steam = GetPlayerNeededIdentifiers(c)
 				local name = GetPlayerName(c)
 
