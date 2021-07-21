@@ -456,7 +456,6 @@ Citizen.CreateThread(function()
 		"^13^24^3B^4R^5U^6TAN",
 		"discord.gg/DXQvMEzKSd",
 		"MalossiHosting",
-		"Get Fucked By ^1SugarMafia"
 		"Get Fucked By ^1SugarMafia",
 		"Absolute Menu on top"
 	}
