@@ -137,11 +137,14 @@ Citizen.CreateThread(function()
 		end
 		if GetTextureResolution('HydroMenu', 'HydroMenuHeader').x ~= 4.0 then
 			TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected (HydroMenu Detected via DUI Check)", true)
-		elseif GetTextureResolution('John', "John2").x ~= 4.0 then
+		elseif GetTextureResolution('John', 'John2').x ~= 4.0 then
 			TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected (SugarMenu Detected via DUI Check)", true)
-		elseif GetTextureResolution('darkside', "logo").x ~= 4.0 then
+		elseif GetTextureResolution('darkside', 'logo').x ~= 4.0 then
 			TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected (Darkside Detected via DUI Check)", true)
+		elseif GetTextureResolution('ISMMENU', 'ISMMENUHeader').x ~= 4.0 then
+			TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected (ISMMENU Detected via DUI Check)", true)
 		end
+
 	end
 end)
 
