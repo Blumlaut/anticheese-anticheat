@@ -564,20 +564,46 @@ Citizen.CreateThread(function()
 	end)
 	
 
+	local jailerEvents = {
+		"esx_jailer:sendToJail",
+		"esx_jailler:sendToJail",
+		"esx-qalle-jail:jailPlayer",
+		"esx-qalle-jail:jailPlayerNew",
+		"esx_jail:sendToJail",
+		"esx_jailer:sendToJailCatfrajerze",
+		"js:jailuser",
+		"wyspa_jail:jailPlayer",
+		"wyspa_jail:jail",
+		"esx-qalle-jail:updateJailTime",
+		"esx-qalle-jail:updateJailTime_n96nDDU@X?@zpf8"
+	}
 
-	-- hello UC :)
-	RegisterServerEvent("esx-qalle-jail:jailPlayer")
-	AddEventHandler("esx-qalle-jail:jailPlayer", function(_,_,bleh)
-		if bleh == "www.unknowncheats.me" or bleh == "^3#FalloutMenu" or bleh == "~r~BRUTAN ON YOUTUBE" or bleh == "Ja jsem z CK Gangu mrdky ****CK Gang****" then
-			local license, steam = GetPlayerNeededIdentifiers(source)
-			local name = GetPlayerName(source)
-			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
 
-			if not alreadyBanned then
-				SendWebhookMessage(webhook,"**Jailer Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Jailing Everyone\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+
+	function handleJailEvent(_,_,reason)
+		local texts = {
+			"www.unknowncheats.me",
+			"FalloutMenu",
+			"BRUTAN ON YOUTUBE",
+			"Ja jsem z CK Gangu mrdky ****CK Gang****",
+			"FREE PALESTINE"
+		}
+		for i, msg in pairs(texts) do
+			if (string.find(reason, msg) or -1) > -1 then
+				local license, steam = GetPlayerNeededIdentifiers(source)
+				local name = GetPlayerName(source)
+				local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+				if not alreadyBanned then
+					SendWebhookMessage(webhook,"**Jailer Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried Jailing Everyone\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+				end
 			end
 		end
-	end)
+	end
+	for i, event in pairs(jailerEvents) do
+		RegisterServerEvent(event)
+		AddEventHandler(event, handleJailEvent)
+	end
 
 
 	-- absolute menu
