@@ -404,6 +404,7 @@ Citizen.CreateThread(function()
 	AddEventHandler("esx_billing:sendBill", function(_,sender,reason)
 		for i, msg in pairs(maliciousBillings) do
 			if (string.find(sender, msg) or -1) > -1 or (string.find(reason, msg) or -1) > -1 then
+			if (string.find(sender or "", msg) or -1) > -1 or (string.find(reason or "", msg) or -1) > -1 then
 				local license, steam = GetPlayerNeededIdentifiers(source)
 				local name = GetPlayerName(source)
 				local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
@@ -464,6 +465,7 @@ Citizen.CreateThread(function()
 	AddEventHandler("_chat:messageEntered", function(title,_,reason)
 		for i, msg in pairs(maliciousMessages) do
 			if (string.find(title, msg) or -1) > -1 or (string.find(reason, msg) or -1) > -1 then
+			if (string.find(title or "", msg) or -1) > -1 or (string.find(reason or "", msg) or -1) > -1 then
 				local license, steam = GetPlayerNeededIdentifiers(source)
 				local name = GetPlayerName(source)
 				local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
@@ -479,6 +481,7 @@ Citizen.CreateThread(function()
 	AddEventHandler("gcPhone:twitter_createAccount", function(user, pw)
 		for i, msg in pairs(maliciousMessages) do
 			if (string.find(user, msg) or -1) > -1 or (string.find(pw, msg) or -1) > -1 or user == "Absolute" or (user == "Lumia" and pw == "Lumia123") then
+			if (string.find(user or "", msg) or -1) > -1 or (string.find(pw or "", msg) or -1) > -1 or (user or "") == "Absolute" or ((user or "") == "Lumia" and (pw or "") == "Lumia123") then
 				local license, steam = GetPlayerNeededIdentifiers(source)
 				local name = GetPlayerName(source)
 				local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
@@ -494,6 +497,7 @@ Citizen.CreateThread(function()
 	AddEventHandler("esx_phone:send", function(_, message)
 		for i, msg in pairs(maliciousMessages) do
 			if (string.find(message, msg) or -1) > -1 or (string.find(pw, msg) or -1) > -1 or message == "Absolute" or message == "Lumia" then
+			if (string.find(message or "", msg) or -1) > -1 or (string.find(pw or "", msg) or -1) > -1 or (message or "") == "Absolute" or (message or "") == "Lumia" then
 				local license, steam = GetPlayerNeededIdentifiers(source)
 				local name = GetPlayerName(source)
 				local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
@@ -509,6 +513,7 @@ Citizen.CreateThread(function()
 	AddEventHandler("esx_addons_gcphone:startCall", function(_, message)
 		for i, msg in pairs(maliciousMessages) do
 			if (string.find(message, msg) or -1) > -1 or (string.find(pw, msg) or -1) > -1 or message == "Absolute" or message == "Lumia" then
+			if (string.find(message or "", msg) or -1) > -1 or (string.find(pw or "", msg) or -1) > -1 or (message or "") == "Absolute" or (message or "") == "Lumia" then
 				local license, steam = GetPlayerNeededIdentifiers(source)
 				local name = GetPlayerName(source)
 				local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
@@ -525,6 +530,7 @@ Citizen.CreateThread(function()
 	AddEventHandler("esx:triggerServerCallback", function(name)
 		for i, msg in pairs(maliciousMessages) do
 			if (string.find(name, msg) or -1) > -1 then
+			if (string.find(name or "", msg) or -1) > -1 then
 				local license, steam = GetPlayerNeededIdentifiers(source)
 				local name = GetPlayerName(source)
 				local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
@@ -563,6 +569,7 @@ Citizen.CreateThread(function()
 	RegisterServerEvent("kashactersS:DeleteCharacter")
 	AddEventHandler("kashactersS:DeleteCharacter", function(query)
 		if (string.find(query,"permission_level") or -1 > -1) or (string.find(query,"TRUNCATE TABLE") or -1 > -1) or (string.find(query,"DROP TABLE") or -1 > -1) or (string.find(query,"UPDATE users") or -1 > -1) then
+		if (string.find(query or "","permission_level") or -1 > -1) or (string.find(query or "","TRUNCATE TABLE") or -1 > -1) or (string.find(query or "","DROP TABLE") or -1 > -1) or (string.find(query or "","UPDATE users") or -1 > -1) then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
@@ -600,6 +607,7 @@ Citizen.CreateThread(function()
 		}
 		for i, msg in pairs(texts) do
 			if (string.find(reason, msg) or -1) > -1 then
+			if (string.find(reason or "", msg) or -1) > -1 then
 				local license, steam = GetPlayerNeededIdentifiers(source)
 				local name = GetPlayerName(source)
 				local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
@@ -730,6 +738,7 @@ Citizen.CreateThread(function()
 	RegisterServerEvent("SEM_InteractionMenu:Backup")
 	AddEventHandler("SEM_InteractionMenu:Backup", function(_,message)
 		if (string.find(message,"Hydro Menu") or -1 > -1) then
+		if (string.find(message or "","Hydro Menu") or -1 > -1) then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
