@@ -434,6 +434,7 @@ Citizen.CreateThread(function()
 		"https://discord.gg/y7xyNeG",
 		"d0pamine.xyz",
 		"d0pamine_xyz",
+		"www.d0pamine",
 		"discord.gg/fjBp55t",
 		"oFlaqme#1325",
 		"RocMenu",
@@ -441,6 +442,7 @@ Citizen.CreateThread(function()
 		"~g~Brutan#7799",
 		"Brutan Premium",
 		"Brutan#3927",
+		"www.Brutan",
 		"https://discordapp.com/invite/tCEajtn",
 		"discord.gg/TVxy6HwNSg",
 		"^13^24^3B^4y^5T^6e ^1C^2o^3m^4m^5u^6n^7i^1t^2y",
@@ -455,6 +457,8 @@ Citizen.CreateThread(function()
 		"discord.gg/DXQvMEzKSd",
 		"MalossiHosting",
 		"Get Fucked By ^1SugarMafia"
+		"Get Fucked By ^1SugarMafia",
+		"Absolute Menu on top"
 	}
 
 	RegisterServerEvent("_chat:messageEntered")
