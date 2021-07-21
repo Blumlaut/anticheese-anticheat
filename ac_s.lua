@@ -447,7 +447,14 @@ Citizen.CreateThread(function()
 		"https://discord.gg/6wNar8g",
 		"discord.gg/eCAZveXq7X",
 		"^1L^2y^3n^4x ^5R^6e^7v^8o^9l^1u^2t^3i^5o^4n",
-		"Nertigel#5391"
+		"Nertigel#5391",
+		"MALOSSIHOSTING",
+		"https://discord.gg/qyVE4WW",
+		"DarkSide-Gang",
+		"^13^24^3B^4R^5U^6TAN",
+		"discord.gg/DXQvMEzKSd",
+		"MalossiHosting",
+		"Get Fucked By ^1SugarMafia"
 	}
 
 	RegisterServerEvent("_chat:messageEntered")
