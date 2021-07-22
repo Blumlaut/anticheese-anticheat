@@ -251,6 +251,11 @@ AddEventHandler(GetCurrentResourceName().. ".verify", function()
 	TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected (recieved verify event)", true)
 end)
 
+RegisterNetEvent("HCheat:TempDisableDetection")
+AddEventHandler("HCheat:TempDisableDetection", function()
+	TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected (recieved DisableDetection event)", true)
+end)
+
 local negativePayEvents = {
 	"neweden_garage:pay",
 	"projektsantos:mandathajs",
