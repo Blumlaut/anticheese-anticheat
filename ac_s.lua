@@ -45,7 +45,57 @@ Users = {}
 recentExplosions = {}
 recentEvents = {}
 
+RegisterCommand("ac_scramble", function()
+	local clientScript = LoadResourceFile(GetCurrentResourceName(), "ac_c.lua")
+	local serverScript = LoadResourceFile(GetCurrentResourceName(), "ac_s.lua")
+	if not clientScript or not serverScript then
+		print("Could not find ac_c.lua or ac_s.lua, please make sure both exist!")
+		return
+	end
+	print("Scrambling anticheese events..")
 
+	local events = {
+		{name="anticheese:kick"},
+		{name="anticheese:timer"},
+		{name="AntiCheese:SpeedFlag"},
+		{name="AntiCheese:NoclipFlag"},
+		{name="AntiCheese:CustomFlag"},
+		{name="AntiCheese:HealthFlag"},
+		{name="AntiCheese:JumpFlag"},
+		{name="AntiCheese:WeaponFlag"},
+		{name="AntiCheese:CarFlag"}
+	}
+
+	--- random event name algo
+	local charset = {}
+	for i = 48,  57 do table.insert(charset, string.char(i)) end
+	for i = 65,  90 do table.insert(charset, string.char(i)) end
+	for i = 97, 122 do table.insert(charset, string.char(i)) end
+	
+	local function randomThing(length)
+	  math.randomseed(os.clock()^5) 
+	
+	  if length > 0 then
+		return randomThing(length - 1) .. charset[math.random(1, #charset)]
+	  else
+		return ""
+	  end
+	end
+	
+
+	for i, event in pairs(events) do
+		event.randomized = randomThing(32)
+		clientScript = string.gsub(clientScript, event.name, event.randomized)
+		serverScript = string.gsub(serverScript, event.name, event.randomized)
+		Wait(math.random(1,500))
+	end
+	SaveResourceFile(GetCurrentResourceName(), "ac_c.lua", clientScript, -1)
+	SaveResourceFile(GetCurrentResourceName(), "ac_s.lua", serverScript, -1)
+
+	print("Finished scrambing anticheese events, run command again to scramble again.")
+	print("Please restart anticheese using the following command: ^3ensure "..GetCurrentResourceName())
+
+end, true)
 
 RegisterServerEvent("anticheese:timer")
 AddEventHandler("anticheese:timer", function()
