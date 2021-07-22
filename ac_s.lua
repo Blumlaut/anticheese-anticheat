@@ -77,7 +77,7 @@ RegisterCommand("ac_scramble", function()
 	for i = 97, 122 do table.insert(charset, string.char(i)) end
 	
 	local function randomThing(length, i)
-	  math.randomseed(GetGameTimer()+(os.clock()^5)+i) 
+	  math.randomseed(GetGameTimer()+(os.clock()^5)+(i or 1)) 
 	
 	  if length > 0 then
 		return randomThing(length - 1) .. charset[math.random(1, #charset)]
