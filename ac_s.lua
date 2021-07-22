@@ -54,7 +54,7 @@ RegisterCommand("ac_scramble", function()
 	end
 	print("Scrambling anticheese events..")
 
-	local events = {
+	local anticheeseEventsTable = {
 		{name="anticheese:kick"},
 		{name="anticheese:timer"},
 		{name="AntiCheese:SpeedFlag"},
@@ -63,8 +63,9 @@ RegisterCommand("ac_scramble", function()
 		{name="AntiCheese:HealthFlag"},
 		{name="AntiCheese:JumpFlag"},
 		{name="AntiCheese:WeaponFlag"},
-		{name="AntiCheese:CarFlag"}
-	}
+		{name="AntiCheese:CarFlag"},
+		{name="anticheeseEventsTable"}
+	} --anticheeseEventsTable
 
 	--- random event name algo
 	local charset = {}
@@ -83,7 +84,7 @@ RegisterCommand("ac_scramble", function()
 	end
 	
 
-	for i, event in pairs(events) do
+	for i, event in pairs(anticheeseEventsTable) do
 		event.randomized = randomThing(32)
 		clientScript = string.gsub(clientScript, event.name, event.randomized)
 		serverScript = string.gsub(serverScript, event.name, event.randomized)
