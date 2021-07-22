@@ -93,7 +93,7 @@ RegisterCommand("ac_scramble", function()
 	SaveResourceFile(GetCurrentResourceName(), "ac_s.lua", serverScript, -1)
 
 	print("Finished scrambing anticheese events, run command again to scramble again.")
-	print("Please restart anticheese using the following command: ^3ensure "..GetCurrentResourceName())
+	print("Please restart anticheese using the following command: ^3ensure "..GetCurrentResourceName().."^7")
 
 end, true)
 
