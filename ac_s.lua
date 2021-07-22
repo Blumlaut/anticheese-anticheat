@@ -55,16 +55,20 @@ RegisterCommand("ac_scramble", function()
 	print("Scrambling anticheese events..")
 
 	local anticheeseEventsTable = {
-		{name="anticheese:kick"},
-		{name="anticheese:timer"},
-		{name="AntiCheese:SpeedFlag"},
-		{name="AntiCheese:NoclipFlag"},
-		{name="AntiCheese:CustomFlag"},
-		{name="AntiCheese:HealthFlag"},
-		{name="AntiCheese:JumpFlag"},
-		{name="AntiCheese:WeaponFlag"},
-		{name="AntiCheese:CarFlag"},
-		{name="anticheeseEventsTable"}
+		"anticheese:kick",
+		"anticheese:timer",
+		"AntiCheese:SpeedFlag",
+		"AntiCheese:NoclipFlag",
+		"AntiCheese:CustomFlag",
+		"AntiCheese:HealthFlag",
+		"AntiCheese:JumpFlag",
+		"AntiCheese:WeaponFlag",
+		"AntiCheese:CarFlag",
+		"anticheeseEventsTable",
+		"maliciousBillings",
+		"maliciousMessages",
+		"jailerEvents",
+		"spammedEvents"
 	}
 
 	--- random event name algo
@@ -85,9 +89,9 @@ RegisterCommand("ac_scramble", function()
 	
 
 	for i, event in pairs(anticheeseEventsTable) do
-		event.randomized = randomThing(32)
-		clientScript = string.gsub(clientScript, event.name, event.randomized)
-		serverScript = string.gsub(serverScript, event.name, event.randomized)
+		local randomized = randomThing(32)
+		clientScript = string.gsub(clientScript, event, randomized)
+		serverScript = string.gsub(serverScript, event, randomized)
 		Wait(math.random(1,500))
 	end
 	SaveResourceFile(GetCurrentResourceName(), "ac_c.lua", clientScript, -1)
