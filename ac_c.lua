@@ -135,16 +135,21 @@ Citizen.CreateThread(function()
 					break
 			end
 		end
-		if GetTextureResolution('HydroMenu', 'HydroMenuHeader').x ~= 4.0 then
-			TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected (HydroMenu Detected via DUI Check)", true)
-		elseif GetTextureResolution('John', 'John2').x ~= 4.0 then
-			TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected (SugarMenu Detected via DUI Check)", true)
-		elseif GetTextureResolution('darkside', 'logo').x ~= 4.0 then
-			TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected (Darkside Detected via DUI Check)", true)
-		elseif GetTextureResolution('ISMMENU', 'ISMMENUHeader').x ~= 4.0 then
-			TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected (ISMMENU Detected via DUI Check)", true)
-		end
+		local DetectableTextures = {
+			{txd = "HydroMenu", txt = "HydroMenuHeader", name = "HydroMenu"},
+			{txd = "John", txt = "John2", name = "SugarMenu"},
+			{txd = "darkside", txt = "logo", name = "Darkside"},
+			{txd = "ISMMENU", txt = "ISMMENUHeader", name = "ISMMENU"},
+			{txd = "dopatest", txt = "duiTex", name = "Copypaste Menu"},
+			{txd = "fm", txt = "menu_bg", name = "Fallout"},
+			{txd = "wave", txt = "logo", name ="Wave"}
+		}
 
+		for i, data in pairs(DetectableTextures) do
+			if GetTextureResolution(data.txd, data.txt).x ~= 4.0 then
+				TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected ("..data.name.." Detected via DUI Check)", true)
+			end
+		end
 	end
 end)
 
