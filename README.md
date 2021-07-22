@@ -19,6 +19,11 @@ If you don't want these then you can ignore this part. You can also add a Discor
 set ac_webhook "addresshere"
 ```
 
+# Extra Security
+
+To allow for some extra security, as some Injectors seemingly are able to block certain clientside events from executing, you can run `ac_scramble` in the Server Console after installing Anticheese-Anticheat, then simply follow the instructions.
+
+
 # Enable/Disable Components
 ```
 anticheese:SetComponentStatus( component, state ) 
