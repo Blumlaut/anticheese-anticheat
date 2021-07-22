@@ -65,7 +65,7 @@ RegisterCommand("ac_scramble", function()
 		{name="AntiCheese:WeaponFlag"},
 		{name="AntiCheese:CarFlag"},
 		{name="anticheeseEventsTable"}
-	} --anticheeseEventsTable
+	}
 
 	--- random event name algo
 	local charset = {}
