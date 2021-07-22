@@ -78,7 +78,7 @@ RegisterCommand("ac_scramble", function()
 		for i = 97, 122 do table.insert(charset, string.char(i)) end
 		
 		local function randomThing(length, i)
-			math.randomseed(GetGameTimer()+(os.clock()^5)+(i or 1)+os.time())
+			math.randomseed(GetGameTimer()^2+(os.clock()^2)+(i or 1)+os.time())
 			Wait(1)
 		
 			if length > 0 then
@@ -96,20 +96,24 @@ RegisterCommand("ac_scramble", function()
 
 			--Wait(math.random(500,2000))
 		end
-		local collission = false
+		local collision = false
 		repeat 
+			collision = false
 			for i, event in pairs(scrambledEvents) do
 				for o, event2 in pairs(scrambledEvents) do
 					if i~=o and event==event2 then
-						print("collission detected for "..anticheeseEventsTable[i].." ("..event.."), regenerating.")
-						collission = true
+						print("collision detected between "..anticheeseEventsTable[i].." and "..anticheeseEventsTable[o].." ("..event.."), regenerating. (if this message shows multiple times, restart your server and try again)")
+						collision = true
 						Wait(1000)
-						scrambledEvents[i] = randomThing(32, i^5)
+						for i, event in pairs(anticheeseEventsTable) do
+							Wait(200)
+							scrambledEvents[i] = randomThing(32, i^5)
+						end
 					end
 				end
 			end
 			Wait(1)
-		until (not collission)
+		until (not collision)
 		for i, event in pairs(anticheeseEventsTable) do
 			clientScript = string.gsub(clientScript, event, scrambledEvents[i])
 			serverScript = string.gsub(serverScript, event, scrambledEvents[i])					
