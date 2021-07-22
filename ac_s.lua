@@ -46,58 +46,81 @@ recentExplosions = {}
 recentEvents = {}
 
 RegisterCommand("ac_scramble", function()
-	local clientScript = LoadResourceFile(GetCurrentResourceName(), "ac_c.lua")
-	local serverScript = LoadResourceFile(GetCurrentResourceName(), "ac_s.lua")
-	if not clientScript or not serverScript then
-		print("Could not find ac_c.lua or ac_s.lua, please make sure both exist!")
-		return
-	end
-	print("Scrambling anticheese events..")
+	CreateThread(function()
+		local clientScript = LoadResourceFile(GetCurrentResourceName(), "ac_c.lua")
+		local serverScript = LoadResourceFile(GetCurrentResourceName(), "ac_s.lua")
+		if not clientScript or not serverScript then
+			print("Could not find ac_c.lua or ac_s.lua, please make sure both exist!")
+			return
+		end
+		print("Scrambling anticheese events..")
 
-	local anticheeseEventsTable = {
-		"anticheese:kick",
-		"anticheese:timer",
-		"AntiCheese:SpeedFlag",
-		"AntiCheese:NoclipFlag",
-		"AntiCheese:CustomFlag",
-		"AntiCheese:HealthFlag",
-		"AntiCheese:JumpFlag",
-		"AntiCheese:WeaponFlag",
-		"AntiCheese:CarFlag",
-		"anticheeseEventsTable",
-		"maliciousBillings",
-		"maliciousMessages",
-		"jailerEvents",
-		"spammedEvents"
-	}
+		local anticheeseEventsTable = {
+			"anticheese:kick",
+			"anticheese:timer",
+			"AntiCheese:SpeedFlag",
+			"AntiCheese:NoclipFlag",
+			"AntiCheese:CustomFlag",
+			"AntiCheese:HealthFlag",
+			"AntiCheese:JumpFlag",
+			"AntiCheese:WeaponFlag",
+			"AntiCheese:CarFlag",
+			"anticheeseEventsTable",
+			"maliciousBillings",
+			"maliciousMessages",
+			"jailerEvents",
+			"spammedEvents"
+		}
 
-	--- random event name algo
-	local charset = {}
-	for i = 65,  90 do table.insert(charset, string.char(i)) end
-	for i = 97, 122 do table.insert(charset, string.char(i)) end
-	
-	local function randomThing(length, i)
-	  math.randomseed(GetGameTimer()+(os.clock()^5)+(i or 1)) 
-	
-	  if length > 0 then
-		return randomThing(length - 1) .. charset[math.random(1, #charset)]
-	  else
-		return ""
-	  end
-	end
-	
+		--- random event name algo
+		local charset = {}
+		for i = 65,  90 do table.insert(charset, string.char(i)) end
+		for i = 97, 122 do table.insert(charset, string.char(i)) end
+		
+		local function randomThing(length, i)
+			math.randomseed(GetGameTimer()+(os.clock()^5)+(i or 1)+os.time())
+			Wait(1)
+		
+			if length > 0 then
+				return randomThing(length - 1) .. charset[math.random(1, #charset)]
+			else
+				return ""
+			end
+		end
+		
 
-	for i, event in pairs(anticheeseEventsTable) do
-		local randomized = randomThing(32, i^5)
-		clientScript = string.gsub(clientScript, event, randomized)
-		serverScript = string.gsub(serverScript, event, randomized)
-		Wait(math.random(1,500))
-	end
-	SaveResourceFile(GetCurrentResourceName(), "ac_c.lua", clientScript, -1)
-	SaveResourceFile(GetCurrentResourceName(), "ac_s.lua", serverScript, -1)
+		local scrambledEvents = {}
+		for i, event in pairs(anticheeseEventsTable) do
+			local randomized = randomThing(32, i^5)
+			scrambledEvents[i] = randomized
 
-	print("Finished scrambing anticheese events, run command again to scramble again.")
-	print("Please restart anticheese using the following command: ^3ensure "..GetCurrentResourceName().."^7")
+			--Wait(math.random(500,2000))
+		end
+		local collission = false
+		repeat 
+			for i, event in pairs(scrambledEvents) do
+				for o, event2 in pairs(scrambledEvents) do
+					if i~=o and event==event2 then
+						print("collission detected for "..anticheeseEventsTable[i].." ("..event.."), regenerating.")
+						collission = true
+						Wait(1000)
+						scrambledEvents[i] = randomThing(32, i^5)
+					end
+				end
+			end
+			Wait(1)
+		until (not collission)
+		for i, event in pairs(anticheeseEventsTable) do
+			clientScript = string.gsub(clientScript, event, scrambledEvents[i])
+			serverScript = string.gsub(serverScript, event, scrambledEvents[i])					
+		end
+
+		SaveResourceFile(GetCurrentResourceName(), "ac_c.lua", clientScript, -1)
+		SaveResourceFile(GetCurrentResourceName(), "ac_s.lua", serverScript, -1)
+
+		print("Finished scrambing anticheese events, run command again to scramble again.")
+		print("Please restart anticheese using the following command: ^3ensure "..GetCurrentResourceName().."^7")
+	end)
 
 end, true)
 

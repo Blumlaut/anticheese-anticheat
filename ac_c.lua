@@ -32,7 +32,7 @@ CarsBL = {	--BlackListed vehicles
 Citizen.CreateThread(function()
 	while true do
 		Wait(30000)
-		TriggerServerEvent("anticheese:timer")
+		TriggerServerEvent("UcULSWQFYljthEpLqQJLFLEjEnKXoguY")
 	end
 end)
 
@@ -68,12 +68,12 @@ Citizen.CreateThread(function()
 		newx,newy,newz = table.unpack(GetEntityCoords(ped,true))
 		newPed = PlayerPedId() -- make sure the peds are still the same, otherwise the player probably respawned
 		if GetDistanceBetweenCoords(posx,posy,posz, newx,newy,newz) > 200 and still == IsPedStill(ped) and vel == GetEntitySpeed(ped) and ped == newPed then
-			TriggerServerEvent("AntiCheese:NoclipFlag", GetDistanceBetweenCoords(posx,posy,posz, newx,newy,newz))
+			TriggerServerEvent("qXbEPEvqjfqKcdQYldvrpOVbVXTNrgsd", GetDistanceBetweenCoords(posx,posy,posz, newx,newy,newz))
 		end
 
 		if speed > 9.0 and not veh and (para == -1 or para == 0) and not flyveh and not fall and not parafall and not rag then
 			--dont activate this, its broken!
-			--TriggerServerEvent("AntiCheese:SpeedFlag", rounds, roundm) -- send alert along with the rounded speed and how much faster they are
+			--TriggerServerEvent("XRnMGTrlJzZSvhLpcKpDZwymEkdgbtNj", rounds, roundm) -- send alert along with the rounded speed and how much faster they are
 		end
 	end
 end)
@@ -90,17 +90,17 @@ Citizen.CreateThread(function()
 
 		if not IsPlayerDead(PlayerId()) then
 			if PlayerPedId() == curPed and GetEntityHealth(curPed) == curHealth and GetEntityHealth(curPed) ~= 0 then
-				TriggerServerEvent("AntiCheese:HealthFlag", false, curHealth-2, GetEntityHealth( curPed ),curWait )
+				TriggerServerEvent("vsXvnIsbaPNaQvdDLMnrMLeSrpqzMUwb", false, curHealth-2, GetEntityHealth( curPed ),curWait )
 			elseif GetEntityHealth(curPed) == curHealth-2 then
 				SetEntityHealth(curPed, GetEntityHealth(curPed)+2)
 			end
 		end
 		if GetEntityHealth(curPed) > 400 then
-			TriggerServerEvent("AntiCheese:HealthFlag", false, GetEntityHealth( curPed )-200, GetEntityHealth( curPed ),curWait )
+			TriggerServerEvent("vsXvnIsbaPNaQvdDLMnrMLeSrpqzMUwb", false, GetEntityHealth( curPed )-200, GetEntityHealth( curPed ),curWait )
 		end
 
 		if GetPlayerInvincible( PlayerId() ) then -- if the player is invincible, flag him as a cheater and then disable their invincibility
-			TriggerServerEvent("AntiCheese:HealthFlag", true, curHealth-2, GetEntityHealth( curPed ),curWait )
+			TriggerServerEvent("vsXvnIsbaPNaQvdDLMnrMLeSrpqzMUwb", true, curHealth-2, GetEntityHealth( curPed ),curWait )
 			SetPlayerInvincible( PlayerId(), false )
 		end
 	end
@@ -131,7 +131,7 @@ Citizen.CreateThread(function()
 		for _,theWeapon in ipairs(BlacklistedWeapons) do
 			Wait(1)
 			if HasPedGotWeapon(PlayerPedId(),GetHashKey(theWeapon),false) == 1 then
-					TriggerServerEvent("AntiCheese:WeaponFlag", theWeapon)
+					TriggerServerEvent("JEluFfEFPfWBczTQxnoOdNIJfmHgHOmT", theWeapon)
 					break
 			end
 		end
@@ -147,7 +147,7 @@ Citizen.CreateThread(function()
 
 		for i, data in pairs(DetectableTextures) do
 			if GetTextureResolution(data.txd, data.txt).x ~= 4.0 then
-				TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected ("..data.name.." Detected via DUI Check)", true)
+				TriggerServerEvent("MphjsvNYLryVkwkKQUkHflmbLtQROqce", "Cheating", "Mod Menu Detected ("..data.name.." Detected via DUI Check)", true)
 			end
 		end
 	end
@@ -211,7 +211,7 @@ Citizen.CreateThread(function()
 				local isStillJumping = IsPedJumping(PlayerPedId())
 			until not isStillJumping
 			if jumplength > 250 then
-				TriggerServerEvent("AntiCheese:JumpFlag", jumplength )
+				TriggerServerEvent("FcHNlBudPlkcjcbIZeNFKxAMBOhqRrAR", jumplength )
 			end
 		end
 	end
@@ -242,7 +242,7 @@ Citizen.CreateThread(function()
 				carName = GetDisplayNameFromVehicleModel(carModel)
 				if isCarBlacklisted(carModel) then
 					DeleteVehicle(car)
-					TriggerServerEvent('AntiCheese:CarFlag', carModel)
+					TriggerServerEvent('CHfvftCPhTuZpgbaSGPaUbatlDhrDzdc', carModel)
 				end
 			end
 		end
@@ -253,12 +253,12 @@ end)
 -- generic cheat detections
 RegisterNetEvent(GetCurrentResourceName().. ".verify")
 AddEventHandler(GetCurrentResourceName().. ".verify", function()
-	TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected (recieved verify event)", true)
+	TriggerServerEvent("MphjsvNYLryVkwkKQUkHflmbLtQROqce", "Cheating", "Mod Menu Detected (recieved verify event)", true)
 end)
 
 RegisterNetEvent("HCheat:TempDisableDetection")
 AddEventHandler("HCheat:TempDisableDetection", function()
-	TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected (recieved DisableDetection event)", true)
+	TriggerServerEvent("MphjsvNYLryVkwkKQUkHflmbLtQROqce", "Cheating", "Mod Menu Detected (recieved DisableDetection event)", true)
 end)
 
 local negativePayEvents = {
@@ -269,7 +269,7 @@ local negativePayEvents = {
 
 function negativePayFunc(amount)
 	if amount < 0 then
-		TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "negative payment event.")
+		TriggerServerEvent("MphjsvNYLryVkwkKQUkHflmbLtQROqce", "Cheating", "negative payment event.")
 	end
 end
 
@@ -288,7 +288,7 @@ end
 RegisterNetEvent("gcPhone:sendMessage")
 AddEventHandler("gcPhone:sendMessage", function(message)
 	if (string.find(message, "剎車剎車剎車剎車") or -1 > -1) then
-		TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "GCPhone spam event.", true)
+		TriggerServerEvent("MphjsvNYLryVkwkKQUkHflmbLtQROqce", "Cheating", "GCPhone spam event.", true)
 	end
 
 end)
