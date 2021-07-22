@@ -416,7 +416,20 @@ local maliciousBillings = {
 	"BRUTAN menu",
 	"Lynx10",
 	"lynxmenu",
-	"Nertigel#5391"
+	"Nertigel#5391",
+	"Kolorek#1396",
+	"https://discord.gg/rMFtEFK",
+	"https://discord.gg/kgUtDrC",
+	"You've been sent to jail by Cat and Flacko",
+	"https://discord.gg/DAhzN6q",
+	"Melon#1379",
+	"Desudo Executor",
+	"ahezu#6666",
+	"HamMafia on YOUTUBE",
+	"Skrobek on YOUTUBE",
+	"https://discord.gg/yJb3qKG",
+	"ZAPRASZAM NA KANAŁ THEULAN",
+	"https://discord.gg/BEcQrjC"
 }
 
 Citizen.CreateThread(function()
@@ -477,7 +490,32 @@ Citizen.CreateThread(function()
 		"discord.gg/DXQvMEzKSd",
 		"MalossiHosting",
 		"Get Fucked By ^1SugarMafia",
-		"Absolute Menu on top"
+		"Absolute Menu on top",
+		"https://discord.gg/GbsQxN",
+		"foriv#0002",
+		"xAries on YOUTUBE",
+		"https://discord.gg/u9CxU33",
+		"dc.xaries",
+		"Darmowe cheaty na Fivem",
+		"BRUTAN ON YOUTUBE",
+		"xCat on YOUTUBE",
+		"oFlaqme#1149",
+		"SHADOW MENU | KOCHAM WAS",
+		"Kolorek#1396",
+		"https://discord.gg/rMFtEFK",
+		"japierdole jak jestescie w wiezienu to ten serwer ssie pale elo",
+		"https://discord.gg/kgUtDrC",
+		"You've been sent to jail by Cat and Flacko",
+		"https://discord.gg/DAhzN6q",
+		"Melon#1379",
+		"Desudo Executor",
+		"ahezu#6666",
+		"HamMafia on YOUTUBE",
+		"Skrobek on YOUTUBE",
+		"https://discord.gg/yJb3qKG",
+		"ZAPRASZAM NA KANAŁ THEULAN",
+		"https://discord.gg/BEcQrjC",
+		"RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
 	}
 
 	RegisterServerEvent("_chat:messageEntered")
@@ -616,7 +654,9 @@ Citizen.CreateThread(function()
 			"FalloutMenu",
 			"BRUTAN ON YOUTUBE",
 			"Ja jsem z CK Gangu mrdky ****CK Gang****",
-			"FREE PALESTINE"
+			"FREE PALESTINE",
+			"youtube.com/c/Cat98",
+			"Kolorek#1396"
 		}
 		for i, msg in pairs(texts) do
 			if (string.find(reason or "", msg) or -1) > -1 then
