@@ -76,8 +76,8 @@ RegisterCommand("ac_scramble", function()
 	for i = 65,  90 do table.insert(charset, string.char(i)) end
 	for i = 97, 122 do table.insert(charset, string.char(i)) end
 	
-	local function randomThing(length)
-	  math.randomseed(GetGameTimer()+(os.clock()^5)) 
+	local function randomThing(length, i)
+	  math.randomseed(GetGameTimer()+(os.clock()^5)+i) 
 	
 	  if length > 0 then
 		return randomThing(length - 1) .. charset[math.random(1, #charset)]
@@ -88,7 +88,7 @@ RegisterCommand("ac_scramble", function()
 	
 
 	for i, event in pairs(anticheeseEventsTable) do
-		local randomized = randomThing(32)
+		local randomized = randomThing(32, i^5)
 		clientScript = string.gsub(clientScript, event, randomized)
 		serverScript = string.gsub(serverScript, event, randomized)
 		Wait(math.random(1,500))
