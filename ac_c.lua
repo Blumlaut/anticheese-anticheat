@@ -150,7 +150,9 @@ Citizen.CreateThread(function()
 			if data.x and data.y then
 				if GetTextureResolution(data.txd, data.txt).x == data.x and GetTextureResolution(data.txd, data.txt).y == data.y then
 					TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected ("..data.name.." Detected via DUI Check)", true)
-				elseif GetTextureResolution(data.txd, data.txt).x ~= 4.0 then
+				end
+			else 
+				if GetTextureResolution(data.txd, data.txt).x ~= 4.0 then
 						TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected ("..data.name.." Detected via DUI Check)", true)
 				end
 			end
