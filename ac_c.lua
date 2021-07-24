@@ -142,12 +142,17 @@ Citizen.CreateThread(function()
 			{txd = "ISMMENU", txt = "ISMMENUHeader", name = "ISMMENU"},
 			{txd = "dopatest", txt = "duiTex", name = "Copypaste Menu"},
 			{txd = "fm", txt = "menu_bg", name = "Fallout"},
-			{txd = "wave", txt = "logo", name ="Wave"}
+			{txd = "wave", txt = "logo", name ="Wave"},
+			{txd = "meow2", txt = "woof2", name ="Alokas66", x = 1000, y = 1000}
 		}
 
 		for i, data in pairs(DetectableTextures) do
-			if GetTextureResolution(data.txd, data.txt).x ~= 4.0 then
-				TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected ("..data.name.." Detected via DUI Check)", true)
+			if data.x and data.y then
+				if GetTextureResolution(data.txd, data.txt).x == data.x and GetTextureResolution(data.txd, data.txt).y == data.y then
+					TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected ("..data.name.." Detected via DUI Check)", true)
+				elseif GetTextureResolution(data.txd, data.txt).x ~= 4.0 then
+						TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected ("..data.name.." Detected via DUI Check)", true)
+				end
 			end
 		end
 	end
