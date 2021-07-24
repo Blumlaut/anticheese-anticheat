@@ -228,13 +228,12 @@ function isCarBlacklisted(model)
 end
 
 Citizen.CreateThread(function()
-local playerPedLocal = PlayerPedId()
 	while true do
 		Citizen.Wait(500)
-		if IsPedInAnyVehicle(playerPedLocal) then
+		if IsPedInAnyVehicle(GetPlayerPed(-1)) then
 			v = GetVehiclePedIsIn(playerPed, false)
 		end
-		playerPed = playerPedLocal
+		playerPed = GetPlayerPed(-1)
 		
 		if playerPed and v then
 			if GetPedInVehicleSeat(v, -1) == playerPed then
