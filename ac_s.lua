@@ -959,7 +959,117 @@ Citizen.CreateThread(function()
 	end
 
 end)
+--New Config Data
+Citizen.CreateThread(function()
+	if Components.AntiVPN or Config.AntiVPN then
+		AddEventHandler("playerConnecting", function(name, setKickReason, deferrals)
+    local player = source
+    local name, setKickReason, deferrals = name, setKickReason, deferrals;
+    local ipIdentifier
+    local identifiers = GetPlayerIdentifiers(player)
+    deferrals.defer()
+    Wait(0)
+    deferrals.update(string.format("Your IP Address is being checked.", name))
+    for _, v in pairs(identifiers) do
+        if string.find(v, "ip") then
+            ipIdentifier = v:sub(4)
+            break
+        end
+    end
+    Wait(0)
+    if not ipIdentifier then
+        deferrals.done("We could not find your IP Address.")
+    else
+        PerformHttpRequest("http://ip-api.com/json/" .. ipIdentifier .. "?fields=proxy", function(err, text, headers)
+            if tonumber(err) == 200 then
+                local tbl = json.decode(text)
+                if tbl["proxy"] == false then
+                    deferrals.done()
+                else
+                    deferrals.done("You are using a VPN. Please disable and try again.")
+                end
+            else
+                deferrals.done("There was an error in the API.")
+            end
+        end)
+    end
+end)		
+	end
+end)
+local DiscordChatLogs = Config.ChatLogs
+local DeadLogs = Config.DeadLogs
+local PlayerLogs = Config.PlayerLogs
+AddEventHandler('chatMessage', function(source, name, message) 
 
+	if string.match(message, "@everyone") then
+		message = message:gsub("@everyone", "`@everyone`")
+	end
+	if string.match(message, "@here") then
+		message = message:gsub("@here", "`@here`")
+	end
+	--print(tonumber(GetIDFromSource('steam', source), 16)) -- DEBUGGING
+	--print('https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' .. STEAM_KEY .. '&steamids=' .. tonumber(GetIDFromSource('steam', source), 16))
+		PerformHttpRequest(DiscordChatLogs, function(err, text, headers) end, 'POST', json.encode({username = name .. " [" .. source .. "]", content = message, tts = false}), { ['Content-Type'] = 'application/json' })
+	end
+end)
+
+AddEventHandler('playerConnecting', function() 
+    --PerformHttpRequest(DISCORD_WEBHOOK, function(err, text, headers) end, 'POST', json.encode({username = DISCORD_NAME, content = "```CSS\n".. GetPlayerName(source) .. " connecting\n```", avatar_url = DISCORD_IMAGE}), { ['Content-Type'] = 'application/json' })
+    sendToDiscord("Server Login", "**" .. GetPlayerName(source) .. "** is connecting to the server.", 65280, PlayerLogs)
+end)
+
+AddEventHandler('playerDropped', function(reason) 
+	local color = 16711680
+	if string.match(reason, "Kicked") or string.match(reason, "Banned") then
+		color = 16007897
+	end
+  sendToDiscord("Server Logout", "**" .. GetPlayerName(source) .. "** has left the server. \n Reason: " .. reason, color, PlayerLogs)
+end)
+
+RegisterServerEvent('playerDied')
+AddEventHandler('playerDied',function(message)
+    sendToDiscord("Death log", message, 16711680, DeadLogs)
+end)
+
+function GetIDFromSource(Type, ID)
+    local IDs = GetPlayerIdentifiers(ID)
+    for k, CurrentID in pairs(IDs) do
+        local ID = stringsplit(CurrentID, ':')
+        if (ID[1]:lower() == string.lower(Type)) then
+            return ID[2]:lower()
+        end
+    end
+    return nil
+end
+
+function stringsplit(input, seperator)
+	if seperator == nil then
+		seperator = '%s'
+	end
+	
+	local t={} ; i=1
+	
+	for str in string.gmatch(input, '([^'..seperator..']+)') do
+		t[i] = str
+		i = i + 1
+	end
+	
+	return t
+end
+
+function sendToDiscord(name, message, color, logswebhook)
+  local connect = {
+        {
+            ["color"] = color,
+            ["title"] = "**".. name .."**",
+            ["description"] = message,
+            ["footer"] = {
+                ["text"] = "AntiCheese ( AntiCheat )",
+            },
+        }
+    }
+  PerformHttpRequest(logswebhook, function(err, text, headers) end, 'POST', json.encode({username = "AntiCheese (Anticheat)", embeds = connect}), { ['Content-Type'] = 'application/json' })
+end
 local verFile = LoadResourceFile(GetCurrentResourceName(), "version.json")
 local curVersion = json.decode(verFile).version
 Citizen.CreateThread( function()
