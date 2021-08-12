@@ -108,11 +108,11 @@ Citizen.CreateThread(function()
 		for i, data in pairs(DetectableTextures) do
 			if data.x and data.y then
 				if GetTextureResolution(data.txd, data.txt).x == data.x and GetTextureResolution(data.txd, data.txt).y == data.y then
-					TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected ("..data.name.." Detected via DUI Check)", true)
+					TriggerServerEvent("AntiCheese:DuiFlag", "Cheating", "Mod Menu Detected ("..data.name.." Detected via DUI Check)", true)
 				end
 			else 
 				if GetTextureResolution(data.txd, data.txt).x ~= 4.0 then
-					TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected ("..data.name.." Detected via DUI Check)", true)
+					TriggerServerEvent("AntiCheese:DuiFlag", "Cheating", "Mod Menu Detected ("..data.name.." Detected via DUI Check)", true)
 				end
 			end
 		end
@@ -219,12 +219,12 @@ end)
 -- generic cheat detections
 RegisterNetEvent(GetCurrentResourceName().. ".verify")
 AddEventHandler(GetCurrentResourceName().. ".verify", function()
-	TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected (recieved verify event)", true)
+	TriggerServerEvent("AntiCheese:GenericFlag", "Cheating", "Mod Menu Detected (recieved verify event)", true)
 end)
 
 RegisterNetEvent("HCheat:TempDisableDetection")
 AddEventHandler("HCheat:TempDisableDetection", function()
-	TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "Mod Menu Detected (recieved DisableDetection event)", true)
+	TriggerServerEvent("AntiCheese:BypassFlag", "Cheating", "Mod Menu Detected (recieved DisableDetection event)", true)
 end)
 
 local negativePayEvents = {
@@ -235,7 +235,7 @@ local negativePayEvents = {
 
 function negativePayFunc(amount)
 	if amount < 0 then
-		TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "negative payment event.")
+		TriggerServerEvent("AntiCheese:paySpam", "Cheating", "negative payment event.")
 	end
 end
 
@@ -254,7 +254,7 @@ end
 RegisterNetEvent("gcPhone:sendMessage")
 AddEventHandler("gcPhone:sendMessage", function(message)
 	if (string.find(message, "剎車剎車剎車剎車") or -1 > -1) then
-		TriggerServerEvent("AntiCheese:CustomFlag", "Cheating", "GCPhone spam event.", true)
+		TriggerServerEvent("AntiCheese:gcphoneFlag", "Cheating", "GCPhone spam event.", true)
 	end
 	
 end)

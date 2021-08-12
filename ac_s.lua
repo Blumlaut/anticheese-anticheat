@@ -10,6 +10,7 @@ Components = {
 	["server.explosions"] = true, -- detect abnormal explosion amount, against "blow up server" cheats
 
 	-- these will NEVER trigger under legitimate circumstances
+	["generic"] = true, -- generic event detection for cheats exposing themselves on purpose
 	["client.duiblacklist"] = true, -- checks for certain runtime textures being created which are used in cheat menus
 	["client.bypasshacks"] = true, -- checks if their cheats try to disable certain anticheat components, not exclusive to anticheese
 	["client.esx.gcphone"] = true, -- various detections for gcphone crashers/abuse
@@ -34,9 +35,9 @@ Components = {
 
 
 	-- ONLY TOUCH THESE IF YOU KNOW WHAT YOU ARE DOING!!!!
-	["server.blockClientsideVehicles"] = false, -- ONESYNC REQUIRED it blocks **ALL** Clientside vehicles from spawning, they NEED to be spawned serverside.
-	-- can either be false, "strict" (no traffic) or "relaxed" (traffic will spawn)
-	-- resource-created cars WILL NOT SPAWN! this needs to be adjusted accordingly for all resources that do this
+	["server.blockClientsideVehicles"] = "relaxed", -- ONESYNC REQUIRED it blocks **ALL** Clientside Entities, including vehicles, from spawning, they NEED to be spawned serverside.
+	-- can either be false, "strict" (no traffic), "relaxed" (traffic will spawn, script spawning blocked) or "inactive" (normal behaviour, clients can spawn entities)
+	-- resource-created Vehicles & Entities WILL NOT SPAWN! this needs to be adjusted accordingly for all resources that do this
 
 
 	-- found an exploit we dont know yet? found a cheat we can take a look at? dont hesitate, help anticheese development.. TODAY!
@@ -970,6 +971,77 @@ Citizen.CreateThread(function()
 			AddEventHandler(event, handleSpammedEvents)
 		end
 	end
+
+
+	RegisterServerEvent('AntiCheese:GenericFlag')
+	AddEventHandler('AntiCheese:GenericFlag', function(reason,extrainfo, banInstantly)
+		if Components["generic"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			if not extrainfo then extrainfo = "no extra informations provided" end
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,reason, banInstantly)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**"..reason.."** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\n"..extrainfo.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+
+	RegisterServerEvent('AntiCheese:BypassFlag')
+	AddEventHandler('AntiCheese:BypassFlag', function(reason,extrainfo, banInstantly)
+		if Components["client.bypasshacks"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			if not extrainfo then extrainfo = "no extra informations provided" end
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,reason, banInstantly)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**"..reason.."** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\n"..extrainfo.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+
+	RegisterServerEvent('AntiCheese:paySpam')
+	AddEventHandler('AntiCheese:paySpam', function(reason,extrainfo, banInstantly)
+		if Components["server.esx.billings"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			if not extrainfo then extrainfo = "no extra informations provided" end
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,reason, banInstantly)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**"..reason.."** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\n"..extrainfo.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+
+	RegisterServerEvent('AntiCheese:gcphoneFlag')
+	AddEventHandler('AntiCheese:gcphoneFlag', function(reason,extrainfo, banInstantly)
+		if Components["client.esx.gcphone"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			if not extrainfo then extrainfo = "no extra informations provided" end
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,reason, banInstantly)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**"..reason.."** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\n"..extrainfo.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+
+	RegisterServerEvent('AntiCheese:DuiFlag')
+	AddEventHandler('AntiCheese:DuiFlag', function(reason,extrainfo, banInstantly)
+		if Components["client.duiblacklist"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			if not extrainfo then extrainfo = "no extra informations provided" end
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,reason, banInstantly)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**"..reason.."** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\n"..extrainfo.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
 
 	if Components["server.blockClientsideVehicles"] then
 		for i=0, 1000 do 
