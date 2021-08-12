@@ -35,7 +35,7 @@ Components = {
 
 
 	-- ONLY TOUCH THESE IF YOU KNOW WHAT YOU ARE DOING!!!!
-	["server.blockClientsideVehicles"] = "relaxed", -- ONESYNC REQUIRED it blocks **ALL** Clientside Entities, including vehicles, from spawning, they NEED to be spawned serverside.
+	["server.blockClientEntities"] = false, -- ONESYNC REQUIRED it blocks **ALL** Clientside Entities, including vehicles, from spawning, they NEED to be spawned serverside.
 	-- can either be false, "strict" (no traffic), "relaxed" (traffic will spawn, script spawning blocked) or "inactive" (normal behaviour, clients can spawn entities)
 	-- resource-created Vehicles & Entities WILL NOT SPAWN! this needs to be adjusted accordingly for all resources that do this
 
@@ -1043,9 +1043,9 @@ Citizen.CreateThread(function()
 		end
 	end)
 
-	if Components["server.blockClientsideVehicles"] then
+	if Components["server.blockClientEntities"] then
 		for i=0, 1000 do 
-			SetRoutingBucketEntityLockdownMode(i, Components["server.blockClientsideVehicles"])
+			SetRoutingBucketEntityLockdownMode(i, Components["server.blockClientEntities"])
 		end
 	end
 		
