@@ -1,34 +1,4 @@
 
-BlacklistedWeapons = {
-	"WEAPON_BALL",
-	"WEAPON_RAILGUN",
-	"WEAPON_GARBAGEBAG",
-}
-
-CageObjs = {
-	"prop_gold_cont_01",
-	"p_cablecar_s",
-	"stt_prop_stunt_tube_l",
-	"stt_prop_stunt_track_dwuturn",
-	"hei_prop_carrier_cargo_02a",
-	"p_ferris_car_01",
-	"prop_cj_big_boat",
-	"prop_rock_4_big2",
-	"prop_steps_big_01",
-	"v_ilev_lest_bigscreen",
-	"prop_carcreeper",
-	"apa_mp_h_bed_double_09",
-	"apa_mp_h_bed_wide_05",
-	"prop_cattlecrush",
-	"prop_cs_documents_01",
-	
-}
-
-blacklistedCars = {
-	"khanjali", --Example vehicles
-	"avenger"
-}
-
 Citizen.CreateThread(function()
 	while true do
 		Wait(30000)
@@ -231,12 +201,6 @@ RegisterNetEvent("HCheat:TempDisableDetection")
 AddEventHandler("HCheat:TempDisableDetection", function()
 	TriggerServerEvent("AntiCheese:BypassFlag", "Cheating", "Mod Menu Detected (recieved DisableDetection event)", true)
 end)
-
-local negativePayEvents = {
-	"neweden_garage:pay",
-	"projektsantos:mandathajs",
-	"esx_dmvschool:pay"
-}
 
 function negativePayFunc(amount)
 	if amount < 0 then
