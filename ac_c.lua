@@ -1,5 +1,4 @@
 
-
 Citizen.CreateThread(function()
 	while true do
 		Wait(30000)

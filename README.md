@@ -4,11 +4,11 @@
 Anticheat system for FiveM, made in collaboration with EasyAdmin
 
 # About Anti🧀-anticheat:
-This Anitcheat is designed to work with EasyAdmin, hence, it is a required resource to run Anti🧀. It’s based on a 3 ( well, 4 ) Strike system, if you get 3 ( well, 4 ) Strikes, the anticheat will ban you from the server using EasyAdmin’s ban system.
+This Anticheat is designed to work with EasyAdmin, hence, it is a required resource to run Anti🧀. It’s based on a 3 ( well, 4 ) Strike system, if you get 3 ( well, 4 ) Strikes, the anticheat will ban you from the server using EasyAdmin’s ban system.
 There are also smaller checks in place which will not ban you, such as Speedhacking checks.
 
 # Requirement:
-* EasyAdmin 3.6 or Higher
+* EasyAdmin 5.6 or Higher
   * EasyAdmin => https://forum.fivem.net/t/release-easyadmin-its-as-easy-as-it-gets/42245
 
 # Webhooks:
