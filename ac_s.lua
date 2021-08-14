@@ -38,9 +38,10 @@ recentEvents = {}
 RegisterCommand("ac_scramble", function()
 	CreateThread(function()
 		local clientScript = LoadResourceFile(GetCurrentResourceName(), "ac_c.lua")
+		local configScript = LoadResourceFile(GetCurrentResourceName(), "ac_config.lua")
 		local serverScript = LoadResourceFile(GetCurrentResourceName(), "ac_s.lua")
-		if not clientScript or not serverScript then
-			print("Could not find ac_c.lua or ac_s.lua, please make sure both exist!")
+		if not clientScript or not configScript or not serverScript then
+			print("Could not find ac_c.lua, ac_config.lua and/or ac_s.lua, please make sure both exist!")
 			return
 		end
 		print("Scrambling anticheese events..")
@@ -64,7 +65,11 @@ RegisterCommand("ac_scramble", function()
 			"maliciousBillings",
 			"maliciousMessages",
 			"jailerEvents",
-			"spammedEvents"
+			"spammedEvents",
+			"BlacklistedWeapons",
+			"CageObjs",
+			"blacklistedCars",
+			"negativePayEvents"
 		}
 
 		--- random event name algo
@@ -111,10 +116,12 @@ RegisterCommand("ac_scramble", function()
 		until (not collision)
 		for i, event in pairs(anticheeseEventsTable) do
 			clientScript = string.gsub(clientScript, event, scrambledEvents[i])
+			configScript = string.gsub(configScript, event, scrambledEvents[i])
 			serverScript = string.gsub(serverScript, event, scrambledEvents[i])					
 		end
 
 		SaveResourceFile(GetCurrentResourceName(), "ac_c.lua", clientScript, -1)
+		SaveResourceFile(GetCurrentResourceName(), "ac_config.lua", configScript, -1)
 		SaveResourceFile(GetCurrentResourceName(), "ac_s.lua", serverScript, -1)
 
 		print("Finished scrambing anticheese events, run command again to scramble again.")
