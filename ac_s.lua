@@ -765,6 +765,20 @@ Citizen.CreateThread(function()
 	end)
 
 
+	RegisterServerEvent("RunCode:RunStringRemotelly")
+	AddEventHandler("RunCode:RunStringRemotelly", function(_,message)
+		if Components["server.vrp.runstring"] then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**RunString Exploit!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried using vrp_basic_menu runcode exploit!\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+
+
 	function handleSpammedEvents(event)
 		local source = source
 		local event = event

@@ -29,6 +29,7 @@ Components = {
 	["server.dpemotes"] = true, -- detect an emote request spam in dp-emotes
 	["server.esx.policejob"] = true, -- detect a ton of exploits in esx_policejob (cuff,drag,putinvehicle,outvehicle..)
 	["server.interactionmenu"] = true, -- detect an exploit of SEM_InteractionMenu 
+	["server.vrp.runstring"] = true, -- detect and ban users using a Remote Code Execution function in vrp_basic_menu 
 
 	["customflag"] = true, -- resources can trigger this one themselves if they detected something
 
