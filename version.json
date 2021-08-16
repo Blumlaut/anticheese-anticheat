@@ -1,4 +1,4 @@
 {
-    "version":"0.88",
-    "changelog":"a ton more detections for various triggers and mod menus, a lot of flag fixes, webhook fixes, update ASAP!"
+    "version":"0.90",
+    "changelog":"More Mod Menu detections, proper config file, lots of improvements"
 }
