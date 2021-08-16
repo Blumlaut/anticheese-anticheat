@@ -41,7 +41,7 @@ RegisterCommand("ac_scramble", function()
 		local configScript = LoadResourceFile(GetCurrentResourceName(), "ac_config.lua")
 		local serverScript = LoadResourceFile(GetCurrentResourceName(), "ac_s.lua")
 		if not clientScript or not configScript or not serverScript then
-			print("Could not find ac_c.lua, ac_config.lua and/or ac_s.lua, please make sure both exist!")
+			print("Could not find ac_c.lua, ac_config.lua and/or ac_s.lua, please make sure they exist!")
 			return
 		end
 		print("Scrambling anticheese events..")
