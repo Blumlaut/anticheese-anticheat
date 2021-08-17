@@ -251,5 +251,7 @@ spammedEvents = {
 	"SEM_InteractionMenu:CuffNear",
 	"esx_fueldelivery:pay",
 	"AdminMenu:giveBank",
-	"AdminMenu:giveCash"
+	"AdminMenu:giveCash",
+	"esx-qalle-hunting:reward",
+	"esx-qalle-hunting:sell"
 }
