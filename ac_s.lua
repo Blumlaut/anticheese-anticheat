@@ -906,6 +906,17 @@ Citizen.CreateThread(function()
 			end
 		end
 	end)
+		
+	AddEventHandler("clearPedTasksEvent", function(source, data)
+		if data.immediately then
+			CancelEvent()
+			if Components["client.cleartask"] then
+				local license, steam = GetPlayerNeededIdentifiers(source)
+				local name = GetPlayerName(source)
+				SendWebhookMessage(webhook,"**Clear Ped Tasks Event** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nProbably Cheater"```")
+			end
+		end
+	end)
 
 	RegisterServerEvent('AntiCheese:DuiFlag')
 	AddEventHandler('AntiCheese:DuiFlag', function(reason,extrainfo, banInstantly)
