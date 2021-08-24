@@ -416,6 +416,20 @@ Citizen.CreateThread(function()
 		end
 	end)
 		
+	RegisterServerEvent('AntiCheese:Misc')
+	AddEventHandler('AntiCheese:Misc', function(reason,extrainfo, banInstantly)
+		if Components["client.misc"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			if not extrainfo then extrainfo = "no extra informations provided" end
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,reason, banInstantly)
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**"..reason.."** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\n"..extrainfo.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+		
 	AddEventHandler('explosionEvent', function(sender, ev)
 		if Components["server.explosions"] and ev.damageScale ~= 0.0 and ev.ownerNetId == 0 then -- make sure component is enabled, damage isnt 0 and owner is the sender
 			ev.time = os.time()
