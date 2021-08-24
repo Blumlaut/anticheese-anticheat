@@ -8,6 +8,7 @@ Components = {
 	["client.weaponblacklist"] = false, -- blacklist certain weapons in ac_c.lua
 	["client.carblacklist"] = false, -- blacklist certain cars in ac_c.lua
 	["client.misc"] = true, -- anti night, thermal vision, anti multi damage and spectate
+	["server.cleartask"] = true, -- detect kicking from car
 	["server.explosions"] = true, -- detect abnormal explosion amount, against "blow up server" cheats
 
 	-- these will NEVER trigger under legitimate circumstances
