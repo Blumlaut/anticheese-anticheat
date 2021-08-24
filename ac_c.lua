@@ -56,6 +56,27 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
+		Citizen.Wait(60000)
+		if NetworkIsInSpectatorMode() then
+			TriggerServerEvent("AntiSalt:Misc", "Cheating", "Spectator", true)
+		end
+
+		if GetPlayerWeaponDamageModifier(PlayerId()) > 1.0 then
+			TriggerServerEvent("AntiSalt:Misc", "Cheating", "Damage Modifier", true)
+		end
+
+		if GetUsingseethrough() then
+			TriggerServerEvent("AntiSalt:Misc", "Cheating", "Thermal Vision", true)
+		end
+
+		if GetUsingnightvision() then
+			TriggerServerEvent("AntiSalt:Misc", "Cheating", "Night Vision", true)
+		end
+	end
+end)
+
+Citizen.CreateThread(function()
+	while true do
 		Citizen.Wait(30000)
 		for _,theWeapon in ipairs(BlacklistedWeapons) do
 			Wait(1)
