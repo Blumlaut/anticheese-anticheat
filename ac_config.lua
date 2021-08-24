@@ -7,8 +7,11 @@ Components = {
 	["client.superjump"] = false, -- protect against super jump cheats
 	["client.weaponblacklist"] = false, -- blacklist certain weapons in ac_c.lua
 	["client.carblacklist"] = false, -- blacklist certain cars in ac_c.lua
-	["client.misc"] = true, -- anti night, thermal vision, anti multi damage and spectate
-	["server.cleartask"] = true, -- detect kicking from car
+	["client.night"] = true, -- anti night vision
+	["client.thermal"] = true, -- anti thermal vision
+	["client.multidamage"] = true, -- anti multi damage, blocks damage multiplication
+	["client.spectate"] = true, -- detects if cheater is spectating other players
+	["server.cleartask"] = true, -- detects clearing player tasks, e.g.kicking from car
 	["server.explosions"] = true, -- detect abnormal explosion amount, against "blow up server" cheats
 
 	-- these will NEVER trigger under legitimate circumstances
