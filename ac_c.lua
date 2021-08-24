@@ -58,19 +58,19 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(60000)
 		if NetworkIsInSpectatorMode() then
-			TriggerServerEvent("AntiSalt:Misc", "Cheating", "Spectator", true)
+			TriggerServerEvent("AntiCheese:Misc", "Cheating", "Spectator", true)
 		end
 
 		if GetPlayerWeaponDamageModifier(PlayerId()) > 1.0 then
-			TriggerServerEvent("AntiSalt:Misc", "Cheating", "Damage Modifier", true)
+			TriggerServerEvent("AntiCheese:Misc", "Cheating", "Damage Modifier", true)
 		end
 
 		if GetUsingseethrough() then
-			TriggerServerEvent("AntiSalt:Misc", "Cheating", "Thermal Vision", true)
+			TriggerServerEvent("AntiCheese:Misc", "Cheating", "Thermal Vision", true)
 		end
 
 		if GetUsingnightvision() then
-			TriggerServerEvent("AntiSalt:Misc", "Cheating", "Night Vision", true)
+			TriggerServerEvent("AntiCheese:Misc", "Cheating", "Night Vision", true)
 		end
 	end
 end)
