@@ -416,16 +416,58 @@ Citizen.CreateThread(function()
 		end
 	end)
 		
-	RegisterServerEvent('AntiCheese:Misc')
-	AddEventHandler('AntiCheese:Misc', function(reason,extrainfo, banInstantly)
-		if Components["client.misc"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+	RegisterServerEvent('AntiCheese:Spectate')
+	AddEventHandler('AntiCheese:Spectate', function()
+		if Components["client.spectate"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
-			if not extrainfo then extrainfo = "no extra informations provided" end
-			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,reason, banInstantly)
+
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,"Spectating Players")
 
 			if not alreadyBanned then
-				SendWebhookMessage(webhook,"**"..reason.."** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\n"..extrainfo.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+				SendWebhookMessage(webhook,"**Spectating Players!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+		
+	RegisterServerEvent('AntiCheese:Damage')
+	AddEventHandler('AntiCheese:Damage', function()
+		if Components["client.multidamage"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,"Damage Multiplication")
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**Damage Multiplication!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+		
+	RegisterServerEvent('AntiCheese:Thermal')
+	AddEventHandler('AntiCheese:Thermal', function()
+		if Components["client.thermal"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,"Thermal Vision")
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**Thermal Vision!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+		
+	RegisterServerEvent('AntiCheese:Night')
+	AddEventHandler('AntiCheese:Night', function()
+		if Components["client.night"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,"Thermal Night")
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**Thermal Night!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 			end
 		end
 	end)
@@ -861,22 +903,6 @@ Citizen.CreateThread(function()
 
 			if not alreadyBanned then
 				SendWebhookMessage(webhook,"**"..reason.."** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\n"..extrainfo.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
-			end
-		end
-	end)
-
-	AddEventHandler("clearPedTasksEvent", function(source, data)
-		if data.immediately then
-			CancelEvent()
-			if Components["client.cleartask"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
-				local license, steam = GetPlayerNeededIdentifiers(source)
-				local name = GetPlayerName(source)
-				if not extrainfo then extrainfo = "no extra informations provided" end
-				local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,reason, banInstantly)
-	
-				if not alreadyBanned then
-					SendWebhookMessage(webhook,"**"..reason.."** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\n"..extrainfo.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
-				end
 			end
 		end
 	end)
