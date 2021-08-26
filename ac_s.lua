@@ -914,7 +914,7 @@ Citizen.CreateThread(function()
             			if Components["server.cleartask"] then
                 			local license, steam = GetPlayerNeededIdentifiers(source)
 					local name = GetPlayerName(source)
-					local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,reason, banInstantly)
+					local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
 
 					if not alreadyBanned then
 						SendWebhookMessage(webhook,"**Clear Ped Tasks!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried to kick someone from vehicle\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
