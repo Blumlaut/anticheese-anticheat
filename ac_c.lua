@@ -126,12 +126,12 @@ Citizen.CreateThread(function()
 		repeat
 			Wait(1)
 			if IsEntityAttached(object) and DoesEntityExist(object) then
-				if GetEntityModel(object) == GetHashKey("prop_acc_guitar_01") then
+				if GetEntityModel(object) == `prop_acc_guitar_01` then
 					ReqAndDelete(object, true)
 				end
 			end
 			for i=1,#CageObjs do
-				if GetEntityModel(object) == GetHashKey(CageObjs[i]) then
+				if GetEntityModel(object) == CageObjs[i] then
 					ReqAndDelete(object, false)
 				end
 			end
@@ -160,7 +160,7 @@ end)
 
 function isCarBlacklisted(model)
 	for _, blacklistedCar in pairs(blacklistedCars) do
-		if model == GetHashKey(blacklistedCar) then
+		if model == blacklistedCar then
 			return true
 		end
 	end
