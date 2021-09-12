@@ -171,10 +171,10 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(500)
-		if IsPedInAnyVehicle(GetPlayerPed(-1)) then
+		if IsPedInAnyVehicle(PlayerPedId()) then
 			v = GetVehiclePedIsIn(playerPed, false)
 		end
-		playerPed = GetPlayerPed(-1)
+		local playerPed = PlayerPedId()
 		
 		if playerPed and v then
 			if GetPedInVehicleSeat(v, -1) == playerPed then
