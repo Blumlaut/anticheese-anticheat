@@ -36,7 +36,7 @@ recentExplosions = {}
 recentEvents = {}
 
 RegisterCommand("ac_scramble", function()
-	CreateThread(function()
+	Citizen.CreateThread(function()
 		local clientScript = LoadResourceFile(GetCurrentResourceName(), "ac_c.lua")
 		local configScript = LoadResourceFile(GetCurrentResourceName(), "ac_config.lua")
 		local serverScript = LoadResourceFile(GetCurrentResourceName(), "ac_s.lua")
@@ -79,7 +79,7 @@ RegisterCommand("ac_scramble", function()
 		
 		local function randomThing(length, i)
 			math.randomseed(GetGameTimer()^2+(os.clock()^2)+(i or 1)+os.time())
-			Wait(1)
+			Citizen.Wait(1)
 		
 			if length > 0 then
 				return randomThing(length - 1) .. charset[math.random(1, #charset)]
@@ -104,15 +104,15 @@ RegisterCommand("ac_scramble", function()
 					if i~=o and event==event2 then
 						print("collision detected between "..anticheeseEventsTable[i].." and "..anticheeseEventsTable[o].." ("..event.."), regenerating. (if this message shows multiple times, restart your server and try again)")
 						collision = true
-						Wait(1000)
+						Citizen.Wait(1000)
 						for i, event in pairs(anticheeseEventsTable) do
-							Wait(200)
+							Citizen.Wait(200)
 							scrambledEvents[i] = randomThing(32, i^5)
 						end
 					end
 				end
 			end
-			Wait(1)
+			Citizen.Wait(1)
 		until (not collision)
 		for i, event in pairs(anticheeseEventsTable) do
 			clientScript = string.gsub(clientScript, event, scrambledEvents[i])
@@ -147,7 +147,7 @@ AddEventHandler('playerDropped', function()
 	local p = source
 	if(Users[p])then
 		Citizen.CreateThread(function()
-			Wait(10000)
+			Citizen.Wait(10000)
 			Users[p] = nil
 		end)
 	end
@@ -219,7 +219,7 @@ end)
 
 Citizen.CreateThread(function()
 	while true do 
-		Wait(2000)
+		Citizen.Wait(2000)
 		clientExplosionCount = {}
 		for i, expl in ipairs(recentExplosions) do 
 			if not clientExplosionCount[expl.sender] then clientExplosionCount[expl.sender] = 0 end

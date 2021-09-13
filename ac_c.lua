@@ -1,7 +1,7 @@
 
 Citizen.CreateThread(function()
 	while true do
-		Wait(30000)
+		Citizen.Wait(30000)
 		TriggerServerEvent("anticheese:timer")
 	end
 end)
@@ -58,7 +58,7 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(30000)
 		for _,theWeapon in ipairs(BlacklistedWeapons) do
-			Wait(1)
+			Citizen.Wait(1)
 			if HasPedGotWeapon(PlayerPedId(),GetHashKey(theWeapon),false) == 1 then
 				TriggerServerEvent("AntiCheese:WeaponFlag", theWeapon)
 				break
@@ -124,7 +124,7 @@ Citizen.CreateThread(function()
 		local handle, object = FindFirstObject()
 		local finished = false
 		repeat
-			Wait(1)
+			Citizen.Wait(1)
 			if IsEntityAttached(object) and DoesEntityExist(object) then
 				if GetEntityModel(object) == `prop_acc_guitar_01` then
 					ReqAndDelete(object, true)
@@ -147,7 +147,7 @@ Citizen.CreateThread(function()
 		if IsPedJumping(PlayerPedId()) then
 			local jumplength = 0
 			repeat
-				Wait(0)
+				Citizen.Wait(0)
 				jumplength=jumplength+1
 				local isStillJumping = IsPedJumping(PlayerPedId())
 			until not isStillJumping
