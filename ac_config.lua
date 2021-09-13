@@ -48,9 +48,9 @@ Components = {
 
 -- Blacklist Tables
 BlacklistedWeapons = {
-	"WEAPON_BALL",
-	"WEAPON_RAILGUN",
-	"WEAPON_GARBAGEBAG",
+	`WEAPON_BALL`,
+	`WEAPON_RAILGUN`,
+	`WEAPON_GARBAGEBAG`,
 }
 
 

@@ -59,7 +59,7 @@ Citizen.CreateThread(function()
 		Citizen.Wait(30000)
 		for _,theWeapon in ipairs(BlacklistedWeapons) do
 			Citizen.Wait(1)
-			if HasPedGotWeapon(PlayerPedId(),`theWeapon`,false) == 1 then
+			if HasPedGotWeapon(PlayerPedId(),theWeapon,false) == 1 then
 				TriggerServerEvent("AntiCheese:WeaponFlag", theWeapon)
 				break
 			end
