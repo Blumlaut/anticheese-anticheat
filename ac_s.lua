@@ -907,9 +907,12 @@ Citizen.CreateThread(function()
 		end
 	end)
 		
-	AddEventHandler("clearPedTasksEvent", function(ped, source, data)
-    		if data.immediately then
-        		if IsPedAPlayer((ped)) then
+	AddEventHandler("clearPedTasksEvent", function(source, data)
+		source = tonumber(source)
+		local entity = NetworkGetEntityFromNetworkId(data.pedId)
+        	if DoesEntityExist(entity) then
+			local owner = NetworkGetEntityOwner(entity)
+			if owner ~= source then
             			CancelEvent()
             			if Components["server.cleartask"] then
                 			local license, steam = GetPlayerNeededIdentifiers(source)
@@ -920,8 +923,8 @@ Citizen.CreateThread(function()
 						SendWebhookMessage(webhook,"**Clear Ped Tasks!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried to kick someone from vehicle\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 					end
             			end
-        		end
-    		end
+			end
+        	end
 	end)
 
 	RegisterServerEvent('AntiCheese:DuiFlag')
