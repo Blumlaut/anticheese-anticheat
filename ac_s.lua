@@ -416,6 +416,62 @@ Citizen.CreateThread(function()
 		end
 	end)
 		
+	RegisterServerEvent('AntiCheese:Spectate')
+	AddEventHandler('AntiCheese:Spectate', function()
+		if Components["client.spectate"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,"Spectating Players")
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**Spectating Players!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+		
+	RegisterServerEvent('AntiCheese:Damage')
+	AddEventHandler('AntiCheese:Damage', function()
+		if Components["client.multidamage"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,"Damage Multiplication")
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**Damage Multiplication!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+		
+	RegisterServerEvent('AntiCheese:Thermal')
+	AddEventHandler('AntiCheese:Thermal', function()
+		if Components["client.thermal"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,"Thermal Vision")
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**Thermal Vision!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+		
+	RegisterServerEvent('AntiCheese:Night')
+	AddEventHandler('AntiCheese:Night', function()
+		if Components["client.night"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,"Thermal Night")
+
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**Thermal Night!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+		
 	AddEventHandler('explosionEvent', function(sender, ev)
 		if Components["server.explosions"] and ev.damageScale ~= 0.0 and ev.ownerNetId == 0 then -- make sure component is enabled, damage isnt 0 and owner is the sender
 			ev.time = os.time()
@@ -849,6 +905,26 @@ Citizen.CreateThread(function()
 				SendWebhookMessage(webhook,"**"..reason.."** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\n"..extrainfo.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 			end
 		end
+	end)
+		
+	AddEventHandler("clearPedTasksEvent", function(source, data)
+		source = tonumber(source)
+		local entity = NetworkGetEntityFromNetworkId(data.pedId)
+        	if DoesEntityExist(entity) then
+			local owner = NetworkGetEntityOwner(entity)
+			if owner ~= source then
+            			CancelEvent()
+            			if Components["server.cleartask"] then
+                			local license, steam = GetPlayerNeededIdentifiers(source)
+					local name = GetPlayerName(source)
+					local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+
+					if not alreadyBanned then
+						SendWebhookMessage(webhook,"**Clear Ped Tasks!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried to kick someone from vehicle\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+					end
+            			end
+			end
+        	end
 	end)
 
 	RegisterServerEvent('AntiCheese:DuiFlag')
