@@ -192,18 +192,15 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(500)
-		if IsPedInAnyVehicle(PlayerPedId()) then
-			v = GetVehiclePedIsIn(playerPed, false)
-		end
 		local playerPed = PlayerPedId()
+		if IsPedInAnyVehicle(playerPed) then
+			local vehicle = GetVehiclePedIsIn(playerPed, false)
 		
-		if playerPed and v then
-			if GetPedInVehicleSeat(v, -1) == playerPed then
-				local car = GetVehiclePedIsIn(playerPed, false)
-				carModel = GetEntityModel(car)
-				carName = GetDisplayNameFromVehicleModel(carModel)
+			if GetPedInVehicleSeat(vehicle, -1) == playerPed then
+				local carModel = GetEntityModel(vehicle)
+				local carName = GetDisplayNameFromVehicleModel(carModel)
 				if isCarBlacklisted(carModel) then
-					DeleteVehicle(car)
+					DeleteVehicle(vehicle)
 					TriggerServerEvent('AntiCheese:CarFlag', carModel)
 				end
 			end
