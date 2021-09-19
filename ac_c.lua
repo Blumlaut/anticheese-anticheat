@@ -78,13 +78,6 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(30000)
-		for _,theWeapon in ipairs(BlacklistedWeapons) do
-			Citizen.Wait(1)
-			if HasPedGotWeapon(PlayerPedId(),theWeapon,false) == 1 then
-				TriggerServerEvent("AntiCheese:WeaponFlag", theWeapon)
-				break
-			end
-		end
 		local DetectableTextures = {
 			{txd = "HydroMenu", txt = "HydroMenuHeader", name = "HydroMenu"},
 			{txd = "John", txt = "John2", name = "SugarMenu"},
@@ -203,6 +196,14 @@ Citizen.CreateThread(function()
 					DeleteVehicle(vehicle)
 					TriggerServerEvent('AntiCheese:CarFlag', carModel)
 				end
+			end
+		end
+		for _,theWeapon in ipairs(BlacklistedWeapons) do
+			Citizen.Wait(1)
+			if HasPedGotWeapon(PlayerPedId(),theWeapon,false) == 1 then
+				TriggerServerEvent("AntiCheese:WeaponFlag", theWeapon)
+				RemoveWeaponFromPed(PlayerPedId(), theWeapon)
+				break
 			end
 		end
 	end
