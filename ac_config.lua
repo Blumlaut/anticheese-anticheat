@@ -177,7 +177,8 @@ maliciousMessages = {
 	"https://discord.gg/yJb3qKG",
 	"ZAPRASZAM NA KANAŁ THEULAN",
 	"https://discord.gg/BEcQrjC",
-	"RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+	"RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGGGGGGGGGGGGGGGGGGG",
+	"lutfen bankana bak. Sana para gonderdik, bu parayi Alien Menu sayesinde yaptik"
 }
 
 -- events which can be used to jail everyone
@@ -258,5 +259,24 @@ spammedEvents = {
 	"AdminMenu:giveBank",
 	"AdminMenu:giveCash",
 	"esx-qalle-hunting:reward",
-	"esx-qalle-hunting:sell"
+	"esx-qalle-hunting:sell",
+	"esx_vangelico_robbery:gioielli1",
+	"lester:vendita",
+	"houseRobberies:giveMoney",
+	"lh-bankrobbery:server:recieveItem",
+	"esx_uber:pay",
+	"99kr-burglary:Add",
+	"99kr-shops:Cashier",
+	"esx-ecobottles:retrieveBottle",
+	"loffe_carthief:questFinished",
+	"loffe_fishing:caught",
+	"esx_loffe_fangelse:Pay",
+	"loffe_robbery:pickUp",
+	"hospital:client:Revive",
+	"cylex:startSellSarap",
+	"cylex:startTransformSarap",
+	"cylex:startHarvestSarap",
+	"cylex:startSellMelon",
+	"cylex:startTransformMelon",
+	"cylex:startHarvestMelon"
 }

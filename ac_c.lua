@@ -86,6 +86,7 @@ Citizen.CreateThread(function()
 			{txd = "dopatest", txt = "duiTex", name = "Copypaste Menu"},
 			{txd = "fm", txt = "menu_bg", name = "Fallout"},
 			{txd = "wave", txt = "logo", name ="Wave"},
+			{txd = "wave1", txt = "logo1", name = "Wave (alt.)"},
 			{txd = "meow2", txt = "woof2", name ="Alokas66", x = 1000, y = 1000},
 			{txd = "adb831a7fdd83d_Guest_d1e2a309ce7591dff86", txt = "adb831a7fdd83d_Guest_d1e2a309ce7591dff8Header6", name ="Guest Menu"},
 			{txd = "hugev_gif_DSGUHSDGISDG", txt = "duiTex_DSIOGJSDG", name="HugeV Menu"},
