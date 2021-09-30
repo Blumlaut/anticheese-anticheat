@@ -193,9 +193,10 @@ Citizen.CreateThread(function()
 			if GetPedInVehicleSeat(vehicle, -1) == playerPed then
 				local carModel = GetEntityModel(vehicle)
 				local carName = GetDisplayNameFromVehicleModel(carModel)
+				local carLabel = GetLabelText(carName)
 				if isCarBlacklisted(carModel) then
 					DeleteVehicle(vehicle)
-					TriggerServerEvent('AntiCheese:CarFlag', carModel)
+					TriggerServerEvent('AntiCheese:CarFlag', carLabel)
 				end
 			end
 		end
