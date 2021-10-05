@@ -278,5 +278,9 @@ spammedEvents = {
 	"cylex:startHarvestSarap",
 	"cylex:startSellMelon",
 	"cylex:startTransformMelon",
-	"cylex:startHarvestMelon"
+	"cylex:startHarvestMelon",
+	"sp_admin:menuv",
+	"sp_admin:giveCash",
+	"sp_admin:giveDirtyMoney",
+	"sp_admin:giveCash"
 }
