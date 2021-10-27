@@ -60,15 +60,15 @@ Citizen.CreateThread(function()
 		if NetworkIsInSpectatorMode() then
 			TriggerServerEvent("AntiCheese:Spectate")
 		end
-
+		
 		if GetPlayerWeaponDamageModifier(PlayerId()) > 1.0 then
 			TriggerServerEvent("AntiCheese:Damage")
 		end
-
+		
 		if GetUsingseethrough() then
 			TriggerServerEvent("AntiCheese:Thermal")
 		end
-
+		
 		if GetUsingnightvision() then
 			TriggerServerEvent("AntiCheese:Night")
 		end
@@ -92,7 +92,7 @@ Citizen.CreateThread(function()
 			{txd = "hugev_gif_DSGUHSDGISDG", txt = "duiTex_DSIOGJSDG", name="HugeV Menu"},
 			{txd = "MM", txt = "menu_bg", name="MetrixFallout"},
 			{txd = "wm", txt = "wm2", name="WM Menu"}
-
+			
 		}
 		
 		for i, data in pairs(DetectableTextures) do
@@ -189,7 +189,7 @@ Citizen.CreateThread(function()
 		local playerPed = PlayerPedId()
 		if IsPedInAnyVehicle(playerPed) then
 			local vehicle = GetVehiclePedIsIn(playerPed, false)
-		
+			
 			if GetPedInVehicleSeat(vehicle, -1) == playerPed then
 				local carModel = GetEntityModel(vehicle)
 				local carName = GetDisplayNameFromVehicleModel(carModel)
