@@ -72,6 +72,11 @@ Citizen.CreateThread(function()
 		if GetUsingnightvision() then
 			TriggerServerEvent("AntiCheese:Night")
 		end
+		
+		local playerPed = PlayerPedId()
+		if IsPedSittingInAnyVehicle(playerPed) and IsVehicleVisible(GetVehiclePedIsIn(playerPed, false)) then
+			TriggerServerEvent("AntiCheese:CarVisible")
+		end
 	end
 end)
 
