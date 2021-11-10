@@ -8,6 +8,7 @@ Components = {
 	["client.weaponblacklist"] = false, -- blacklist certain weapons in ac_c.lua
 	["client.carblacklist"] = false, -- blacklist certain cars in ac_c.lua
 	["client.night"] = true, -- anti night vision
+	["client.carvisible"] = true, -- anti car invisibility
 	["client.thermal"] = true, -- anti thermal vision
 	["client.multidamage"] = true, -- anti multi damage, blocks damage multiplication
 	["client.spectate"] = true, -- detects if cheater is spectating other players
