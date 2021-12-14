@@ -464,10 +464,24 @@ Citizen.CreateThread(function()
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 			
-			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,"Thermal Night")
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,"Night Vision")
 			
 			if not alreadyBanned then
-				SendWebhookMessage(webhook,"**Thermal Night!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+				SendWebhookMessage(webhook,"**Night Vision!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+
+	RegisterServerEvent('AntiCheese:CarVisible')
+	AddEventHandler('AntiCheese:CarVisible', function()
+		if Components["client.carvisible"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,"Car Invisibility")
+			
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**Car Invisibility!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 			end
 		end
 	end)
