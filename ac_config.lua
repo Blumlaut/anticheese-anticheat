@@ -13,6 +13,7 @@ Components = {
 	["client.multidamage"] = true, -- anti multi damage, blocks damage multiplication
 	["client.spectate"] = true, -- detects if cheater is spectating other players
 	["server.cleartask"] = true, -- detects clearing player tasks, e.g.kicking from car
+	["server.giveweapon"] = true, -- anti weapon giver (detects when player add weapon into other player inventory)
 	["server.explosions"] = true, -- detect abnormal explosion amount, against "blow up server" cheats
 	
 	-- these will NEVER trigger under legitimate circumstances
