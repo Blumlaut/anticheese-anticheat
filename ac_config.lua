@@ -7,13 +7,11 @@ Components = {
 	["client.superjump"] = false, -- protect against super jump cheats
 	["client.weaponblacklist"] = false, -- blacklist certain weapons in ac_c.lua
 	["client.carblacklist"] = false, -- blacklist certain cars in ac_c.lua
-	["client.night"] = true, -- anti night vision
 	["client.carvisible"] = true, -- anti car invisibility
-	["client.thermal"] = true, -- anti thermal vision
 	["client.multidamage"] = true, -- anti multi damage, blocks damage multiplication
 	["client.spectate"] = true, -- detects if cheater is spectating other players
 	["server.cleartask"] = true, -- detects clearing player tasks, e.g.kicking from car
-	["server.giveweapon"] = true, -- anti weapon giver (detects when player add weapon into other player inventory)
+	["server.giveweapon"] = false, -- anti weapon giver (detects when player add weapon into other player inventory)
 	["server.explosions"] = true, -- detect abnormal explosion amount, against "blow up server" cheats
 	
 	-- these will NEVER trigger under legitimate circumstances
@@ -37,6 +35,8 @@ Components = {
 	["server.esx.policejob"] = true, -- detect a ton of exploits in esx_policejob (cuff,drag,putinvehicle,outvehicle..)
 	["server.interactionmenu"] = true, -- detect an exploit of SEM_InteractionMenu 
 	["server.vrp.runstring"] = true, -- detect and ban users using a Remote Code Execution function in vrp_basic_menu 
+	["client.night"] = true, -- anti night vision
+	["client.thermal"] = true, -- anti thermal vision
 	
 	["customflag"] = true, -- resources can trigger this one themselves if they detected something
 	
