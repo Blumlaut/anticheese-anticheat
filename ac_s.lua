@@ -927,8 +927,8 @@ Citizen.CreateThread(function()
 		if DoesEntityExist(entity) then
 			local owner = NetworkGetEntityOwner(entity)
 			if owner ~= source then
-				CancelEvent()
 				if Components["server.cleartask"] then
+					CancelEvent()
 					local license, steam = GetPlayerNeededIdentifiers(source)
 					local name = GetPlayerName(source)
 					local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
@@ -947,8 +947,8 @@ Citizen.CreateThread(function()
 		if DoesEntityExist(entity) then
 			local owner = NetworkGetEntityOwner(entity)
 			if owner ~= source then
-				CancelEvent()
 				if Components["server.giveweapon"] then
+					CancelEvent()
 					local license, steam = GetPlayerNeededIdentifiers(source)
 					local name = GetPlayerName(source)
 					local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
