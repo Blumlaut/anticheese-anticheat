@@ -927,14 +927,34 @@ Citizen.CreateThread(function()
 		if DoesEntityExist(entity) then
 			local owner = NetworkGetEntityOwner(entity)
 			if owner ~= source then
-				CancelEvent()
 				if Components["server.cleartask"] then
+					CancelEvent()
 					local license, steam = GetPlayerNeededIdentifiers(source)
 					local name = GetPlayerName(source)
 					local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
 					
 					if not alreadyBanned then
 						SendWebhookMessage(webhook,"**Clear Ped Tasks!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried to kick someone from vehicle\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+					end
+				end
+			end
+		end
+	end)
+	
+	AddEventHandler("giveWeaponEvent", function(source, data)
+		source = tonumber(source)
+		local entity = NetworkGetEntityFromNetworkId(data.pedId)
+		if DoesEntityExist(entity) then
+			local owner = NetworkGetEntityOwner(entity)
+			if owner ~= source then
+				if Components["server.giveweapon"] then
+					CancelEvent()
+					local license, steam = GetPlayerNeededIdentifiers(source)
+					local name = GetPlayerName(source)
+					local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+					
+					if not alreadyBanned then
+						SendWebhookMessage(webhook,"**Give Ped Weapon!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried to add someone weapon\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 					end
 				end
 			end
