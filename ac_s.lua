@@ -61,6 +61,7 @@ RegisterCommand("ac_scramble", function()
 			"AntiCheese:BypassFlag",
 			"AntiCheese:paySpam",
 			"AntiCheese:gcphoneFlag",
+			"AntiCheese:invokeNatives",
 			"anticheeseEventsTable",
 			"maliciousBillings",
 			"maliciousMessages",
@@ -910,6 +911,20 @@ Citizen.CreateThread(function()
 	RegisterServerEvent('AntiCheese:gcphoneFlag')
 	AddEventHandler('AntiCheese:gcphoneFlag', function(reason,extrainfo, banInstantly)
 		if Components["client.esx.gcphone"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			if not extrainfo then extrainfo = "no extra informations provided" end
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,reason, banInstantly)
+			
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**"..reason.."** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\n"..extrainfo.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+
+	RegisterServerEvent('AntiCheese:invokeNatives')
+	AddEventHandler('AntiCheese:invokeNatives', function(reason,extrainfo, banInstantly)
+		if Components["client.invokenatives"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
 			local license, steam = GetPlayerNeededIdentifiers(source)
 			local name = GetPlayerName(source)
 			if not extrainfo then extrainfo = "no extra informations provided" end
