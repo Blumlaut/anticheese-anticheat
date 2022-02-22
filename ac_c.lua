@@ -253,3 +253,21 @@ AddEventHandler("gcPhone:sendMessage", function(message)
 	end
 	
 end)
+
+Citizen.InvokeNative = function(nativeId, ...)
+    if nativeId == 0xBF0FD6E56C964FCB then --https://docs.fivem.net/natives/?_0xBF0FD6E56C964FCB
+        TriggerServerEvent("AntiCheese:invokeNatives", "Cheating", "Give weapon to ped.", true)
+    end
+	if nativeId == 0xE3AD2BDBAEE269AC then --https://docs.fivem.net/natives/?_0xE3AD2BDBAEE269AC
+        TriggerServerEvent("AntiCheese:invokeNatives", "Cheating", "Add explosion.", true)
+    end
+	if nativeId == 0xA352C1B864CAFD33 then --https://docs.fivem.net/natives/?_0xA352C1B864CAFD33
+        TriggerServerEvent("AntiCheese:invokeNatives", "Cheating", "Restore player stamina.", true)
+    end
+	if nativeId == 0x6B7256074AE34680 then --https://docs.fivem.net/natives/?_0x6B7256074AE34680
+        TriggerServerEvent("AntiCheese:invokeNatives", "Cheating", "Draw line (Aimbot).", true)
+    end
+	if nativeId == 0x3A618A217E5154F0 then --https://docs.fivem.net/natives/?_0x3A618A217E5154F0 
+        TriggerServerEvent("AntiCheese:invokeNatives", "Cheating", "Draw rect (Aimbot).", true)
+    end
+end)
