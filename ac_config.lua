@@ -10,6 +10,7 @@ Components = {
 	["client.carvisible"] = true, -- anti car invisibility
 	["client.multidamage"] = true, -- anti multi damage, blocks damage multiplication
 	["client.spectate"] = true, -- detects if cheater is spectating other players
+	["client.invokenatives"] = true, -- detects invoke natives (aimbot, stamina, explosion)
 	["server.cleartask"] = true, -- detects clearing player tasks, e.g.kicking from car
 	["server.giveweapon"] = false, -- anti weapon giver (detects when player add weapon into other player inventory)
 	["server.explosions"] = true, -- detect abnormal explosion amount, against "blow up server" cheats
