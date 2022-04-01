@@ -485,6 +485,62 @@ Citizen.CreateThread(function()
 			end
 		end
 	end)
+
+	RegisterServerEvent('AntiCheese:PlayerVisible')
+	AddEventHandler('AntiCheese:PlayerVisible', function()
+		if Components["client.playervisible"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,"Player Invisibility")
+			
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**Player Invisibility!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+
+	RegisterServerEvent('AntiCheese:AimAssist')
+	AddEventHandler('AntiCheese:AimAssist', function()
+		if Components["client.aimassist"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,"Aim Assist")
+			
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**Aim Assist!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+
+	RegisterServerEvent('AntiCheese:StartFlag')
+	AddEventHandler('AntiCheese:StartFlag', function(resource)
+		if Components["client.startflag"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,"Resource Start")
+			
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**Resource Start!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nResource: "..resource.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
+
+	RegisterServerEvent('AntiCheese:StopFlag')
+	AddEventHandler('AntiCheese:StopFlag', function(resource)
+		if Components["client.stopflag"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local license, steam = GetPlayerNeededIdentifiers(source)
+			local name = GetPlayerName(source)
+			
+			local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,"Resource Stop")
+			
+			if not alreadyBanned then
+				SendWebhookMessage(webhook,"**Resource Stop!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nResource: "..resource.."\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+			end
+		end
+	end)
 	
 	AddEventHandler('explosionEvent', function(sender, ev)
 		if Components["server.explosions"] and ev.damageScale ~= 0.0 and ev.ownerNetId == 0 then -- make sure component is enabled, damage isnt 0 and owner is the sender
@@ -931,7 +987,7 @@ Citizen.CreateThread(function()
 					CancelEvent()
 					local license, steam = GetPlayerNeededIdentifiers(source)
 					local name = GetPlayerName(source)
-					local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+					local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,"Cheating")
 					
 					if not alreadyBanned then
 						SendWebhookMessage(webhook,"**Clear Ped Tasks!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried to kick someone from vehicle\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
@@ -951,10 +1007,30 @@ Citizen.CreateThread(function()
 					CancelEvent()
 					local license, steam = GetPlayerNeededIdentifiers(source)
 					local name = GetPlayerName(source)
-					local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+					local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,"Cheating",true)
 					
 					if not alreadyBanned then
 						SendWebhookMessage(webhook,"**Give Ped Weapon!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried to add someone weapon\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+					end
+				end
+			end
+		end
+	end)
+
+	AddEventHandler('ptFxEvent', function(source, data)
+		source = tonumber(source)
+		local entity = NetworkGetEntityFromNetworkId(data.pedId)
+		if DoesEntityExist(entity) then
+			local owner = NetworkGetEntityOwner(entity)
+			if owner ~= source then
+				if Components["server.effect"] then
+					CancelEvent()
+					local license, steam = GetPlayerNeededIdentifiers(source)
+					local name = GetPlayerName(source)
+					local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,"Cheating",true)
+					
+					if not alreadyBanned then
+						SendWebhookMessage(webhook,"**Spawn Effect!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried to use effect\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 					end
 				end
 			end
