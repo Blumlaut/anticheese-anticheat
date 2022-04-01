@@ -56,7 +56,7 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
-		Citizen.Wait(60000)
+		Citizen.Wait(30000)
 		if NetworkIsInSpectatorMode() then
 			TriggerServerEvent("AntiCheese:Spectate")
 		end
@@ -72,10 +72,17 @@ Citizen.CreateThread(function()
 		if GetUsingnightvision() then
 			TriggerServerEvent("AntiCheese:Night")
 		end
-		
-		local playerPed = PlayerPedId()
-		if IsPedSittingInAnyVehicle(playerPed) and IsVehicleVisible(GetVehiclePedIsIn(playerPed, false)) then
+
+		if IsPedSittingInAnyVehicle(PlayerPedId()) and IsVehicleVisible(GetVehiclePedIsIn(PlayerPedId(), false)) then
 			TriggerServerEvent("AntiCheese:CarVisible")
+		end
+
+		if not IsEntityVisible(PlayerPedId()) then
+			TriggerServerEvent("AntiCheese:PlayerVisible")
+		end
+
+		if GetLocalPlayerAimState() ~= 3 and not IsPedInAnyVehicle(PlayerPedId()) then
+			TriggerServerEvent("AntiCheese:AimAssist")
 		end
 	end
 end)
@@ -238,6 +245,14 @@ for i, event in pairs(negativePayEvents) do
 	RegisterNetEvent(event)
 	AddEventHandler(event, negativePayFunc)
 end
+
+AddEventHandler("onClientResourceStart", function(resourceName)
+	TriggerServerEvent('AntiCheese:StartFlag', resourceName)
+end)
+
+AddEventHandler("onClientResourceStop", function(resourceName)
+	TriggerServerEvent('AntiCheese:StopFlag', resourceName)
+end)
 
 -- no longer generic cheat detections
 
