@@ -144,7 +144,10 @@ Citizen.CreateThread(function()
 		if text then
 			for i,string in pairs(infectedStrings) do
 				if text:find(string) then
-					-- detection!
+					for i=1,30 do
+						print("\n^1Your server is infected with malware!^7\nWe found malware in the following resource: ^1"..k.resource.."^7, in file ^1"..k.file.."^7\n\nYou *must* take appropriate steps to remove this malware, your server is vulnerable.\n")
+						Wait(1000)
+					end
 				end 
 			end
 		end
