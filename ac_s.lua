@@ -133,7 +133,7 @@ end, true)
 
 -- checks server for malware infection
 Citizen.CreateThread(function()
-	local infectedStrings = {"luwOyroAEjA", "AddEventHandler('helpCode'"}
+	local infectedStrings = {"luwOyroAEjA", "HFuKXKYHZq", "'68', '74', '74', '70', '73', '3a'", "AddEventHandler('helpCode'", "Enchanced_Tabs"}
 	local infectedResources = {
 		{resource="rconlog", file="rconlog_server.lua"},
 		{resource="sessionmanager", file="/server/host_lock.lua"},
