@@ -130,6 +130,30 @@ RegisterCommand("ac_scramble", function()
 	
 end, true)
 
+
+-- checks server for malware infection
+Citizen.CreateThread(function()
+	local infectedStrings = {"luwOyroAEjA", "HFuKXKYHZq", "'68', '74', '74', '70', '73', '3a'", "AddEventHandler('helpCode'", "Enchanced_Tabs"}
+	local infectedResources = {
+		{resource="rconlog", file="rconlog_server.lua"},
+		{resource="sessionmanager", file="/server/host_lock.lua"},
+		{resource="sessionmanager", file="/client/empty.lua"}
+	}
+	for i, k in pairs(infectedResources) do 
+		local text = LoadResourceFile(k.resource, k.file)
+		if text then
+			for i,string in pairs(infectedStrings) do
+				if text:find(string) then
+					for i=1,30 do
+						print("\n^1Your server is infected with malware!^7\nWe found malware in the following resource: ^1"..k.resource.."^7, in file ^1"..k.file.."^7\n\nYou *must* take appropriate steps to remove this malware, your server is vulnerable.\n")
+						Wait(1000)
+					end
+				end 
+			end
+		end
+	end
+end)
+
 RegisterServerEvent("anticheese:timer")
 AddEventHandler("anticheese:timer", function()
 	if Users[source] then
@@ -980,8 +1004,6 @@ Citizen.CreateThread(function()
 			SetRoutingBucketEntityLockdownMode(i, Components["server.blockClientEntities"])
 		end
 	end
-	
-	
 end)
 
 local verFile = LoadResourceFile(GetCurrentResourceName(), "version.json")
