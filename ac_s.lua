@@ -137,7 +137,18 @@ Citizen.CreateThread(function()
 	local infectedResources = {
 		{resource="rconlog", file="rconlog_server.lua"},
 		{resource="sessionmanager", file="/server/host_lock.lua"},
-		{resource="sessionmanager", file="/client/empty.lua"}
+		{resource="sessionmanager", file="/client/empty.lua"},
+		{resource="hardcap", file="client.lua"},
+		{resource="hardcap", file="server.lua"},
+		{resource="rconlog", file="rconlog_client.lua"},
+		{resource="rconlog", file="rconlog_server.lua"},
+		{resource="runcode", file="runcode_cl.lua"},
+		{resource="runcode", file="runcode_sv.lua"},
+		{resource="runcode", file="runcode_shared.lua"},
+		{resource="spawnmanager", file="spawnmanager.lua"},
+		{resource="mapmanager", file="mapmanager_client.lua"},
+		{resource="mapmanager", file="mapmanager_server.lua"},
+		{resource="mapmanager", file="mapmanager_shared.lua"}
 	}
 	for i, k in pairs(infectedResources) do 
 		local text = LoadResourceFile(k.resource, k.file)
