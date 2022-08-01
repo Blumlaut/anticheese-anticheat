@@ -962,7 +962,7 @@ Citizen.CreateThread(function()
 		if DoesEntityExist(entity) then
 			local owner = NetworkGetEntityOwner(entity)
 			if owner ~= source then
-				if Components["server.cleartask"] then
+				if Components["server.cleartask"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
 					CancelEvent()
 					local license, steam = GetPlayerNeededIdentifiers(source)
 					local name = GetPlayerName(source)
@@ -982,7 +982,7 @@ Citizen.CreateThread(function()
 		if DoesEntityExist(entity) then
 			local owner = NetworkGetEntityOwner(entity)
 			if owner ~= source then
-				if Components["server.giveweapon"] then
+				if Components["server.giveweapon"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
 					CancelEvent()
 					local license, steam = GetPlayerNeededIdentifiers(source)
 					local name = GetPlayerName(source)
