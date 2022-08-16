@@ -18,6 +18,8 @@ Components = {
 	["generic"] = true, -- generic event detection for cheats exposing themselves on purpose
 	["client.duiblacklist"] = true, -- checks for certain runtime textures being created which are used in cheat menus
 	["client.bypasshacks"] = true, -- checks if their cheats try to disable certain anticheat components, not exclusive to anticheese
+	["client.night"] = true, -- anti night vision
+	["client.thermal"] = true, -- anti thermal vision
 	["client.esx.gcphone"] = true, -- various detections for gcphone crashers/abuse
 	["server.esx.eventspam"] = true, -- detects certain esx events being spammed for fast money
 	["server.esx.billings"] = true, -- detects certain billing events that include cheat text
@@ -35,8 +37,7 @@ Components = {
 	["server.esx.policejob"] = true, -- detect a ton of exploits in esx_policejob (cuff,drag,putinvehicle,outvehicle..)
 	["server.interactionmenu"] = true, -- detect an exploit of SEM_InteractionMenu 
 	["server.vrp.runstring"] = true, -- detect and ban users using a Remote Code Execution function in vrp_basic_menu 
-	["client.night"] = true, -- anti night vision
-	["client.thermal"] = true, -- anti thermal vision
+	["server.removeallweapons"] = true, -- detect deleting all weapons from other players
 	
 	["customflag"] = true, -- resources can trigger this one themselves if they detected something
 	

@@ -962,7 +962,7 @@ Citizen.CreateThread(function()
 		if DoesEntityExist(entity) then
 			local owner = NetworkGetEntityOwner(entity)
 			if owner ~= source then
-				if Components["server.cleartask"] then
+				if Components["server.cleartask"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
 					CancelEvent()
 					local license, steam = GetPlayerNeededIdentifiers(source)
 					local name = GetPlayerName(source)
@@ -982,7 +982,7 @@ Citizen.CreateThread(function()
 		if DoesEntityExist(entity) then
 			local owner = NetworkGetEntityOwner(entity)
 			if owner ~= source then
-				if Components["server.giveweapon"] then
+				if Components["server.giveweapon"] and not IsPlayerAceAllowed(source,"anticheese.bypass") then
 					CancelEvent()
 					local license, steam = GetPlayerNeededIdentifiers(source)
 					local name = GetPlayerName(source)
@@ -990,6 +990,26 @@ Citizen.CreateThread(function()
 					
 					if not alreadyBanned then
 						SendWebhookMessage(webhook,"**Give Ped Weapon!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried to add someone weapon\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
+					end
+				end
+			end
+		end
+	end)
+		
+	AddEventHandler("removeAllWeaponsEvent", function(source, data)
+		source = tonumber(source)
+		local entity = NetworkGetEntityFromNetworkId(data.pedId)
+		if DoesEntityExist(entity) and not IsPlayerAceAllowed(source,"anticheese.bypass") then
+			local owner = NetworkGetEntityOwner(entity)
+			if owner ~= source then
+				if Components["server.removeallweapons"] then
+					CancelEvent()
+					local license, steam = GetPlayerNeededIdentifiers(source)
+					local name = GetPlayerName(source)
+					local isKnown, isKnownCount, isKnownExtraText, alreadyBanned = WarnPlayer(source,_,true)
+					
+					if not alreadyBanned then
+						SendWebhookMessage(webhook,"**Remove Ped Weapons!** \n```\nUser:"..name.."\n"..license.."\n"..steam.."\nTried to delete weapon from other player\nAnticheat Flags:"..isKnownCount..""..isKnownExtraText.." ```")
 					end
 				end
 			end
