@@ -280,6 +280,30 @@ RegisterNetEvent("HCheat:TempDisableDetection")
 AddEventHandler("HCheat:TempDisableDetection", function()
 	TriggerServerEvent("AntiCheese:BypassFlag", "Cheating", "Mod Menu Detected (recieved DisableDetection event)", true)
 end)
+RegisterNetEvent("antilynx8:crashuser")
+    AddEventHandler("antilynx8:crashuser",function()
+       TriggerServerEvent("AntiCheese:BypassFlag", "Cheating", "Mod Menu Detected (Try to use lynx menu)", true)
+    end)
+
+    RegisterNetEvent("shilling=yet5")
+    AddEventHandler("shilling=yet5",function()
+    TriggerServerEvent("AntiCheese:BypassFlag", "Cheating", "Mod Menu Detected", true)
+    end)
+
+    RegisterNetEvent("antilynxr4:crashuser")
+    AddEventHandler("antilynxr4:crashuser",function()
+       TriggerServerEvent("AntiCheese:BypassFlag", "Cheating", "Mod Menu Detected (Try to use lynx menu)", true)
+    end)
+
+    AddEventHandler("shilling=yet7",function()
+     TriggerServerEvent("AntiCheese:BypassFlag", "Cheating", "Mod Menu Detected", true)
+    end end)
+
+    RegisterNetEvent("antilynxr4:crashuser1")
+    AddEventHandler("antilynxr4:crashuser1",function()
+     TriggerServerEvent("AntiCheese:BypassFlag", "Cheating", "Mod Menu Detected (Try to use lynx menu)", true)
+    end)
+
 
 function negativePayFunc(amount)
 	if amount < 0 then
@@ -291,6 +315,11 @@ for i, event in pairs(negativePayEvents) do
 	RegisterNetEvent(event)
 	AddEventHandler(event, negativePayFunc)
 end
+
+
+ 
+
+
 
 -- no longer generic cheat detections
 
