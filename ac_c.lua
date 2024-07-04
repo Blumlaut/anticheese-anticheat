@@ -155,11 +155,6 @@ Citizen.CreateThread(function()
 					ReqAndDelete(object, true)
 				end
 			end
-			for i=1,#CageObjs do
-				if GetEntityModel(object) == CageObjs[i] then
-					ReqAndDelete(object, false)
-				end
-			end
 			finished, object = FindNextObject(handle)
 		until not finished
 		EndFindObject(handle)
@@ -183,33 +178,10 @@ Citizen.CreateThread(function()
 	end
 end)
 
-function isCarBlacklisted(model)
-	for _, blacklistedCar in pairs(blacklistedCars) do
-		if model == blacklistedCar then
-			return true
-		end
-	end
-	
-	return false
-end
-
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(500)
 		local playerPed = PlayerPedId()
-		if IsPedInAnyVehicle(playerPed) then
-			local vehicle = GetVehiclePedIsIn(playerPed, false)
-			
-			if GetPedInVehicleSeat(vehicle, -1) == playerPed then
-				local carModel = GetEntityModel(vehicle)
-				local carName = GetDisplayNameFromVehicleModel(carModel)
-				local carLabel = GetLabelText(carName)
-				if isCarBlacklisted(carModel) then
-					DeleteVehicle(vehicle)
-					TriggerServerEvent('AntiCheese:CarFlag', carLabel)
-				end
-			end
-		end
 		for _,theWeapon in ipairs(BlacklistedWeapons) do
 			Citizen.Wait(1)
 			if HasPedGotWeapon(playerPed,theWeapon,false) == 1 then

@@ -1015,6 +1015,14 @@ Citizen.CreateThread(function()
 			end
 		end
 	end)
+
+	AddEventHandler("entityCreating", function(handle)
+		local entityModel = GetEntityModel(handle)
+	
+		if BlacklistedObjects[entityModel] or BlacklistedVehicles[entityModel] then
+			CancelEvent()
+		end
+	end)
 	
 	RegisterServerEvent('AntiCheese:DuiFlag')
 	AddEventHandler('AntiCheese:DuiFlag', function(reason,extrainfo, banInstantly)

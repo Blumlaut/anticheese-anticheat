@@ -63,28 +63,28 @@ BlacklistedWeapons = {
 
 
 -- Anticheese will attempt to delete these objects when possible, even if they are legitimate
-CageObjs = {
-	`prop_gold_cont_01`,
-	`p_cablecar_s`,
-	`stt_prop_stunt_tube_l`,
-	`stt_prop_stunt_track_dwuturn`,
-	`hei_prop_carrier_cargo_02a`,
-	`p_ferris_car_01`,
-	`prop_cj_big_boat`,
-	`prop_rock_4_big2`,
-	`prop_steps_big_01`,
-	`v_ilev_lest_bigscreen`,
-	`prop_carcreeper`,
-	`apa_mp_h_bed_double_09`,
-	`apa_mp_h_bed_wide_05`,
-	`prop_cattlecrush`,
-	`prop_cs_documents_01`,
-	
+BlacklistedObjects = {
+	[`prop_gold_cont_01`] = true,
+	[`p_cablecar_s`] = true,
+	[`stt_prop_stunt_tube_l`] = true,
+	[`stt_prop_stunt_track_dwuturn`] = true,
+	[`hei_prop_carrier_cargo_02a`] = true,
+	[`p_ferris_car_01`] = true,
+	[`prop_cj_big_boat`] = true,
+	[`prop_rock_4_big2`] = true,
+	[`prop_steps_big_01`] = true,
+	[`v_ilev_lest_bigscreen`] = true,
+	[`prop_carcreeper`] = true,
+	[`apa_mp_h_bed_double_09`] = true,
+	[`apa_mp_h_bed_wide_05`] = true,
+	[`prop_cattlecrush`] = true,
+	[`prop_cs_documents_01`] = true,
 }
 
 -- list of cars that cannot be spawned
-blacklistedCars = {
-	-- `khanjali`,
+BlacklistedVehicles = {
+	[`khanjali`] = true,
+	[`strikeforce`] = true,
 }
 
 
